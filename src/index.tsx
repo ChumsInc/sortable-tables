@@ -1,15 +1,7 @@
-import React from 'react';
-import {Provider} from 'react-redux';
-import App from './app/App';
-import store from './app/configureStore'
-import {createRoot} from "react-dom/client";
-
-const container = document.getElementById('app');
-const root = createRoot(container!);
-root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </React.StrictMode>
-);
+export {default as DataTable} from './DataTable';
+export {default as DataTableRow} from './DataTableRow';
+export {default as DataTableTBody} from './DataTableTBody';
+export {default as DataTableTH} from './DataTableTH';
+export {default as SortableTable} from './SortableTable';
+export {default as SortableTableHead} from './SortableTableHead';
+export {default as SortableTableTH} from './SortableTableTH';
