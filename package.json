@@ -1,14 +1,18 @@
 {
   "name": "sortable-tables",
   "version": "2.0.0",
+  "main": "./dist/index.js",
+  "source": "./src/index.tsx",
+  "types": "./dist/types.d.ts",
   "peerDependencies": {
     "classnames": "*",
     "react": ">=18.1.0",
     "react-dom": ">=18.1.0"
   },
   "scripts": {
-    "start": "webpack serve --config webpack.dev.mjs --progress",
-    "build": "webpack --config webpack.prod.mjs --progress",
+    "clean": "rimraf dist/",
+    "compile": "tsc",
+    "build": "npm run clean && npm run compile",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "browserslist": {
@@ -39,6 +43,7 @@
     "globals": "^15.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "rimraf": "^6.0.1",
     "sass-loader": "^16.0.0",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.9",
@@ -47,7 +52,7 @@
     "typescript-eslint": "^8.0.1",
     "webpack": "^5.88.2",
     "webpack-bundle-analyzer": "^4.9.1",
-    "webpack-cli": "^5.1.4",
+    "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.0.4",
     "webpack-manifest-plugin": "^5.0.0",
     "webpack-merge": "^6.0.1"
@@ -62,7 +67,6 @@
     "eslint": "^9.8.0"
   },
   "description": "A sortable table module package for Chums, Inc.",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ChumsInc/sortable-tables.git"
