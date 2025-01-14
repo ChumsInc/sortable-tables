@@ -1,4 +1,4 @@
-import React, {ReactNode, TableHTMLAttributes} from 'react'
+import React, {HTMLAttributes, ReactNode, TableHTMLAttributes} from 'react'
 import classNames from "classnames";
 
 
@@ -93,5 +93,24 @@ export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps
     sorted?: boolean,
     ascending?: boolean,
     onClick: (sort: SortProps<T>) => void,
+}
+
+export interface RowsPerPageProps extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
+    value: number;
+    pageValues?: number[];
+    size?: UISize;
+    className?: string;
+    onChange: (value: number) => void;
+}
+
+export interface TablePaginationProps extends HTMLAttributes<HTMLDivElement> {
+    page: number;
+    rowsPerPage: number;
+    onChangePage: (page: number) => void;
+    count: number;
+    size?: UISize;
+    showFirst?: boolean;
+    showLast?: boolean;
+    rowsPerPageProps?: Omit<RowsPerPageProps, 'value'>;
 }
 

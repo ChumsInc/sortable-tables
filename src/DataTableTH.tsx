@@ -3,7 +3,7 @@ import classNames from "classnames";
 import {DataTableTHProps} from "./types";
 
 
-export default function DataTableTH<T = unknown>({
+function DataTableTH<T = unknown>({
                                                      field,
                                                      className,
                                                      children,
@@ -16,3 +16,5 @@ export default function DataTableTH<T = unknown>({
         </th>
     )
 }
+DataTableTH.displayName = 'DataTableTH';
+export default DataTableTH;

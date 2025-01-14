@@ -4,7 +4,7 @@ import {noop} from "./utils";
 import {DataTableRowProps} from "./types";
 
 
-export default function DataTableRow<T = unknown>({
+function DataTableRow<T = unknown>({
                                                       className,
                                                       rowClassName,
                                                       selected,
@@ -55,3 +55,6 @@ export default function DataTableRow<T = unknown>({
         </tr>
     )
 }
+
+DataTableRow.displayName = 'DataTableRow';
+export default DataTableRow;

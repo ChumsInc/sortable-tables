@@ -6,7 +6,7 @@ import {DataTableProps} from "./types";
 import {noop} from "./utils";
 
 
-export default function DataTable<T = unknown>({
+function DataTable<T = unknown>({
                                                    fields,
                                                    data,
                                                    keyField,
@@ -40,3 +40,5 @@ export default function DataTable<T = unknown>({
     )
 }
 
+DataTable.displayName = 'DataTable';
+export default DataTable;

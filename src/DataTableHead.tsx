@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {DataTableHeadProps} from "./types";
 
 
-export default function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {
+function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {
     return (
         <thead {...rest}>
         <tr>
@@ -23,3 +23,5 @@ export default function DataTableHead<T = unknown>({fields, ...rest}: DataTableH
     )
 }
 
+DataTableHead.displayName = 'DataTableHead';
+export default DataTableHead;

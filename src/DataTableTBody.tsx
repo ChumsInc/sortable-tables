@@ -5,7 +5,7 @@ import {DataTableTBodyProps} from "./types";
 
 
 
-export default function DataTableTBody<T = unknown>({
+function DataTableTBody<T = unknown>({
                             fields,
                             data,
                             keyField,
@@ -36,3 +36,5 @@ export default function DataTableTBody<T = unknown>({
         </tbody>
     )
 }
+DataTableTBody.displayName = 'DataTableTBody';
+export default DataTableTBody

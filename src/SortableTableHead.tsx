@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {SortableTableHeadProps} from "./types";
 
 
-export default function SortableTableHead<T = unknown>({
+function SortableTableHead<T = unknown>({
                                                            currentSort,
                                                            fields,
                                                            onChangeSort,
@@ -26,3 +26,6 @@ export default function SortableTableHead<T = unknown>({
         </thead>
     )
 }
+
+SortableTableHead.displayName = 'SortableTableHead';
+export default SortableTableHead;

@@ -6,7 +6,7 @@ import {SortableTableProps} from "./types";
 import {noop} from "./utils";
 
 
-export default function SortableTable<T = unknown>({
+function SortableTable<T = unknown>({
                                                        fields,
                                                        data,
                                                        currentSort,
@@ -39,3 +39,6 @@ export default function SortableTable<T = unknown>({
         </table>
     )
 }
+
+SortableTable.displayName = 'SortableTable';
+export default SortableTable;

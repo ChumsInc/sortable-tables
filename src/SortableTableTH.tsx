@@ -5,7 +5,7 @@ import {SortableTableTHProps} from "./types";
 
 
 
-export default function SortableTableTH<T = unknown>({
+function SortableTableTH<T = unknown>({
                         field,
                         sorted,
                         ascending,
@@ -36,3 +36,6 @@ export default function SortableTableTH<T = unknown>({
         </th>
     )
 }
+
+SortableTableTH.displayName = 'SortableTableTH';
+export default SortableTableTH;
