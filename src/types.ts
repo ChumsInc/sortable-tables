@@ -99,6 +99,7 @@ export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps
 export interface RowsPerPageProps extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
     value: number;
     pageValues?: number[];
+    label?: string;
     size?: UISize;
     className?: string;
     onChange: (value: number) => void;

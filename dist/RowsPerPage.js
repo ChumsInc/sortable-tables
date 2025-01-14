@@ -1,10 +1,15 @@
-import { jsx as _jsx } from "react/jsx-runtime";
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useId } from 'react';
 import classNames from "classnames";
 export const defaultRowsPerPageValues = [10, 25, 50, 100, 250, 500, 1000];
-function RowsPerPage({ value, pageValues = defaultRowsPerPageValues, size, className, onChange, ...rest }) {
+function RowsPerPage({ value, pageValues = defaultRowsPerPageValues, size, label, className, onChange, ...rest }) {
+    const id = useId();
     const changeHandler = (ev) => onChange(Number(ev.target.value));
     const selectClassName = className ?? classNames('form-select', { [`form-select-${size}`]: !!size });
-    return (_jsx("select", { value: value, onChange: changeHandler, className: selectClassName, ...rest, children: pageValues.map(value => (_jsx("option", { value: value, children: value }, value))) }));
+    const inputGroupClassName = classNames('input-group', {
+        [`input-group-${size}`]: !!size,
+    });
+    return (_jsxs("div", { className: inputGroupClassName, children: [_jsx("label", { className: "input-group-text", htmlFor: id, children: label ?? 'Rows' }), _jsx("select", { value: value, onChange: changeHandler, className: selectClassName, ...rest, children: pageValues.map(value => (_jsx("option", { value: value, children: value }, value))) })] }, value));
 }
 RowsPerPage.displayName = 'RowsPerPage';
 export default RowsPerPage;
