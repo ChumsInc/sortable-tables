@@ -8,6 +8,7 @@ export interface SortProps<T = unknown> {
 }
 
 export type UISize = 'sm'|'lg'|'';
+export type UITableSize = UISize|'xs';
 
 export type DataTableClassNames<T = unknown> =
     string
@@ -37,7 +38,7 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     fields: DataTableField<T>[],
     data: T[],
     keyField: keyof T | ((row: T) => string|number),
-    size?: UISize,
+    size?: UITableSize,
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
     onSelectRow?: (row: T) => T | void,
