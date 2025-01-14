@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "main": "./dist/index.js",
   "source": "./src/index.tsx",
-  "types": "./dist/types.d.ts",
+  "types": "./dist/index.d.ts",
   "peerDependencies": {
     "classnames": "*",
     "react": ">=18.1.0",
