@@ -16,7 +16,12 @@ function SortableTableTH<T = unknown>({
         return (<DataTableTH field={field} className={className}/>)
     }
 
-    const thClassName = classNames({[`text-${field.align}`]: !!field.align}, className);
+    const {className: _thClassName, ...thProps} = field.thProps ?? {};
+    const thClassName = classNames(
+        className,
+        _thClassName,
+        {[`text-${field.align}`]: !!field.align}
+    );
 
     const clickHandler = () => {
         onClick({field: field.field, ascending: !sorted ? true : !ascending});
@@ -28,7 +33,7 @@ function SortableTableTH<T = unknown>({
 
 
     return (
-        <th {...field.thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
+        <th {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
             {!!sorted && (
                 <span className={classNames('me-1', iconClassName)}/>
             )}

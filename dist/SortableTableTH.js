@@ -5,7 +5,8 @@ function SortableTableTH({ field, sorted, ascending, className, onClick }) {
     if (!field.sortable) {
         return (_jsx(DataTableTH, { field: field, className: className }));
     }
-    const thClassName = classNames({ [`text-${field.align}`]: !!field.align }, className);
+    const { className: _thClassName, ...thProps } = field.thProps ?? {};
+    const thClassName = classNames(className, _thClassName, { [`text-${field.align}`]: !!field.align });
     const clickHandler = () => {
         onClick({ field: field.field, ascending: !sorted ? true : !ascending });
     };
@@ -13,7 +14,7 @@ function SortableTableTH({ field, sorted, ascending, className, onClick }) {
         'bi-arrow-down': !!sorted && !!ascending,
         'bi-arrow-up': !!sorted && !ascending,
     };
-    return (_jsxs("th", { ...field.thProps, className: classNames("sortable", thClassName), onClick: clickHandler, children: [!!sorted && (_jsx("span", { className: classNames('me-1', iconClassName) })), field.title] }));
+    return (_jsxs("th", { ...thProps, className: classNames("sortable", thClassName), onClick: clickHandler, children: [!!sorted && (_jsx("span", { className: classNames('me-1', iconClassName) })), field.title] }));
 }
 SortableTableTH.displayName = 'SortableTableTH';
 export default SortableTableTH;
