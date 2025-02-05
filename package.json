@@ -1,6 +1,6 @@
 {
   "name": "sortable-tables",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "./dist/index.js",
   "source": "./src/index.tsx",
   "types": "./dist/index.d.ts",
