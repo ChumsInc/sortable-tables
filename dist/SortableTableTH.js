@@ -13,7 +13,7 @@ function SortableTableTH({ field, sorted, ascending, className, onClick }) {
         'bi-arrow-down': !!sorted && !!ascending,
         'bi-arrow-up': !!sorted && !ascending,
     };
-    return (_jsxs("th", { className: classNames("sortable", thClassName), onClick: clickHandler, children: [!!sorted && (_jsx("span", { className: classNames('me-1', iconClassName) })), field.title] }));
+    return (_jsxs("th", { ...field.thProps, className: classNames("sortable", thClassName), onClick: clickHandler, children: [!!sorted && (_jsx("span", { className: classNames('me-1', iconClassName) })), field.title] }));
 }
 SortableTableTH.displayName = 'SortableTableTH';
 export default SortableTableTH;

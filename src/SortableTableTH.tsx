@@ -28,7 +28,7 @@ function SortableTableTH<T = unknown>({
 
 
     return (
-        <th className={classNames("sortable", thClassName)} onClick={clickHandler}>
+        <th {...field.thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
             {!!sorted && (
                 <span className={classNames('me-1', iconClassName)}/>
             )}

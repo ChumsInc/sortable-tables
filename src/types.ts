@@ -26,7 +26,7 @@ export interface DataTableField<T = unknown> {
     render?: (row: T) => ReactNode,
     className?: DataTableClassNames<T>,
     colSpan?: number,
-    thProps?: DataTableTHProps<T>,
+    thProps?: Omit<DataTableTHProps<T>, 'field'>,
     cellProps?: TableHTMLAttributes<HTMLTableCellElement>
 }
 
