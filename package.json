@@ -76,5 +76,9 @@
   "bugs": {
     "url": "https://github.com/ChumsInc/sortable-tables/issues"
   },
-  "homepage": "https://github.com/ChumsInc/sortable-tables#readme"
+  "homepage": "https://github.com/ChumsInc/sortable-tables#readme",
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0"
+  }
 }

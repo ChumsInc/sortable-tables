@@ -2,8 +2,15 @@ import React from "react";
 import classNames from "classnames";
 import DataTableTH from "./DataTableTH";
 import {SortableTableTHProps} from "./types";
+import styled from '@emotion/styled';
 
-
+type SortIconProps = Pick<SortableTableTHProps, 'sorted'>;
+const SortIcon = styled.span<SortIconProps>`
+    opacity: ${props => props.sorted ? 1 : 0};
+    &:hover {
+        opacity: 1;
+    }
+`
 
 function SortableTableTH<T = unknown>({
                         field,
@@ -26,17 +33,16 @@ function SortableTableTH<T = unknown>({
     const clickHandler = () => {
         onClick({field: field.field, ascending: !sorted ? true : !ascending});
     }
+
     const iconClassName = {
-        'bi-arrow-down': !!sorted && !!ascending,
-        'bi-arrow-up': !!sorted && !ascending,
+        'bi-arrow-down': ascending,
+        'bi-arrow-up': !ascending,
     }
 
 
     return (
         <th {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
-            {!!sorted && (
-                <span className={classNames('me-1', iconClassName)}/>
-            )}
+            <SortIcon className={classNames('me-1', iconClassName)} sorted={sorted} />
             {field.title}
         </th>
     )
