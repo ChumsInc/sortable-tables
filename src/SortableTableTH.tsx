@@ -4,11 +4,13 @@ import DataTableTH from "./DataTableTH";
 import {SortableTableTHProps} from "./types";
 import styled from '@emotion/styled';
 
-type SortIconProps = Pick<SortableTableTHProps, 'sorted'>;
-const SortIcon = styled.span<SortIconProps>`
-    opacity: ${props => props.sorted ? 1 : 0};
-    &:hover {
-        opacity: 1;
+type SortableTHProps = Pick<SortableTableTHProps, 'sorted'>;
+const SortableTH = styled.span<SortableTHProps>`
+    .sort-icon {
+        opacity: ${props => props.sorted ? 1 : 0};
+        &:hover {
+            opacity: 1;
+        }
     }
 `
 
@@ -41,10 +43,10 @@ function SortableTableTH<T = unknown>({
 
 
     return (
-        <th {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
-            <SortIcon className={classNames('me-1', iconClassName)} sorted={sorted} />
+        <SortableTH {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler} sorted={sorted}>
+            <span className={classNames('me-1', iconClassName)} />
             {field.title}
-        </th>
+        </SortableTH>
     )
 }
 
