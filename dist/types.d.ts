@@ -27,6 +27,8 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     data: T[];
     keyField: keyof T | ((row: T) => string | number);
     size?: UITableSize;
+    sticky?: boolean;
+    responsive?: boolean | "sm" | "md" | "lg" | "xl" | 'xxl';
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
     onSelectRow?: (row: T) => T | void;

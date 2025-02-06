@@ -11,6 +11,7 @@ const localProxy = {
 };
 
 export default merge(common, {
+    entry: './test/index.tsx',
     mode: 'development',
     devServer: {
         allowedHosts: 'auto',
@@ -20,10 +21,14 @@ export default merge(common, {
             watch: false,
         },
         hot: true,
+        port: 3000,
         proxy: [
             {context: ['/api'], ...localProxy},
         ],
-        watchFiles: path.join(process.cwd(), 'src/**/*')
+        watchFiles: [
+            path.join(process.cwd(), 'src/**/*'),
+            path.join(process.cwd(), 'test/**/*')
+        ]
     },
     devtool: 'inline-source-map',
     plugins: []

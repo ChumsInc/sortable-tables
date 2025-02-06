@@ -42,19 +42,17 @@ export default {
             maxInitialRequests: 30,
             enforceSizeThreshold: 50000,
             cacheGroups: {
+                react: {
+                    test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                    name: 'vendors-react',
+                    chunks: 'all',
+                    priority: 10,
+                },
                 defaultVendors: {
-                    test: /[\\/]node_modules[\\/](?!chums.*[\\/])(.*)[\\/]/,
+                    test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
                     chunks: 'all',
-                    priority: -10,
-                    reuseExistingChunk: true,
-                },
-                chums: {
-                    test: /[\\/]node_modules[\\/]chums.*[\\/]/,
-                    name: 'chums',
-                    chunks: 'all',
-                    priority: -0,
-                    reuseExistingChunk: true,
+                    priority: 0,
                 },
                 default: {
                     minChunks: 2,

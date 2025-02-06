@@ -4,30 +4,33 @@ import DataTableHead from "./DataTableHead";
 import DataTableTBody from "./DataTableTBody";
 import {DataTableProps} from "./types";
 import {noop} from "./utils";
+import Table from "./Table";
 
 
 function DataTable<T = unknown>({
-                                                   fields,
-                                                   data,
-                                                   keyField,
-                                                   size = '',
-                                                   rowClassName,
-                                                   renderRow,
-                                                   onSelectRow = noop,
-                                                   selected = '',
-                                                   className = '',
-                                                   tfoot,
-                                                   children,
-                                                   tableHeadProps,
-                                                   ...rest
-                                               }: DataTableProps<T>) {
+                                    fields,
+                                    data,
+                                    keyField,
+                                    size = '',
+                                    sticky,
+                                    responsive,
+                                    rowClassName,
+                                    renderRow,
+                                    onSelectRow = noop,
+                                    selected = '',
+                                    className = '',
+                                    tfoot,
+                                    children,
+                                    tableHeadProps,
+                                    ...rest
+                                }: DataTableProps<T>) {
 
     const tableClassName = classNames('table', className, {
         [`table-${size}`]: !!size,
     })
 
     return (
-        <table className={tableClassName} {...rest}>
+        <Table sticky={sticky} responsive={responsive} className={tableClassName} {...rest}>
             <DataTableHead {...tableHeadProps} fields={fields}/>
             {!!data.length && (
                 <DataTableTBody fields={fields} data={data} keyField={keyField} rowClassName={rowClassName}
@@ -36,7 +39,7 @@ function DataTable<T = unknown>({
             )}
             {children}
             {tfoot}
-        </table>
+        </Table>
     )
 }
 

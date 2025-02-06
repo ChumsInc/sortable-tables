@@ -12,6 +12,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "compile": "tsc",
+    "dev": "webpack serve --config webpack.dev.mjs --progress",
     "build": "npm run clean && npm run compile",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },

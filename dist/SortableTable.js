@@ -3,11 +3,12 @@ import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
 import { noop } from "./utils";
-function SortableTable({ fields, data, currentSort, onChangeSort, keyField, size = '', rowClassName, renderRow, onSelectRow = noop, selected = '', className = '', tfoot, children, ...rest }) {
+import Table from "./Table";
+function SortableTable({ fields, data, currentSort, onChangeSort, keyField, size = '', sticky, rowClassName, renderRow, onSelectRow = noop, selected = '', className = '', tfoot, children, ...rest }) {
     const tableClassName = classNames('table', className, {
         [`table-${size}`]: !!size,
     });
-    return (_jsxs("table", { className: tableClassName, ...rest, children: [_jsx(SortableTableHead, { currentSort: currentSort, fields: fields, onChangeSort: onChangeSort }), !!data.length && (_jsx(DataTableTBody, { fields: fields, data: data, keyField: keyField, rowClassName: rowClassName, renderRow: renderRow, onSelectRow: onSelectRow, selected: selected })), children, tfoot] }));
+    return (_jsxs(Table, { className: tableClassName, sticky: sticky, ...rest, children: [_jsx(SortableTableHead, { currentSort: currentSort, fields: fields, onChangeSort: onChangeSort }), !!data.length && (_jsx(DataTableTBody, { fields: fields, data: data, keyField: keyField, rowClassName: rowClassName, renderRow: renderRow, onSelectRow: onSelectRow, selected: selected })), children, tfoot] }));
 }
 SortableTable.displayName = 'SortableTable';
 export default SortableTable;

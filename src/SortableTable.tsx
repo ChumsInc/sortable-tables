@@ -4,30 +4,32 @@ import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
 import {SortableTableProps} from "./types";
 import {noop} from "./utils";
+import Table from "./Table";
 
 
 function SortableTable<T = unknown>({
-                                                       fields,
-                                                       data,
-                                                       currentSort,
-                                                       onChangeSort,
-                                                       keyField,
-                                                       size = '',
-                                                       rowClassName,
-                                                       renderRow,
-                                                       onSelectRow = noop,
-                                                       selected = '',
-                                                       className = '',
-                                                       tfoot,
-                                                       children,
-                                                       ...rest
-                                                   }: SortableTableProps<T>) {
+                                        fields,
+                                        data,
+                                        currentSort,
+                                        onChangeSort,
+                                        keyField,
+                                        size = '',
+                                        sticky,
+                                        rowClassName,
+                                        renderRow,
+                                        onSelectRow = noop,
+                                        selected = '',
+                                        className = '',
+                                        tfoot,
+                                        children,
+                                        ...rest
+                                    }: SortableTableProps<T>) {
     const tableClassName = classNames('table', className, {
         [`table-${size}`]: !!size,
     })
 
     return (
-        <table className={tableClassName} {...rest}>
+        <Table className={tableClassName} sticky={sticky} {...rest}>
             <SortableTableHead currentSort={currentSort} fields={fields} onChangeSort={onChangeSort}/>
             {!!data.length && (
                 <DataTableTBody fields={fields} data={data} keyField={keyField} rowClassName={rowClassName}
@@ -36,7 +38,7 @@ function SortableTable<T = unknown>({
             )}
             {children}
             {tfoot}
-        </table>
+        </Table>
     )
 }
 

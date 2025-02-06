@@ -23,14 +23,14 @@ function TablePagination({
     const buttonClassName = classNames("btn btn-link", {[`btn-${size}`]: !!size});
 
     return (
-        <div className={classNames("row g-3 justify-content-end align-items-baseline", className)} {...rest}>
+        <div className={classNames("row g-3 justify-content-end", className)} {...rest}>
             {!!rowsPerPageProps && (
                 <div className="col-auto">
                     <RowsPerPage {...rowsPerPageProps} value={rowsPerPage} size={size}/>
                 </div>
             )}
             <div className="col-auto">
-                <div className="row g-3 flex-nowrap">
+                <div className="row g-3 flex-nowrap align-items-baseline">
                     <div className="col-auto">
                         {first}-{last} of {count}
                     </div>
