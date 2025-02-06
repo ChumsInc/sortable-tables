@@ -44,7 +44,7 @@ function SortableTableTH<T = unknown>({
 
     return (
         <SortableTH {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler} sorted={sorted}>
-            <span className={classNames('me-1', iconClassName)} />
+            <span className={classNames('me-1 sort-icon', iconClassName)} />
             {field.title}
         </SortableTH>
     )
