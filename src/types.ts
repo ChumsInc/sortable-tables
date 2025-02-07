@@ -22,6 +22,7 @@ export interface DataTableField<T = unknown> {
     id?: number | string;
     field: keyof T;
     title: ReactNode;
+    as?: 'td'|'th';
     align?: 'start' | 'center' | 'end';
     render?: (row: T) => ReactNode;
     className?: DataTableClassNames<T>;
@@ -50,10 +51,16 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     children?: ReactNode;
 }
 
-export interface DataTableTHProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableCellElement>, 'className'> {
+export interface DataTableCellProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableCellElement>, 'className'> {
     field: DataTableField<T>;
+    row: T;
+    as?: 'td'|'th',
     className?: string | classNames.Argument;
     children?: React.ReactNode;
+}
+
+export interface DataTableTHProps<T = unknown> extends Omit<DataTableCellProps<T>, 'row'> {
+    as?: 'th',
 }
 
 export interface DataTableHeadProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {

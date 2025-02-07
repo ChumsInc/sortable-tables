@@ -64,7 +64,7 @@ function SortableTableTH<T = unknown>({
     }
 
     return (
-        <th {...thProps} className={classNames("sortable", thClassName)} onClick={clickHandler}>
+        <th {...thProps} className={classNames("sortable", thClassName)} scope="col" onClick={clickHandler}>
             <FieldTitle sorted={sorted} align={field.align}>
                 <div className="field-title">{field.title}</div>
                 <div className={classNames('me-1 sort-icon', iconClassName)}/>

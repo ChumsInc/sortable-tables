@@ -11,7 +11,7 @@ function DataTableTH<T = unknown>({
                                                  }: DataTableTHProps<T>) {
     const thClassName = classNames({[`text-${field.align}`]: !!field.align}, className);
     return (
-        <th className={thClassName} {...rest}>
+        <th className={thClassName} scope="col" {...rest}>
             {children ?? field.title}
         </th>
     )

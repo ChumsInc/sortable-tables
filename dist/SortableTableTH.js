@@ -41,7 +41,7 @@ function SortableTableTH({ field, sorted, ascending, className, onClick }) {
         'bi-arrow-down': ascending,
         'bi-arrow-up': !ascending,
     };
-    return (_jsx("th", { ...thProps, className: classNames("sortable", thClassName), onClick: clickHandler, children: _jsxs(FieldTitle, { sorted: sorted, align: field.align, children: [_jsx("div", { className: "field-title", children: field.title }), _jsx("div", { className: classNames('me-1 sort-icon', iconClassName) })] }) }));
+    return (_jsx("th", { ...thProps, className: classNames("sortable", thClassName), scope: "col", onClick: clickHandler, children: _jsxs(FieldTitle, { sorted: sorted, align: field.align, children: [_jsx("div", { className: "field-title", children: field.title }), _jsx("div", { className: classNames('me-1 sort-icon', iconClassName) })] }) }));
 }
 SortableTableTH.displayName = 'SortableTableTH';
 export default SortableTableTH;

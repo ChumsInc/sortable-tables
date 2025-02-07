@@ -14,7 +14,7 @@ function SortableTableHead<T = unknown>({
         <thead>
         <tr>
             {fields.map((tableField, index) => (
-                <SortableTableTH key={index} field={tableField}
+                <SortableTableTH<T> key={index} field={tableField}
                                  sorted={field === tableField.field} ascending={ascending}
                                  className={classNames(
                                 typeof tableField.className === 'function'

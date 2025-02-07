@@ -4,7 +4,7 @@ import {SortableTable, SortableTableField, SortProps} from "../src";
 import TablePagination from "../src/TablePagination";
 
 const fields: SortableTableField<ProductLine>[] = [
-    {field: 'ProductLine', title: 'Prod Line', sortable: true},
+    {field: 'ProductLine', title: 'Prod Line', sortable: true, as: 'th'},
     {field: 'ProductLineDesc', title: 'Description', sortable: true},
     {
         field: 'ProductType',

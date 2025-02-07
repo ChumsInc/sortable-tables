@@ -38,27 +38,27 @@ function TablePagination({
                         <div className="col-auto">
                             <button className={buttonClassName} disabled={page === 0}
                                     onClick={() => onChangePage(0)}>
-                                <span className="bi-chevron-bar-left"/>
+                                <span className="bi-chevron-bar-left" aria-label="First page" />
                             </button>
                         </div>
                     )}
                     <div className="col-auto">
                         <button className={buttonClassName} disabled={page === 0}
                                 onClick={() => onChangePage(page - 1)}>
-                            <span className="bi-chevron-left"/>
+                            <span className="bi-chevron-left" aria-label="Previous page" />
                         </button>
                     </div>
                     <div className="col-auto">
                         <button className={buttonClassName} disabled={page >= lastPage}
                                 onClick={() => onChangePage(page + 1)}>
-                            <span className="bi-chevron-right"/>
+                            <span className="bi-chevron-right" aria-label="Next page" />
                         </button>
                     </div>
                     {showLast && (
                         <div className="col-auto">
                             <button className={buttonClassName} disabled={page >= lastPage}
                                     onClick={() => onChangePage(lastPage)}>
-                                <span className="bi-chevron-bar-right"/>
+                                <span className="bi-chevron-bar-right" aria-label="Last page" />
                             </button>
                         </div>
                     )}

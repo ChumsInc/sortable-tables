@@ -2,6 +2,7 @@ import React, {ReactNode} from 'react';
 import classNames from "classnames";
 import {noop} from "./utils";
 import {DataTableRowProps} from "./types";
+import DataTableCell from "./DataTableCell";
 
 
 function DataTableRow<T = unknown>({
@@ -28,30 +29,7 @@ function DataTableRow<T = unknown>({
             className={classNames({'table-active': selected}, className, _className)}
             onClick={clickHandler}
             {...rest}>
-            {fields.map((field, index) => {
-                const fieldClassName = typeof field.className === 'function' ? field.className(row) : field.className;
-
-                if (typeof field.render === 'function') {
-                    return (
-                        <td key={index} className={classNames({[`text-${field.align}`]: !!field.align}, fieldClassName)}
-                            colSpan={field.colSpan} {...field.cellProps}>
-                            {field.render(row)}
-                        </td>
-                    );
-                }
-
-                if (row[field.field] === undefined) {
-                    return <td key={index} {...field.cellProps}></td>;
-                }
-
-                return (
-                    <td key={index} className={classNames({[`text-${field.align}`]: !!field.align}, fieldClassName)}
-                        colSpan={field.colSpan}
-                        {...field.cellProps}>
-                        {row[field.field] as ReactNode}
-                    </td>
-                );
-            })}
+            {fields.map((field, index) => (<DataTableCell key={index} field={field} row={row} />))}
         </tr>
     )
 }
