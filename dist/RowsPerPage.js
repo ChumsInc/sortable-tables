@@ -9,7 +9,7 @@ function RowsPerPage({ value, pageValues = defaultRowsPerPageValues, size, label
     const inputGroupClassName = classNames('input-group', {
         [`input-group-${size}`]: !!size,
     });
-    return (_jsxs("div", { className: inputGroupClassName, children: [_jsx("label", { className: "input-group-text", htmlFor: id, children: label ?? 'Rows' }), _jsx("select", { value: value, onChange: changeHandler, className: selectClassName, ...rest, children: pageValues.map(value => (_jsx("option", { value: value, children: value }, value))) })] }, value));
+    return (_jsxs("div", { className: inputGroupClassName, children: [_jsx("label", { className: "input-group-text", htmlFor: id, children: label ?? 'Rows' }), _jsx("select", { className: selectClassName, id: id, value: value, onChange: changeHandler, ...rest, children: pageValues.map(value => (_jsx("option", { value: value, children: value }, value))) })] }, value));
 }
 RowsPerPage.displayName = 'RowsPerPage';
 export default RowsPerPage;

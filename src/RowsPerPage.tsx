@@ -24,7 +24,8 @@ function RowsPerPage({
     return (
         <div className={inputGroupClassName} key={value}>
             <label className="input-group-text" htmlFor={id}>{label ?? 'Rows'}</label>
-            <select value={value} onChange={changeHandler} className={selectClassName} {...rest}>
+            <select className={selectClassName} id={id}
+                    value={value} onChange={changeHandler} {...rest}>
                 {pageValues.map(value => (
                     <option key={value} value={value}>{value}</option>
                 ))}
