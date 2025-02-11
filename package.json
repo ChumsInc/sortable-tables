@@ -1,5 +1,5 @@
 {
-  "name": "sortable-tables",
+  "name": "@chumsinc/sortable-tables",
   "version": "2.0.6",
   "main": "./dist/index.js",
   "source": "./src/index.tsx",
@@ -79,5 +79,13 @@
   "bugs": {
     "url": "https://github.com/ChumsInc/sortable-tables/issues"
   },
-  "homepage": "https://github.com/ChumsInc/sortable-tables#readme"
+  "homepage": "https://github.com/ChumsInc/sortable-tables#readme",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "keywords": [
+    "Bootstrap",
+    "Table"
+  ]
 }
