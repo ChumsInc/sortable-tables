@@ -5,6 +5,7 @@
   "source": "./src/index.tsx",
   "types": "./dist/index.d.ts",
   "peerDependencies": {
+    "@emotion/styled": "^11.14.0",
     "classnames": "*",
     "react": ">=18.1.0",
     "react-dom": ">=18.1.0"
@@ -29,6 +30,7 @@
     ]
   },
   "devDependencies": {
+    "@emotion/styled": "^11.14.0",
     "@eslint/js": "^9.8.0",
     "@types/node": "^22.1.0",
     "@types/numeral": "^2.0.3",
@@ -77,8 +79,5 @@
   "bugs": {
     "url": "https://github.com/ChumsInc/sortable-tables/issues"
   },
-  "homepage": "https://github.com/ChumsInc/sortable-tables#readme",
-  "dependencies": {
-    "@emotion/styled": "^11.14.0"
-  }
+  "homepage": "https://github.com/ChumsInc/sortable-tables#readme"
 }
