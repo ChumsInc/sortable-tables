@@ -17,7 +17,7 @@ export default function DataTableCell<T = unknown>({field, row, className, as, .
             ...field.cellProps,
             ...rest
         },
-        row[field.field] === undefined
+        (row[field.field] === undefined && !field.render)
             ? null
             : (
                 typeof field.render === 'function'

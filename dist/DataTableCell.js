@@ -8,7 +8,7 @@ export default function DataTableCell({ field, row, className, as, ...rest }) {
         colSpan: field.colSpan,
         ...field.cellProps,
         ...rest
-    }, row[field.field] === undefined
+    }, (row[field.field] === undefined && !field.render)
         ? null
         : (typeof field.render === 'function'
             ? field.render(row)
