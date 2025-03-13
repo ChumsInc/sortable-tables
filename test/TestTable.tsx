@@ -56,6 +56,7 @@ export default function TestTable() {
                              rowsPerPage={rowsPerPage}
                              rowsPerPageProps={{
                                  onChange: rowsPerPageChangeHandler,
+                                 label: <span className="bi-images" />,
                                  pageValues: [5, 10, 15, 25, 50, 100]
                              }}
                              showFirst={list.length > rowsPerPage}
