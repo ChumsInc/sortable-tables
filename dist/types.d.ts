@@ -70,6 +70,7 @@ export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes
     onClick?: (row?: T) => T | void;
 }
 export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
+    fields: SortableTableField<T>[];
     currentSort: SortProps<T>;
     onChangeSort: (sort: SortProps<T>) => void;
 }

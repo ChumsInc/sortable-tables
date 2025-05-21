@@ -63,6 +63,8 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     inert?: boolean | undefined;
     inputMode?: "none" | "text" | "tel" | "url" | "email" | "numeric" | "decimal" | "search" | undefined;
     is?: string | undefined;
+    exportparts?: string | undefined;
+    part?: string | undefined;
     "aria-activedescendant"?: string | undefined;
     "aria-atomic"?: (boolean | "true" | "false") | undefined;
     "aria-autocomplete"?: "none" | "inline" | "list" | "both" | undefined;
@@ -137,7 +139,7 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     onBlurCapture?: React.FocusEventHandler<HTMLTableCellElement> | undefined;
     onChange?: React.FormEventHandler<HTMLTableCellElement> | undefined;
     onChangeCapture?: React.FormEventHandler<HTMLTableCellElement> | undefined;
-    onBeforeInput?: React.FormEventHandler<HTMLTableCellElement> | undefined;
+    onBeforeInput?: React.InputEventHandler<HTMLTableCellElement> | undefined;
     onBeforeInputCapture?: React.FormEventHandler<HTMLTableCellElement> | undefined;
     onInput?: React.FormEventHandler<HTMLTableCellElement> | undefined;
     onInputCapture?: React.FormEventHandler<HTMLTableCellElement> | undefined;
@@ -187,8 +189,6 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     onProgressCapture?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
     onRateChange?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
     onRateChangeCapture?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
-    onResize?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
-    onResizeCapture?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
     onSeeked?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
     onSeekedCapture?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
     onSeeking?: React.ReactEventHandler<HTMLTableCellElement> | undefined;
@@ -269,6 +269,8 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     onLostPointerCaptureCapture?: React.PointerEventHandler<HTMLTableCellElement> | undefined;
     onScroll?: React.UIEventHandler<HTMLTableCellElement> | undefined;
     onScrollCapture?: React.UIEventHandler<HTMLTableCellElement> | undefined;
+    onScrollEnd?: React.UIEventHandler<HTMLTableCellElement> | undefined;
+    onScrollEndCapture?: React.UIEventHandler<HTMLTableCellElement> | undefined;
     onWheel?: React.WheelEventHandler<HTMLTableCellElement> | undefined;
     onWheelCapture?: React.WheelEventHandler<HTMLTableCellElement> | undefined;
     onAnimationStart?: React.AnimationEventHandler<HTMLTableCellElement> | undefined;

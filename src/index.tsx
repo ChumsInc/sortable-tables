@@ -8,7 +8,22 @@ export {default as SortableTableTH} from './SortableTableTH';
 export {default as RowsPerPage, defaultRowsPerPageValues} from './RowsPerPage';
 export {default as TablePagination} from './TablePagination';
 export type {
-    DataTableHeadProps, DataTableField, DataTableTHProps, DataTableClassNames, DataTableProps,
-    SortableTableField, DataTableRowProps, DataTableTBodyProps, SortableTableTHProps, SortableTableHeadProps,
-    SortProps, SortableTableProps, UISize, UIFlexAlign, TablePaginationProps, RowsPerPageProps
+    DataTableHeadProps,
+    DataTableField,
+    DataTableTHProps,
+    DataTableClassNames,
+    DataTableProps,
+    SortableTableField,
+    DataTableRowProps,
+    DataTableTBodyProps,
+    SortableTableTHProps,
+    SortableTableHeadProps,
+    SortProps,
+    SortableTableProps,
+    UISize,
+    UIFlexAlign,
+    TablePaginationProps,
+    RowsPerPageProps,
+    UITableSize,
+    DataTableCellProps
 } from './types';
