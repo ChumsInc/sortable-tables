@@ -26,7 +26,7 @@ function DataTableTBody<T = unknown>({
                 return renderRow(row);
             }
             return (
-                <DataTableRow key={keyValue} onClick={() => onSelectRow(row)}
+                <DataTableRow key={keyValue} onClick={(ev) => onSelectRow(row, ev)}
                               rowClassName={rowClassName}
                               fields={fields}
                               row={row} selected={isSelected}/>

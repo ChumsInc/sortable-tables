@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, MouseEvent} from 'react';
 import classNames from "classnames";
 import {noop} from "./utils";
 import {DataTableRowProps} from "./types";
@@ -15,8 +15,8 @@ function DataTableRow<T = unknown>({
                                                       onClick = noop,
                                                       ...rest
                                                   }: DataTableRowProps<T>) {
-    const clickHandler = () => {
-        return onClick ? onClick() : noop();
+    const clickHandler = (ev:MouseEvent) => {
+        return onClick ? onClick(ev) : noop();
     }
 
     const _className = typeof rowClassName === 'function' ? rowClassName(row) : rowClassName;
