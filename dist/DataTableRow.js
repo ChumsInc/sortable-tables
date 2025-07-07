@@ -3,8 +3,8 @@ import classNames from "classnames";
 import { noop } from "./utils";
 import DataTableCell from "./DataTableCell";
 function DataTableRow({ className, rowClassName, selected, fields, row, trRef, onClick = noop, ...rest }) {
-    const clickHandler = () => {
-        return onClick ? onClick() : noop();
+    const clickHandler = (ev) => {
+        return onClick ? onClick(ev) : noop();
     };
     const _className = typeof rowClassName === 'function' ? rowClassName(row) : rowClassName;
     if (!row) {

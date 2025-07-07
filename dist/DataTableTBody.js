@@ -8,7 +8,7 @@ function DataTableTBody({ fields, data, keyField, rowClassName, renderRow, onSel
                 if (renderRow) {
                     return renderRow(row);
                 }
-                return (_jsx(DataTableRow, { onClick: () => onSelectRow(row), rowClassName: rowClassName, fields: fields, row: row, selected: isSelected }, keyValue));
+                return (_jsx(DataTableRow, { onClick: (ev) => onSelectRow(row, ev), rowClassName: rowClassName, fields: fields, row: row, selected: isSelected }, keyValue));
             }), children] }));
 }
 DataTableTBody.displayName = 'DataTableTBody';
