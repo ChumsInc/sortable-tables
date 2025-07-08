@@ -15,7 +15,7 @@ function DataTableRow<T = unknown>({
                                                       onClick = noop,
                                                       ...rest
                                                   }: DataTableRowProps<T>) {
-    const clickHandler = (ev:MouseEvent) => {
+    const clickHandler = (ev:MouseEvent<HTMLTableRowElement>) => {
         return onClick ? onClick(ev) : noop();
     }
 
