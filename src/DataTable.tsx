@@ -3,7 +3,6 @@ import classNames from "classnames";
 import DataTableHead from "./DataTableHead";
 import DataTableTBody from "./DataTableTBody";
 import {DataTableProps} from "./types";
-import {noop} from "./utils";
 import Table from "./Table";
 
 
@@ -16,7 +15,7 @@ function DataTable<T = unknown>({
                                     responsive,
                                     rowClassName,
                                     renderRow,
-                                    onSelectRow = noop,
+                                    onSelectRow,
                                     selected = '',
                                     className = '',
                                     tfoot,

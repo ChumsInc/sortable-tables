@@ -2,9 +2,8 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
-import { noop } from "./utils";
 import Table from "./Table";
-function SortableTable({ fields, data, currentSort, onChangeSort, keyField, size = '', sticky, rowClassName, renderRow, onSelectRow = noop, selected = '', className = '', tfoot, children, ...rest }) {
+function SortableTable({ fields, data, currentSort, onChangeSort, keyField, size = '', sticky, rowClassName, renderRow, onSelectRow, selected = '', className = '', tfoot, children, ...rest }) {
     const tableClassName = classNames('table', className, {
         [`table-${size}`]: !!size,
     });

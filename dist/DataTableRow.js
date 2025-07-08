@@ -1,10 +1,9 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import classNames from "classnames";
-import { noop } from "./utils";
 import DataTableCell from "./DataTableCell";
-function DataTableRow({ className, rowClassName, selected, fields, row, trRef, onClick = noop, ...rest }) {
+function DataTableRow({ className, rowClassName, selected, fields, row, trRef, onClick, ...rest }) {
     const clickHandler = (ev) => {
-        return onClick ? onClick(ev) : noop();
+        onClick?.(row, ev);
     };
     const _className = typeof rowClassName === 'function' ? rowClassName(row) : rowClassName;
     if (!row) {

@@ -44,7 +44,7 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     responsive?: boolean|"sm" | "md" | "lg" | "xl" | 'xxl';
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
-    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => T | void;
+    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     tfoot?: React.ReactElement<HTMLTableSectionElement>;
     tableHeadProps?: DataTableHeadProps<T>;
@@ -73,18 +73,18 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
     keyField: keyof T | ((row: T) => string|number);
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
-    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => T | void;
+    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     children?: ReactNode;
 }
 
-export interface DataTableRowProps<T = unknown> extends Omit <TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
+export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
     rowClassName?: string | classNames.Argument | ((row: T) => string | classNames.Argument);
     selected?: boolean;
     fields: DataTableField<T>[];
     row: T;
     trRef?: React.Ref<HTMLTableRowElement>;
-    onClick?: (ev?:MouseEvent<HTMLTableRowElement>) => void;
+    onClick?: (row:T, ev?:MouseEvent<HTMLTableRowElement>) => void;
 }
 
 export interface SortableTableProps<T = unknown> extends DataTableProps<T> {

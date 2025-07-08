@@ -3,7 +3,6 @@ import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
 import {SortableTableProps} from "./types";
-import {noop} from "./utils";
 import Table from "./Table";
 
 
@@ -17,7 +16,7 @@ function SortableTable<T = unknown>({
                                         sticky,
                                         rowClassName,
                                         renderRow,
-                                        onSelectRow = noop,
+                                        onSelectRow,
                                         selected = '',
                                         className = '',
                                         tfoot,

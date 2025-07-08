@@ -2,9 +2,8 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import classNames from "classnames";
 import DataTableHead from "./DataTableHead";
 import DataTableTBody from "./DataTableTBody";
-import { noop } from "./utils";
 import Table from "./Table";
-function DataTable({ fields, data, keyField, size = '', sticky, responsive, rowClassName, renderRow, onSelectRow = noop, selected = '', className = '', tfoot, children, tableHeadProps, ...rest }) {
+function DataTable({ fields, data, keyField, size = '', sticky, responsive, rowClassName, renderRow, onSelectRow, selected = '', className = '', tfoot, children, tableHeadProps, ...rest }) {
     const tableClassName = classNames('table', className, {
         [`table-${size}`]: !!size,
     });

@@ -1,22 +1,19 @@
 import React from 'react';
 import DataTableRow from "./DataTableRow";
-import {noop} from "./utils";
 import {DataTableTBodyProps} from "./types";
 
 
-
 function DataTableTBody<T = unknown>({
-                            fields,
-                            data,
-                            keyField,
-                            rowClassName,
-                            renderRow,
-                            onSelectRow = noop,
-                            selected = '',
-                            children,
-                            ...rest
-                        }: DataTableTBodyProps<T>) {
-
+                                         fields,
+                                         data,
+                                         keyField,
+                                         rowClassName,
+                                         renderRow,
+                                         onSelectRow,
+                                         selected = '',
+                                         children,
+                                         ...rest
+                                     }: DataTableTBodyProps<T>) {
     return (
         <tbody {...rest}>
         {data.map(row => {
@@ -26,7 +23,7 @@ function DataTableTBody<T = unknown>({
                 return renderRow(row);
             }
             return (
-                <DataTableRow key={keyValue} onClick={(ev) => onSelectRow(row, ev)}
+                <DataTableRow key={keyValue} onClick={onSelectRow}
                               rowClassName={rowClassName}
                               fields={fields}
                               row={row} selected={isSelected}/>
@@ -36,5 +33,6 @@ function DataTableTBody<T = unknown>({
         </tbody>
     )
 }
+
 DataTableTBody.displayName = 'DataTableTBody';
 export default DataTableTBody
