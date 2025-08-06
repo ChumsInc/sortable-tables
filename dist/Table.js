@@ -15,14 +15,14 @@ const StyledTable = styled.table `
         }
     }
 `;
-export default React.forwardRef(function Table({ sticky, responsive, children, ...rest }, ref) {
+export default React.forwardRef(function Table({ sticky, responsive, children, className, ...rest }, ref) {
     if (responsive) {
-        const className = classNames({
+        const _className = classNames(className, {
             'table-responsive': responsive === true,
             [`table-responsive-${responsive}`]: responsive !== true,
         });
-        return (_jsx("div", { className: className, children: _jsx(StyledTable, { ref: ref, ...rest, children: children }) }));
+        return (_jsx("div", { className: _className, children: _jsx(StyledTable, { ref: ref, ...rest, children: children }) }));
     }
-    return (_jsx(StyledTable, { sticky: sticky, ref: ref, ...rest, children: children }));
+    return (_jsx(StyledTable, { className: className, sticky: sticky, ref: ref, ...rest, children: children }));
 });
 //# sourceMappingURL=Table.js.map

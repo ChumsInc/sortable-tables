@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import {DataTableProps} from "./types";
 import classNames from "classnames";
 
-export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky'|'responsive'>
+export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky' | 'responsive'>
 
 const StyledTable = styled.table<StyledTableProps>`
     --table-sticky-top: ${props => props.sticky ? '0' : undefined};
@@ -24,20 +24,21 @@ export default React.forwardRef<HTMLTableElement, StyledTableProps>(
                        sticky,
                        responsive,
                        children,
+                       className,
                        ...rest
                    }, ref) {
         if (responsive) {
-            const className = classNames({
+            const _className = classNames(className, {
                 'table-responsive': responsive === true,
                 [`table-responsive-${responsive}`]: responsive !== true,
             })
             return (
-                <div className={className}>
+                <div className={_className}>
                     <StyledTable ref={ref} {...rest}>{children}</StyledTable>
                 </div>
             )
         }
         return (
-            <StyledTable sticky={sticky} ref={ref} {...rest}>{children}</StyledTable>
+            <StyledTable className={className} sticky={sticky} ref={ref} {...rest}>{children}</StyledTable>
         )
     })
