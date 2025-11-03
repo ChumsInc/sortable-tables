@@ -1,6 +1,6 @@
 import React, {TableHTMLAttributes} from 'react';
 import styled from "@emotion/styled";
-import {DataTableProps} from "./types";
+import type {DataTableProps} from "./types";
 import classNames from "classnames";
 
 export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky' | 'responsive'>

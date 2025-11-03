@@ -1,7 +1,7 @@
 import React from "react";
 import SortableTableTH from "./SortableTableTH";
 import classNames from "classnames";
-import {SortableTableHeadProps} from "./types";
+import type {SortableTableHeadProps} from "./types";
 
 
 function SortableTableHead<T = unknown>({

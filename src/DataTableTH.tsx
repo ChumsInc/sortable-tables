@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {DataTableTHProps} from "./types";
+import type {DataTableTHProps} from "./types";
 
 
 function DataTableTH<T = unknown>({

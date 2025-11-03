@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTableRow from "./DataTableRow";
-import {DataTableTBodyProps} from "./types";
+import type {DataTableTBodyProps} from "./types";
 
 
 function DataTableTBody<T = unknown>({

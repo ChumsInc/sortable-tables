@@ -1,7 +1,7 @@
 import React from "react";
 import DataTableTH from "./DataTableTH";
 import classNames from "classnames";
-import {DataTableHeadProps} from "./types";
+import type {DataTableHeadProps} from "./types";
 
 
 function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {

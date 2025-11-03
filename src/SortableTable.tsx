@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
-import {SortableTableProps} from "./types";
+import type {SortableTableProps} from "./types";
 import Table from "./Table";
 
 

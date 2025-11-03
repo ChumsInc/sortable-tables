@@ -1,7 +1,7 @@
 import React from 'react';
 import RowsPerPage from "./RowsPerPage";
 import classNames from "classnames";
-import {TablePaginationProps} from "./types";
+import type {TablePaginationProps} from "./types";
 
 function TablePagination({
                              page,

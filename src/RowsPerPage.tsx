@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useId} from 'react';
 import classNames from "classnames";
-import {RowsPerPageProps} from "./types";
+import type {RowsPerPageProps} from "./types";
 
 export const defaultRowsPerPageValues: number[] = [10, 25, 50, 100, 250, 500, 1000];
 

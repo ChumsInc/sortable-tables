@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from "classnames";
 import DataTableHead from "./DataTableHead";
 import DataTableTBody from "./DataTableTBody";
-import {DataTableProps} from "./types";
+import type {DataTableProps} from "./types";
 import Table from "./Table";
 
 

@@ -1,5 +1,5 @@
-import React, {HTMLAttributes, ReactNode, TableHTMLAttributes, MouseEvent} from 'react'
-import classNames from "classnames";
+import React, {type HTMLAttributes, type  MouseEvent, type  ReactNode, type  TableHTMLAttributes} from 'react'
+import {Argument} from "classnames";
 
 
 export interface SortProps<T = unknown> {
@@ -7,13 +7,13 @@ export interface SortProps<T = unknown> {
     ascending: boolean;
 }
 
-export type UISize = 'sm'|'lg'|'';
-export type UITableSize = UISize|'xs';
+export type UISize = 'sm' | 'lg' | '';
+export type UITableSize = UISize | 'xs';
 
 export type DataTableClassNames<T = unknown> =
     string
-    | classNames.Argument
-    | ((row: T) => (string | classNames.Argument));
+    | Argument
+    | ((row: T) => (string | Argument));
 
 
 export type UIFlexAlign = 'start' | 'end' | 'center' | 'baseline' | 'stretch';
@@ -22,7 +22,7 @@ export interface DataTableField<T = unknown> {
     id?: number | string;
     field: keyof T;
     title: ReactNode;
-    as?: 'td'|'th';
+    as?: 'td' | 'th';
     align?: 'start' | 'center' | 'end';
     render?: (row: T) => ReactNode;
     className?: DataTableClassNames<T>;
@@ -38,13 +38,13 @@ export interface SortableTableField<T = unknown> extends DataTableField<T> {
 export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTableElement> {
     fields: DataTableField<T>[];
     data: T[];
-    keyField: keyof T | ((row: T) => string|number);
+    keyField: keyof T | ((row: T) => string | number);
     size?: UITableSize;
     sticky?: boolean;
-    responsive?: boolean|"sm" | "md" | "lg" | "xl" | 'xxl';
+    responsive?: boolean | "sm" | "md" | "lg" | "xl" | 'xxl';
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
-    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => void;
+    onSelectRow?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     tfoot?: React.ReactElement<HTMLTableSectionElement>;
     tableHeadProps?: DataTableHeadProps<T>;
@@ -54,8 +54,8 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
 export interface DataTableCellProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableCellElement>, 'className'> {
     field: DataTableField<T>;
     row: T;
-    as?: 'td'|'th',
-    className?: string | classNames.Argument;
+    as?: 'td' | 'th',
+    className?: string | Argument;
     children?: React.ReactNode;
 }
 
@@ -70,21 +70,21 @@ export interface DataTableHeadProps<T = unknown> extends TableHTMLAttributes<HTM
 export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
     fields: DataTableField<T>[];
     data: T[];
-    keyField: keyof T | ((row: T) => string|number);
+    keyField: keyof T | ((row: T) => string | number);
     rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => React.ReactNode;
-    onSelectRow?: (row: T, ev?:MouseEvent<HTMLTableRowElement>) => void;
+    onSelectRow?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     children?: ReactNode;
 }
 
 export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
-    rowClassName?: string | classNames.Argument | ((row: T) => string | classNames.Argument);
+    rowClassName?: string | Argument | ((row: T) => string | Argument);
     selected?: boolean;
     fields: DataTableField<T>[];
     row: T;
     trRef?: React.Ref<HTMLTableRowElement>;
-    onClick?: (row:T, ev?:MouseEvent<HTMLTableRowElement>) => void;
+    onClick?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
 }
 
 export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
@@ -109,7 +109,7 @@ export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps
 export interface RowsPerPageProps extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
     value: number;
     pageValues?: number[];
-    label?: string|React.ReactNode;
+    label?: string | React.ReactNode;
     size?: UISize;
     className?: string;
     onChange: (value: number) => void;

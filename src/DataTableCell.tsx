@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {DataTableCellProps} from "./types";
+import type {DataTableCellProps} from "./types";
 import classNames from "classnames";
 
 export default function DataTableCell<T = unknown>({field, row, className, as, ...rest}:DataTableCellProps<T>) {

@@ -1,6 +1,6 @@
 import React, {MouseEvent} from 'react';
 import classNames from "classnames";
-import {DataTableRowProps} from "./types";
+import type {DataTableRowProps} from "./types";
 import DataTableCell from "./DataTableCell";
 
 
