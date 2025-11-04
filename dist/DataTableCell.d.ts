@@ -57,7 +57,7 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     results?: number | undefined;
     security?: string | undefined;
     unselectable?: "on" | "off" | undefined;
-    popover?: "" | "auto" | "manual" | undefined;
+    popover?: "" | "auto" | "manual" | "hint" | undefined;
     popoverTargetAction?: "toggle" | "show" | "hide" | undefined;
     popoverTarget?: string | undefined;
     inert?: boolean | undefined;
