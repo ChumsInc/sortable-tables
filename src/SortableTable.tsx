@@ -1,9 +1,10 @@
 import React from 'react';
-import classNames from "classnames";
 import SortableTableHead from "./SortableTableHead";
 import DataTableTBody from "./DataTableTBody";
 import type {SortableTableProps} from "./types";
 import Table from "./Table";
+import DataTableCols from "./DataTableCols";
+import clsx from "clsx";
 
 
 function SortableTable<T = unknown>({
@@ -23,12 +24,13 @@ function SortableTable<T = unknown>({
                                         children,
                                         ...rest
                                     }: SortableTableProps<T>) {
-    const tableClassName = classNames('table', className, {
+    const tableClassName = clsx('table', className, {
         [`table-${size}`]: !!size,
     })
 
     return (
         <Table className={tableClassName} sticky={sticky} {...rest}>
+            <DataTableCols fields={fields}/>
             <SortableTableHead currentSort={currentSort} fields={fields} onChangeSort={onChangeSort}/>
             {!!data.length && (
                 <DataTableTBody fields={fields} data={data} keyField={keyField} rowClassName={rowClassName}

@@ -1,12 +1,12 @@
 import { default as React, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes } from 'react';
-import { Argument } from 'classnames';
+import { ClassValue } from 'clsx';
 export interface SortProps<T = unknown> {
     field: keyof T;
     ascending: boolean;
 }
 export type UISize = 'sm' | 'lg' | '';
 export type UITableSize = UISize | 'xs';
-export type DataTableClassNames<T = unknown> = string | Argument | ((row: T) => (string | Argument));
+export type DataTableClassNames<T = unknown> = string | ClassValue | ((row: T) => (string | ClassValue));
 export type UIFlexAlign = 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 export interface DataTableField<T = unknown> {
     id?: number | string;
@@ -19,6 +19,8 @@ export interface DataTableField<T = unknown> {
     colSpan?: number;
     thProps?: Omit<DataTableTHProps<T>, 'field'>;
     cellProps?: TableHTMLAttributes<HTMLTableCellElement>;
+    collapse?: boolean;
+    colClassName?: string;
 }
 export interface SortableTableField<T = unknown> extends DataTableField<T> {
     sortable?: boolean;
@@ -42,7 +44,7 @@ export interface DataTableCellProps<T = unknown> extends Omit<TableHTMLAttribute
     field: DataTableField<T>;
     row: T;
     as?: 'td' | 'th';
-    className?: string | Argument;
+    className?: string | ClassValue;
     children?: React.ReactNode;
 }
 export interface DataTableTHProps<T = unknown> extends Omit<DataTableCellProps<T>, 'row'> {
@@ -62,7 +64,7 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
     children?: ReactNode;
 }
 export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
-    rowClassName?: string | Argument | ((row: T) => string | Argument);
+    rowClassName?: string | ClassValue | ((row: T) => string | ClassValue);
     selected?: boolean;
     fields: DataTableField<T>[];
     row: T;
@@ -102,4 +104,7 @@ export interface TablePaginationProps extends HTMLAttributes<HTMLDivElement> {
     showFirst?: boolean;
     showLast?: boolean;
     rowsPerPageProps?: Omit<RowsPerPageProps, 'value'>;
+}
+export interface DataTableColProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
+    fields: SortableTableField<T>[];
 }

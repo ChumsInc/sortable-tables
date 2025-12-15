@@ -1,7 +1,7 @@
 import React, {TableHTMLAttributes} from 'react';
 import styled from "@emotion/styled";
 import type {DataTableProps} from "./types";
-import classNames from "classnames";
+import clsx from "clsx";
 
 export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky' | 'responsive'>
 
@@ -28,7 +28,7 @@ export default React.forwardRef<HTMLTableElement, StyledTableProps>(
                        ...rest
                    }, ref) {
         if (responsive) {
-            const _className = classNames(className, {
+            const _className = clsx(className, {
                 'table-responsive': responsive === true,
                 [`table-responsive-${responsive}`]: responsive !== true,
             })

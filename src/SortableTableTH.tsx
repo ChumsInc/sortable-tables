@@ -1,8 +1,8 @@
 import React from "react";
-import classNames from "classnames";
 import DataTableTH from "./DataTableTH";
 import type {SortableTableTHProps, UIFlexAlign} from "./types";
 import styled from '@emotion/styled';
+import clsx from "clsx";
 
 const flexJustifyContent = (align?: UIFlexAlign) => {
     if (!align) {
@@ -25,12 +25,14 @@ const FieldTitle = styled.div<FieldTitleProps>`
     width: 100%;
     flex-direction: ${props => props.align === 'end' ? 'row-reverse' : 'row'};
     justify-content: ${props => flexJustifyContent(props.align)};
+
     .sort-icon {
         flex-grow: ${props => props.align === 'end' ? '1' : '0'};
         opacity: ${props => props.sorted ? 1 : 0};
     }
+
     &:hover .sort-icon {
-        color: ${props => props.sorted ? 'unset' : 'var(--bs-primary)'} ;
+        color: ${props => props.sorted ? 'unset' : 'var(--bs-primary)'};
         opacity: 0.75;
         transition: opacity 0.2s;
     }
@@ -48,7 +50,7 @@ function SortableTableTH<T = unknown>({
     }
 
     const {className: _thClassName, ...thProps} = field.thProps ?? {};
-    const thClassName = classNames(
+    const thClassName = clsx(
         className,
         _thClassName,
         {[`text-${field.align}`]: !!field.align}
@@ -64,10 +66,10 @@ function SortableTableTH<T = unknown>({
     }
 
     return (
-        <th {...thProps} className={classNames("sortable", thClassName)} scope="col" onClick={clickHandler}>
+        <th {...thProps} className={clsx("sortable", thClassName)} scope="col" onClick={clickHandler}>
             <FieldTitle sorted={sorted} align={field.align}>
                 <div className="field-title">{field.title}</div>
-                <div className={classNames('me-1 sort-icon', iconClassName)}/>
+                <div className={clsx('me-1 sort-icon', iconClassName)}/>
             </FieldTitle>
         </th>
     )

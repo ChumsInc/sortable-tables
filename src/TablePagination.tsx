@@ -1,7 +1,7 @@
 import React from 'react';
 import RowsPerPage from "./RowsPerPage";
-import classNames from "classnames";
 import type {TablePaginationProps} from "./types";
+import clsx from "clsx";
 
 function TablePagination({
                              page,
@@ -20,10 +20,10 @@ function TablePagination({
     const last = Math.min(page * rowsPerPage + rowsPerPage, count);
     const lastPage = rowsPerPage === 0 ? 0 : Math.floor((count - 1) / rowsPerPage);
 
-    const buttonClassName = classNames("btn btn-link", {[`btn-${size}`]: !!size});
+    const buttonClassName = clsx("btn btn-link", {[`btn-${size}`]: !!size});
 
     return (
-        <div className={classNames("row g-3 justify-content-end", className)} {...rest}>
+        <div className={clsx("row g-3 justify-content-end", className)} {...rest}>
             {!!rowsPerPageProps && (
                 <div className="col-auto">
                     <RowsPerPage {...rowsPerPageProps} value={rowsPerPage} size={size}/>

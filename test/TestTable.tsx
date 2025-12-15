@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 import {ProductLine, productLines, productLineSorter} from './data'
 import {SortableTable, SortableTableField, SortProps} from "../src";
 import TablePagination from "../src/TablePagination";
 
-const fields: SortableTableField<ProductLine>[] = [
+const stdFields: SortableTableField<ProductLine>[] = [
     {field: 'ProductLine', title: 'Prod Line', sortable: true, as: 'th'},
     {field: 'ProductLineDesc', title: 'Description', sortable: true},
     {
@@ -35,6 +35,9 @@ export default function TestTable() {
     const [list, setList] = useState<ProductLine[]>(productLines);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [visible, setVisible] = useState(true)
+    const id = useId();
+    const [fields, setFields] = useState(stdFields);
 
 
     useEffect(() => {
@@ -47,8 +50,24 @@ export default function TestTable() {
         setRowsPerPage(rpp);
     }
 
+    const handleVisibleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        const visible = ev.target.checked;
+        setVisible(visible);
+        const nextFields = fields.map(f => {
+            switch (f.field) {
+                case 'ProductLineDesc':
+                    return {...f, collapse: !visible}
+                default:
+                    return f;
+            }
+        })
+        setFields(nextFields)
+    }
+
     return (
         <div>
+            <input type="checkbox" checked={visible} id={id} onChange={handleVisibleChange}/>
+            <label htmlFor={id}>Show Description</label>
             <SortableTable currentSort={sort} onChangeSort={setSort} fields={fields} size="lg" responsive
                            data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
                            keyField="ProductLine" rowClassName={rowClassName}/>

@@ -1,20 +1,32 @@
-import { jsx as e, jsxs as N } from "react/jsx-runtime";
-import u from "classnames";
-import $, { useId as j } from "react";
-import k from "@emotion/styled";
-function T({
-  field: a,
-  className: n,
-  children: t,
-  ...l
-}) {
-  const s = u({ [`text-${a.align}`]: !!a.align }, n);
-  return /* @__PURE__ */ e("th", { className: s, scope: "col", ...l, children: t ?? a.title });
+import { jsx as l, jsxs as h } from "react/jsx-runtime";
+import x, { useId as A } from "react";
+import g from "@emotion/styled";
+function k(a) {
+  var e, t, n = "";
+  if (typeof a == "string" || typeof a == "number") n += a;
+  else if (typeof a == "object") if (Array.isArray(a)) {
+    var s = a.length;
+    for (e = 0; e < s; e++) a[e] && (t = k(a[e])) && (n && (n += " "), n += t);
+  } else for (t in a) a[t] && (n && (n += " "), n += t);
+  return n;
 }
-T.displayName = "DataTableTH";
-function x({ fields: a, ...n }) {
-  return /* @__PURE__ */ e("thead", { ...n, children: /* @__PURE__ */ e("tr", { children: a.map((t, l) => /* @__PURE__ */ e(
-    T,
+function u() {
+  for (var a, e, t = 0, n = "", s = arguments.length; t < s; t++) (a = arguments[t]) && (e = k(a)) && (n && (n += " "), n += e);
+  return n;
+}
+function v({
+  field: a,
+  className: e,
+  children: t,
+  ...n
+}) {
+  const s = u({ [`text-${a.align}`]: !!a.align }, e);
+  return /* @__PURE__ */ l("th", { className: s, scope: "col", ...n, children: t ?? a.title });
+}
+v.displayName = "DataTableTH";
+function D({ fields: a, ...e }) {
+  return /* @__PURE__ */ l("thead", { ...e, children: /* @__PURE__ */ l("tr", { children: a.map((t, n) => /* @__PURE__ */ l(
+    v,
     {
       ...t.thProps,
       field: t,
@@ -22,75 +34,75 @@ function x({ fields: a, ...n }) {
         typeof t.className == "function" ? { [`text-${t.align}`]: !!t.align } : t.className
       )
     },
-    t.id ?? l
+    t.id ?? n
   )) }) });
 }
-x.displayName = "DataTableHead";
-function _({ field: a, row: n, className: t, as: l, ...s }) {
+D.displayName = "DataTableHead";
+function B({ field: a, row: e, className: t, as: n, ...s }) {
   const c = u(
     { [`text-${a.align}`]: !!a.align },
     t,
-    typeof a.className == "function" ? a.className(n) : a.className
+    typeof a.className == "function" ? a.className(e) : a.className
   );
-  return $.createElement(
-    l ?? a.as ?? "td",
+  return x.createElement(
+    n ?? a.as ?? "td",
     {
       className: c,
-      scope: (l ?? a.as) === "th" ? "row" : void 0,
+      scope: (n ?? a.as) === "th" ? "row" : void 0,
       colSpan: a.colSpan,
       ...a.cellProps,
       ...s
     },
-    n[a.field] === void 0 && !a.render ? null : typeof a.render == "function" ? a.render(n) : n[a.field]
+    e[a.field] === void 0 && !a.render ? null : typeof a.render == "function" ? a.render(e) : e[a.field]
   );
 }
-function C({
+function S({
   className: a,
-  rowClassName: n,
+  rowClassName: e,
   selected: t,
-  fields: l,
+  fields: n,
   row: s,
   trRef: c,
-  onClick: r,
+  onClick: o,
   ...i
 }) {
-  const m = (b) => {
-    r?.(s, b);
-  }, o = typeof n == "function" ? n(s) : n;
-  return s ? /* @__PURE__ */ e(
+  const d = (b) => {
+    o?.(s, b);
+  }, r = typeof e == "function" ? e(s) : e;
+  return s ? /* @__PURE__ */ l(
     "tr",
     {
       ref: c,
-      className: u({ "table-active": t }, a, o),
-      onClick: m,
+      className: u({ "table-active": t }, a, r),
+      onClick: d,
       ...i,
-      children: l.map((b, d) => /* @__PURE__ */ e(_, { field: b, row: s }, d))
+      children: n.map((b, m) => /* @__PURE__ */ l(B, { field: b, row: s }, m))
     }
   ) : null;
 }
-C.displayName = "DataTableRow";
-function v({
+S.displayName = "DataTableRow";
+function T({
   fields: a,
-  data: n,
+  data: e,
   keyField: t,
-  rowClassName: l,
+  rowClassName: n,
   renderRow: s,
   onSelectRow: c,
-  selected: r = "",
+  selected: o = "",
   children: i,
-  ...m
+  ...d
 }) {
-  return /* @__PURE__ */ N("tbody", { ...m, children: [
-    n.map((o) => {
-      const b = String(typeof t == "function" ? t(o) : o[t]), d = typeof r == "function" ? r(o) : b === r;
-      return s ? s(o) : /* @__PURE__ */ e(
-        C,
+  return /* @__PURE__ */ h("tbody", { ...d, children: [
+    e.map((r) => {
+      const b = String(typeof t == "function" ? t(r) : r[t]), m = typeof o == "function" ? o(r) : b === o;
+      return s ? s(r) : /* @__PURE__ */ l(
+        S,
         {
           onClick: c,
-          rowClassName: l,
+          rowClassName: n,
           fields: a,
-          row: o,
-          selected: d
+          row: r,
+          selected: m
         },
         b
       );
@@ -98,8 +110,8 @@ function v({
     i
   ] });
 }
-v.displayName = "DataTableTBody";
-const g = k.table`
+T.displayName = "DataTableTBody";
+const $ = g.table`
     --table-sticky-top: ${(a) => a.sticky ? "0" : void 0};
 
     thead {
@@ -111,64 +123,80 @@ const g = k.table`
             background: ${(a) => a.sticky ? "linear-gradient(var(--bs-table-bg) 75%, rgba(var(--bs-secondary-bg-rgb), 0.9))" : "unset"};
         }
     }
-`, D = $.forwardRef(
+`, H = x.forwardRef(
   function({
-    sticky: n,
+    sticky: e,
     responsive: t,
-    children: l,
+    children: n,
     className: s,
     ...c
-  }, r) {
+  }, o) {
     if (t) {
       const i = u(s, {
         "table-responsive": t === !0,
         [`table-responsive-${t}`]: t !== !0
       });
-      return /* @__PURE__ */ e("div", { className: i, children: /* @__PURE__ */ e(g, { ref: r, ...c, children: l }) });
+      return /* @__PURE__ */ l("div", { className: i, children: /* @__PURE__ */ l($, { ref: o, ...c, children: n }) });
     }
-    return /* @__PURE__ */ e(g, { className: s, sticky: n, ref: r, ...c, children: l });
+    return /* @__PURE__ */ l($, { className: s, sticky: e, ref: o, ...c, children: n });
   }
-);
-function B({
+), M = g.col`
+    &.col-collapsed {
+        visibility: collapse;
+    } 
+`;
+function C({ fields: a }) {
+  return /* @__PURE__ */ l("colgroup", { children: a.map((e, t) => /* @__PURE__ */ l(
+    M,
+    {
+      className: u(e.colClassName, { "col-collapsed": e.collapse }),
+      span: e.colSpan ?? 1
+    },
+    t
+  )) });
+}
+C.displayName = "DataTableCols";
+function V({
   fields: a,
-  data: n,
+  data: e,
   keyField: t,
-  size: l = "",
+  size: n = "",
   sticky: s,
   responsive: c,
-  rowClassName: r,
+  rowClassName: o,
   renderRow: i,
-  onSelectRow: m,
-  selected: o = "",
+  onSelectRow: d,
+  selected: r = "",
   className: b = "",
-  tfoot: d,
-  children: p,
-  tableHeadProps: h,
+  tfoot: m,
+  children: N,
+  tableHeadProps: p,
   ...y
 }) {
   const f = u("table", b, {
-    [`table-${l}`]: !!l
+    [`table-${n}`]: !!n
   });
-  return /* @__PURE__ */ N(D, { sticky: s, responsive: c, className: f, ...y, children: [
-    /* @__PURE__ */ e(x, { ...h, fields: a }),
-    !!n.length && /* @__PURE__ */ e(
-      v,
+  return /* @__PURE__ */ h(H, { sticky: s, responsive: c, className: f, ...y, children: [
+    /* @__PURE__ */ l(C, { fields: a }),
+    /* @__PURE__ */ l(D, { ...p, fields: a }),
+    !!e.length && /* @__PURE__ */ l(
+      T,
       {
         fields: a,
-        data: n,
+        data: e,
         keyField: t,
-        rowClassName: r,
+        rowClassName: o,
         renderRow: i,
-        onSelectRow: m,
-        selected: o
+        onSelectRow: d,
+        selected: r
       }
     ),
-    p,
-    d
+    N,
+    m
   ] });
 }
-B.displayName = "DataTable";
-const M = (a) => {
+V.displayName = "DataTable";
+const E = (a) => {
   if (!a)
     return "flex-start";
   switch (a) {
@@ -177,212 +205,215 @@ const M = (a) => {
     default:
       return "center";
   }
-}, V = k.div`
+}, G = g.div`
     display: flex;
     width: 100%;
     flex-direction: ${(a) => a.align === "end" ? "row-reverse" : "row"};
-    justify-content: ${(a) => M(a.align)};
+    justify-content: ${(a) => E(a.align)};
+
     .sort-icon {
         flex-grow: ${(a) => a.align === "end" ? "1" : "0"};
         opacity: ${(a) => a.sorted ? 1 : 0};
     }
+
     &:hover .sort-icon {
-        color: ${(a) => a.sorted ? "unset" : "var(--bs-primary)"} ;
+        color: ${(a) => a.sorted ? "unset" : "var(--bs-primary)"};
         opacity: 0.75;
         transition: opacity 0.2s;
     }
 `;
-function H({
+function R({
   field: a,
-  sorted: n,
+  sorted: e,
   ascending: t,
-  className: l,
+  className: n,
   onClick: s
 }) {
   if (!a.sortable)
-    return /* @__PURE__ */ e(T, { field: a, className: l });
-  const { className: c, ...r } = a.thProps ?? {}, i = u(
-    l,
+    return /* @__PURE__ */ l(v, { field: a, className: n });
+  const { className: c, ...o } = a.thProps ?? {}, i = u(
+    n,
     c,
     { [`text-${a.align}`]: !!a.align }
-  ), m = () => {
-    s({ field: a.field, ascending: n ? !t : !0 });
-  }, o = {
+  ), d = () => {
+    s({ field: a.field, ascending: e ? !t : !0 });
+  }, r = {
     "bi-arrow-down": t,
     "bi-arrow-up": !t
   };
-  return /* @__PURE__ */ e("th", { ...r, className: u("sortable", i), scope: "col", onClick: m, children: /* @__PURE__ */ N(V, { sorted: n, align: a.align, children: [
-    /* @__PURE__ */ e("div", { className: "field-title", children: a.title }),
-    /* @__PURE__ */ e("div", { className: u("me-1 sort-icon", o) })
+  return /* @__PURE__ */ l("th", { ...o, className: u("sortable", i), scope: "col", onClick: d, children: /* @__PURE__ */ h(G, { sorted: e, align: a.align, children: [
+    /* @__PURE__ */ l("div", { className: "field-title", children: a.title }),
+    /* @__PURE__ */ l("div", { className: u("me-1 sort-icon", r) })
   ] }) });
 }
-H.displayName = "SortableTableTH";
-function S({
+R.displayName = "SortableTableTH";
+function j({
   currentSort: a,
-  fields: n,
+  fields: e,
   onChangeSort: t
 }) {
-  const { field: l, ascending: s } = a;
-  return /* @__PURE__ */ e("thead", { children: /* @__PURE__ */ e("tr", { children: n.map((c, r) => /* @__PURE__ */ e(
-    H,
+  const { field: n, ascending: s } = a;
+  return /* @__PURE__ */ l("thead", { children: /* @__PURE__ */ l("tr", { children: e.map((c, o) => /* @__PURE__ */ l(
+    R,
     {
       field: c,
-      sorted: l === c.field,
+      sorted: n === c.field,
       ascending: s,
       className: u(
         typeof c.className == "function" ? { [`text-${c.align}`]: !!c.align } : c.className
       ),
       onClick: t
     },
-    r
+    o
   )) }) });
 }
-S.displayName = "SortableTableHead";
-function E({
+j.displayName = "SortableTableHead";
+function I({
   fields: a,
-  data: n,
+  data: e,
   currentSort: t,
-  onChangeSort: l,
+  onChangeSort: n,
   keyField: s,
   size: c = "",
-  sticky: r,
+  sticky: o,
   rowClassName: i,
-  renderRow: m,
-  onSelectRow: o,
+  renderRow: d,
+  onSelectRow: r,
   selected: b = "",
-  className: d = "",
-  tfoot: p,
-  children: h,
+  className: m = "",
+  tfoot: N,
+  children: p,
   ...y
 }) {
-  const f = u("table", d, {
+  const f = u("table", m, {
     [`table-${c}`]: !!c
   });
-  return /* @__PURE__ */ N(D, { className: f, sticky: r, ...y, children: [
-    /* @__PURE__ */ e(S, { currentSort: t, fields: a, onChangeSort: l }),
-    !!n.length && /* @__PURE__ */ e(
-      v,
+  return /* @__PURE__ */ h(H, { className: f, sticky: o, ...y, children: [
+    /* @__PURE__ */ l(C, { fields: a }),
+    /* @__PURE__ */ l(j, { currentSort: t, fields: a, onChangeSort: n }),
+    !!e.length && /* @__PURE__ */ l(
+      T,
       {
         fields: a,
-        data: n,
+        data: e,
         keyField: s,
         rowClassName: i,
-        renderRow: m,
-        onSelectRow: o,
+        renderRow: d,
+        onSelectRow: r,
         selected: b
       }
     ),
-    h,
-    p
+    p,
+    N
   ] });
 }
-E.displayName = "SortableTable";
-const G = [10, 25, 50, 100, 250, 500, 1e3];
-function R({
+I.displayName = "SortableTable";
+const J = [10, 25, 50, 100, 250, 500, 1e3];
+function _({
   value: a,
-  pageValues: n = G,
+  pageValues: e = J,
   size: t,
-  label: l,
+  label: n,
   className: s,
   onChange: c,
-  ...r
+  ...o
 }) {
-  const i = j(), m = (d) => c(Number(d.target.value)), o = s ?? u("form-select", { [`form-select-${t}`]: !!t }), b = u("input-group", {
+  const i = A(), d = (m) => c(Number(m.target.value)), r = s ?? u("form-select", { [`form-select-${t}`]: !!t }), b = u("input-group", {
     [`input-group-${t}`]: !!t
   });
-  return /* @__PURE__ */ N("div", { className: b, children: [
-    /* @__PURE__ */ e("label", { className: "input-group-text", htmlFor: i, children: l ?? "Rows" }),
-    /* @__PURE__ */ e(
+  return /* @__PURE__ */ h("div", { className: b, children: [
+    /* @__PURE__ */ l("label", { className: "input-group-text", htmlFor: i, children: n ?? "Rows" }),
+    /* @__PURE__ */ l(
       "select",
       {
-        className: o,
+        className: r,
         id: i,
         value: a,
-        onChange: m,
-        ...r,
-        children: n.map((d) => /* @__PURE__ */ e("option", { value: d, children: d }, d))
+        onChange: d,
+        ...o,
+        children: e.map((m) => /* @__PURE__ */ l("option", { value: m, children: m }, m))
       }
     )
   ] }, a);
 }
-R.displayName = "RowsPerPage";
-function I({
+_.displayName = "RowsPerPage";
+function L({
   page: a,
-  rowsPerPage: n,
+  rowsPerPage: e,
   onChangePage: t,
-  count: l,
+  count: n,
   size: s,
   showFirst: c,
-  showLast: r,
+  showLast: o,
   className: i,
-  rowsPerPageProps: m,
-  ...o
+  rowsPerPageProps: d,
+  ...r
 }) {
-  const b = l === 0 ? 0 : a * n + 1, d = Math.min(a * n + n, l), p = n === 0 ? 0 : Math.floor((l - 1) / n), h = u("btn btn-link", { [`btn-${s}`]: !!s });
-  return /* @__PURE__ */ N("div", { className: u("row g-3 justify-content-end", i), ...o, children: [
-    !!m && /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ e(R, { ...m, value: n, size: s }) }),
-    /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ N("div", { className: "row g-3 flex-nowrap align-items-baseline", children: [
-      /* @__PURE__ */ N("div", { className: "col-auto", children: [
+  const b = n === 0 ? 0 : a * e + 1, m = Math.min(a * e + e, n), N = e === 0 ? 0 : Math.floor((n - 1) / e), p = u("btn btn-link", { [`btn-${s}`]: !!s });
+  return /* @__PURE__ */ h("div", { className: u("row g-3 justify-content-end", i), ...r, children: [
+    !!d && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(_, { ...d, value: e, size: s }) }),
+    /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ h("div", { className: "row g-3 flex-nowrap align-items-baseline", children: [
+      /* @__PURE__ */ h("div", { className: "col-auto", children: [
         b,
         "-",
-        d,
+        m,
         " of ",
-        l
+        n
       ] }),
-      c && /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ e(
+      c && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: h,
+          className: p,
           disabled: a === 0,
           onClick: () => t(0),
           "aria-label": "First page",
-          children: /* @__PURE__ */ e("span", { className: "bi-chevron-bar-left", "aria-hidden": "true" })
+          children: /* @__PURE__ */ l("span", { className: "bi-chevron-bar-left", "aria-hidden": "true" })
         }
       ) }),
-      /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ e(
+      /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: h,
+          className: p,
           disabled: a === 0,
           onClick: () => t(a - 1),
           "aria-label": "Previous page",
-          children: /* @__PURE__ */ e("span", { className: "bi-chevron-left", "aria-hidden": "true" })
+          children: /* @__PURE__ */ l("span", { className: "bi-chevron-left", "aria-hidden": "true" })
         }
       ) }),
-      /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ e(
+      /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: h,
-          disabled: a >= p,
+          className: p,
+          disabled: a >= N,
           onClick: () => t(a + 1),
           "aria-label": "Next page",
-          children: /* @__PURE__ */ e("span", { className: "bi-chevron-right", "aria-hidden": "true" })
+          children: /* @__PURE__ */ l("span", { className: "bi-chevron-right", "aria-hidden": "true" })
         }
       ) }),
-      r && /* @__PURE__ */ e("div", { className: "col-auto", children: /* @__PURE__ */ e(
+      o && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: h,
-          disabled: a >= p,
-          onClick: () => t(p),
+          className: p,
+          disabled: a >= N,
+          onClick: () => t(N),
           "aria-label": "Last page",
-          children: /* @__PURE__ */ e("span", { className: "bi-chevron-bar-right", "aria-hidden": "true" })
+          children: /* @__PURE__ */ l("span", { className: "bi-chevron-bar-right", "aria-hidden": "true" })
         }
       ) })
     ] }) })
   ] });
 }
-I.displayname = "TablePagination";
+L.displayname = "TablePagination";
 export {
-  B as DataTable,
-  C as DataTableRow,
-  v as DataTableTBody,
-  T as DataTableTH,
-  R as RowsPerPage,
-  E as SortableTable,
-  S as SortableTableHead,
-  H as SortableTableTH,
-  I as TablePagination,
-  G as defaultRowsPerPageValues
+  V as DataTable,
+  C as DataTableCols,
+  S as DataTableRow,
+  T as DataTableTBody,
+  v as DataTableTH,
+  _ as RowsPerPage,
+  I as SortableTable,
+  j as SortableTableHead,
+  R as SortableTableTH,
+  L as TablePagination
 };
 //# sourceMappingURL=index.es.js.map

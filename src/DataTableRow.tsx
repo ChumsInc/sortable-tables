@@ -1,7 +1,7 @@
 import React, {MouseEvent} from 'react';
-import classNames from "classnames";
 import type {DataTableRowProps} from "./types";
 import DataTableCell from "./DataTableCell";
+import clsx from "clsx";
 
 
 function DataTableRow<T = unknown>({
@@ -25,7 +25,7 @@ function DataTableRow<T = unknown>({
 
     return (
         <tr ref={trRef}
-            className={classNames({'table-active': selected}, className, _className)}
+            className={clsx({'table-active': selected}, className, _className)}
             onClick={clickHandler}
             {...rest}>
             {fields.map((field, index) => (<DataTableCell key={index} field={field} row={row}/>))}

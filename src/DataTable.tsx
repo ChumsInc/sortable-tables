@@ -1,9 +1,10 @@
 import React from 'react';
-import classNames from "classnames";
 import DataTableHead from "./DataTableHead";
 import DataTableTBody from "./DataTableTBody";
 import type {DataTableProps} from "./types";
 import Table from "./Table";
+import DataTableCols from "./DataTableCols";
+import clsx from "clsx";
 
 
 function DataTable<T = unknown>({
@@ -24,12 +25,13 @@ function DataTable<T = unknown>({
                                     ...rest
                                 }: DataTableProps<T>) {
 
-    const tableClassName = classNames('table', className, {
+    const tableClassName = clsx('table', className, {
         [`table-${size}`]: !!size,
     })
 
     return (
         <Table sticky={sticky} responsive={responsive} className={tableClassName} {...rest}>
+            <DataTableCols fields={fields}/>
             <DataTableHead {...tableHeadProps} fields={fields}/>
             {!!data.length && (
                 <DataTableTBody fields={fields} data={data} keyField={keyField} rowClassName={rowClassName}

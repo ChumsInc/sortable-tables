@@ -1,5 +1,5 @@
 import React, {type HTMLAttributes, type  MouseEvent, type  ReactNode, type  TableHTMLAttributes} from 'react'
-import {Argument} from "classnames";
+import type {ClassValue} from "clsx";
 
 
 export interface SortProps<T = unknown> {
@@ -12,8 +12,8 @@ export type UITableSize = UISize | 'xs';
 
 export type DataTableClassNames<T = unknown> =
     string
-    | Argument
-    | ((row: T) => (string | Argument));
+    | ClassValue
+    | ((row: T) => (string | ClassValue));
 
 
 export type UIFlexAlign = 'start' | 'end' | 'center' | 'baseline' | 'stretch';
@@ -28,7 +28,9 @@ export interface DataTableField<T = unknown> {
     className?: DataTableClassNames<T>;
     colSpan?: number;
     thProps?: Omit<DataTableTHProps<T>, 'field'>;
-    cellProps?: TableHTMLAttributes<HTMLTableCellElement>
+    cellProps?: TableHTMLAttributes<HTMLTableCellElement>;
+    collapse?: boolean;
+    colClassName?: string;
 }
 
 export interface SortableTableField<T = unknown> extends DataTableField<T> {
@@ -55,7 +57,7 @@ export interface DataTableCellProps<T = unknown> extends Omit<TableHTMLAttribute
     field: DataTableField<T>;
     row: T;
     as?: 'td' | 'th',
-    className?: string | Argument;
+    className?: string | ClassValue;
     children?: React.ReactNode;
 }
 
@@ -79,7 +81,7 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
 }
 
 export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
-    rowClassName?: string | Argument | ((row: T) => string | Argument);
+    rowClassName?: string | ClassValue | ((row: T) => string | ClassValue);
     selected?: boolean;
     fields: DataTableField<T>[];
     row: T;
@@ -126,3 +128,7 @@ export interface TablePaginationProps extends HTMLAttributes<HTMLDivElement> {
     rowsPerPageProps?: Omit<RowsPerPageProps, 'value'>;
 }
 
+
+export interface DataTableColProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
+    fields: SortableTableField<T>[];
+}

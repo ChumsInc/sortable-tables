@@ -1,7 +1,7 @@
 import React from "react";
 import DataTableTH from "./DataTableTH";
-import classNames from "classnames";
 import type {DataTableHeadProps} from "./types";
+import clsx from "clsx";
 
 
 function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {
@@ -12,7 +12,7 @@ function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {
                 <DataTableTH key={field.id ?? index}
                              {...field.thProps}
                              field={field}
-                             className={classNames(
+                             className={clsx(
                                  typeof field.className === 'function'
                                      ? {[`text-${field.align}`]: !!field.align}
                                      : field.className

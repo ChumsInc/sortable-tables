@@ -1,9 +1,8 @@
 import React, {ChangeEvent, useId} from 'react';
-import classNames from "classnames";
 import type {RowsPerPageProps} from "./types";
+import clsx from "clsx";
 
-export const defaultRowsPerPageValues: number[] = [10, 25, 50, 100, 250, 500, 1000];
-
+const defaultRowsPerPageValues: number[] = [10, 25, 50, 100, 250, 500, 1000];
 
 function RowsPerPage({
                          value,
@@ -16,8 +15,8 @@ function RowsPerPage({
                      }: RowsPerPageProps) {
     const id = useId();
     const changeHandler = (ev: ChangeEvent<HTMLSelectElement>) => onChange(Number(ev.target.value));
-    const selectClassName = className ?? classNames('form-select', {[`form-select-${size}`]: !!size});
-    const inputGroupClassName = classNames('input-group', {
+    const selectClassName = className ?? clsx('form-select', {[`form-select-${size}`]: !!size});
+    const inputGroupClassName = clsx('input-group', {
         [`input-group-${size}`]: !!size,
     })
 

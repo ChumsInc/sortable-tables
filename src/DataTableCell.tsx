@@ -1,9 +1,9 @@
 import React, {ReactNode} from 'react';
 import type {DataTableCellProps} from "./types";
-import classNames from "classnames";
+import clsx from "clsx";
 
-export default function DataTableCell<T = unknown>({field, row, className, as, ...rest}:DataTableCellProps<T>) {
-    const cellClassName = classNames(
+export default function DataTableCell<T = unknown>({field, row, className, as, ...rest}: DataTableCellProps<T>) {
+    const cellClassName = clsx(
         {[`text-${field.align}`]: !!field.align},
         className,
         typeof field.className === 'function' ? field.className(row) : field.className
