@@ -1,10 +1,11 @@
-import React from "react";
+import React, {type TableHTMLAttributes} from "react";
 import DataTableTH from "./DataTableTH";
-import type {DataTableHeadProps} from "./types";
 import clsx from "clsx";
+import {useTableFields} from "./TableProvider";
 
 
-function DataTableHead<T = unknown>({fields, ...rest}: DataTableHeadProps<T>) {
+function DataTableHead<T = unknown>({...rest}: TableHTMLAttributes<HTMLTableSectionElement>) {
+    const fields = useTableFields<T>()
     return (
         <thead {...rest}>
         <tr>

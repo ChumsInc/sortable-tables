@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import {createElement, ReactNode} from 'react';
 import type {DataTableCellProps} from "./types";
 import clsx from "clsx";
 
@@ -8,7 +8,7 @@ export default function DataTableCell<T = unknown>({field, row, className, as, .
         className,
         typeof field.className === 'function' ? field.className(row) : field.className
     );
-    return React.createElement(
+    return createElement(
         (as ?? field.as) ?? 'td',
         {
             className: cellClassName,

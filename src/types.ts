@@ -31,11 +31,10 @@ export interface DataTableField<T = unknown> {
     cellProps?: TableHTMLAttributes<HTMLTableCellElement>;
     collapse?: boolean;
     colClassName?: string;
-}
-
-export interface SortableTableField<T = unknown> extends DataTableField<T> {
     sortable?: boolean;
 }
+
+export type SortableTableField<T = unknown> = DataTableField<T>;
 
 export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTableElement> {
     fields: DataTableField<T>[];
@@ -49,7 +48,7 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     onSelectRow?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     tfoot?: React.ReactElement<HTMLTableSectionElement>;
-    tableHeadProps?: DataTableHeadProps<T>;
+    tableHeadProps?: TableHTMLAttributes<HTMLTableSectionElement>;
     children?: ReactNode;
 }
 
@@ -65,12 +64,7 @@ export interface DataTableTHProps<T = unknown> extends Omit<DataTableCellProps<T
     as?: 'th',
 }
 
-export interface DataTableHeadProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
-    fields: DataTableField<T>[];
-}
-
 export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
-    fields: DataTableField<T>[];
     data: T[];
     keyField: keyof T | ((row: T) => string | number);
     rowClassName?: DataTableClassNames<T>;
@@ -83,26 +77,24 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
 export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
     rowClassName?: string | ClassValue | ((row: T) => string | ClassValue);
     selected?: boolean;
-    fields: DataTableField<T>[];
     row: T;
     trRef?: React.Ref<HTMLTableRowElement>;
     onClick?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
 }
 
 export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
-    fields: SortableTableField<T>[];
+    fields: DataTableField<T>[];
     currentSort: SortProps<T>;
     onChangeSort: (sort: SortProps<T>) => void;
 }
 
-export interface SortableTableHeadProps<T = unknown> extends DataTableHeadProps<T> {
+export interface SortableTableHeadProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
     currentSort: SortProps<T>;
-    fields: SortableTableField<T>[];
     onChangeSort: (sort: SortProps<T>) => void;
 }
 
 export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps<T>, 'onClick'> {
-    field: SortableTableField<T>;
+    field: DataTableField<T>;
     sorted?: boolean;
     ascending?: boolean;
     onClick: (sort: SortProps<T>) => void;
@@ -130,5 +122,5 @@ export interface TablePaginationProps extends HTMLAttributes<HTMLDivElement> {
 
 
 export interface DataTableColProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
-    fields: SortableTableField<T>[];
+    fields: DataTableField<T>[];
 }

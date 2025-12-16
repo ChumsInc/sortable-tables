@@ -2,13 +2,14 @@ import React from "react";
 import SortableTableTH from "./SortableTableTH";
 import type {SortableTableHeadProps} from "./types";
 import clsx from "clsx";
+import {useTableFields} from "./TableProvider";
 
 
 function SortableTableHead<T = unknown>({
                                             currentSort,
-                                            fields,
                                             onChangeSort,
                                         }: SortableTableHeadProps<T>) {
+    const fields = useTableFields<T>()
     const {field, ascending} = currentSort;
     return (
         <thead>

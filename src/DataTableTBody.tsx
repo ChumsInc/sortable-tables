@@ -4,7 +4,6 @@ import type {DataTableTBodyProps} from "./types";
 
 
 function DataTableTBody<T = unknown>({
-                                         fields,
                                          data,
                                          keyField,
                                          rowClassName,
@@ -25,7 +24,6 @@ function DataTableTBody<T = unknown>({
             return (
                 <DataTableRow key={keyValue} onClick={onSelectRow}
                               rowClassName={rowClassName}
-                              fields={fields}
                               row={row} selected={isSelected}/>
             )
         })}
