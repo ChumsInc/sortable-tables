@@ -1,11 +1,11 @@
-import {useTableContext, useTableSort} from "../src";
+import {useTableContext} from "../src";
 import React, {useCallback, useId} from "react";
-import {ProductLine} from "./data";
+import type {ProductLine} from "./data";
 
 export default function TableColumnsHandler() {
     const {updateField, getField} = useTableContext<ProductLine>();
     const [collapse, setCollapse] = React.useState<boolean>(getField('ProductLineDesc')?.collapse ?? false);
-    const {sort} = useTableSort();
+    // const {sort} = useTableSort();
     const id = useId();
 
     const toggleFieldCollapse = useCallback((key: string, next: boolean) => {
@@ -22,7 +22,7 @@ export default function TableColumnsHandler() {
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1rem'}}>
             <input type="checkbox" checked={collapse} id={id} onChange={handleVisibleChange}/>
             <label htmlFor={id}>Hide Description</label>
-            <code>{JSON.stringify(sort)}</code>
+            {/*<code>{JSON.stringify(sort)}</code>*/}
         </div>
     )
 }

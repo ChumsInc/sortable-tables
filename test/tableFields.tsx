@@ -1,5 +1,5 @@
-import {SortableTableField} from "../src";
-import {ProductLine} from "./data";
+import type {SortableTableField} from "../src";
+import type {ProductLine} from "./data";
 import React from "react";
 
 export const tableFields: SortableTableField<ProductLine>[] = [

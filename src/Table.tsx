@@ -1,9 +1,11 @@
-import React, {TableHTMLAttributes} from 'react';
+import React, {type RefObject, type TableHTMLAttributes} from 'react';
 import styled from "@emotion/styled";
 import type {DataTableProps} from "./types";
 import clsx from "clsx";
 
-export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky' | 'responsive'>
+export interface StyledTableProps extends TableHTMLAttributes<HTMLTableElement>, Pick<DataTableProps, 'sticky' | 'responsive'> {
+    ref: RefObject<HTMLTableElement>;
+}
 
 const StyledTable = styled.table<StyledTableProps>`
     --table-sticky-top: ${props => props.sticky ? '0' : undefined};
@@ -19,26 +21,29 @@ const StyledTable = styled.table<StyledTableProps>`
     }
 `
 
-export default React.forwardRef<HTMLTableElement, StyledTableProps>(
-    function Table({
-                       sticky,
-                       responsive,
-                       children,
-                       className,
-                       ...rest
-                   }, ref) {
-        if (responsive) {
-            const _className = clsx(className, {
-                'table-responsive': responsive === true,
-                [`table-responsive-${responsive}`]: responsive !== true,
-            })
-            return (
-                <div className={_className}>
-                    <StyledTable ref={ref} {...rest}>{children}</StyledTable>
-                </div>
-            )
-        }
+
+export default function Table({
+                                  sticky,
+                                  responsive,
+                                  children,
+                                  className,
+                                  ref,
+                                  ...rest
+                              }: StyledTableProps) {
+    if (responsive) {
+        const _className = clsx(className, {
+            'table-responsive': responsive === true,
+            [`table-responsive-${responsive}`]: responsive !== true,
+        })
         return (
-            <StyledTable className={className} sticky={sticky} ref={ref} {...rest}>{children}</StyledTable>
+            <div className={_className}>
+                <StyledTable ref={ref} {...rest}>{children}</StyledTable>
+            </div>
         )
-    })
+    }
+
+    return (
+        <StyledTable className={className} sticky={sticky} ref={ref} {...rest}>{children}</StyledTable>
+    )
+}
+

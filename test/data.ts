@@ -1,4 +1,4 @@
-import {SortProps} from "../src";
+import type {SortProps} from "../src";
 
 export interface ProductLine {
     ProductLine: string,

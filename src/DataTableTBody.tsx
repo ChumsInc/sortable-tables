@@ -3,7 +3,7 @@ import DataTableRow from "./DataTableRow";
 import type {DataTableTBodyProps} from "./types";
 
 
-function DataTableTBody<T = unknown>({
+export default function DataTableTBody<T = unknown>({
                                          data,
                                          keyField,
                                          rowClassName,
@@ -31,6 +31,4 @@ function DataTableTBody<T = unknown>({
         </tbody>
     )
 }
-
 DataTableTBody.displayName = 'DataTableTBody';
-export default DataTableTBody

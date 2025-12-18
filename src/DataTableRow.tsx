@@ -1,11 +1,11 @@
-import React, {MouseEvent} from 'react';
+import React, {type MouseEvent} from 'react';
 import type {DataTableRowProps} from "./types";
 import DataTableCell from "./DataTableCell";
 import clsx from "clsx";
-import {useTableFields} from "./TableProvider";
+import {useTableFields} from "./useTableFields";
 
 
-function DataTableRow<T = unknown>({
+export default function DataTableRow<T = unknown>({
                                        className,
                                        rowClassName,
                                        selected,
@@ -14,7 +14,7 @@ function DataTableRow<T = unknown>({
                                        onClick,
                                        ...rest
                                    }: DataTableRowProps<T>) {
-    const fields = useTableFields<T>()
+    const [fields] = useTableFields<T>()
     const clickHandler = (ev: MouseEvent<HTMLTableRowElement>) => {
         onClick?.(row, ev)
     }
@@ -29,10 +29,8 @@ function DataTableRow<T = unknown>({
             className={clsx({'table-active': selected}, className, _className)}
             onClick={clickHandler}
             {...rest}>
-            {fields.map((field, index) => (<DataTableCell key={field?.id ?? index} field={field} row={row}/>))}
+            {fields.map((field, index) => (<DataTableCell key={String(field?.id ?? index)} field={field} row={row}/>))}
         </tr>
     )
 }
-
 DataTableRow.displayName = 'DataTableRow';
-export default DataTableRow;

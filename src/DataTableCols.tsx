@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import clsx from "clsx";
-import {useTableFields} from "./TableProvider";
+import {useTableFields} from "./useTableFields";
+
 
 const TableCol = styled.col`
     &.col-collapsed {
@@ -8,8 +9,8 @@ const TableCol = styled.col`
     }
 `
 
-function DataTableCols() {
-    const fields = useTableFields()
+export default function DataTableCols<T = unknown>() {
+    const [fields] = useTableFields<T>()
     return (
         <colgroup>
             {fields.map((field, index) => (
@@ -20,6 +21,5 @@ function DataTableCols() {
         </colgroup>
     )
 }
-
 DataTableCols.displayName = 'DataTableCols';
-export default DataTableCols;
+

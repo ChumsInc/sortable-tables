@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import DataTableTH from "./DataTableTH";
 import type {SortableTableTHProps, UIFlexAlign} from "./types";
 import styled from '@emotion/styled';
@@ -39,7 +38,7 @@ const FieldTitle = styled.div<FieldTitleProps>`
     }
 `
 
-function SortableTableTH<T = unknown>({
+export default function SortableTableTH<T = unknown>({
                                           field,
                                           sorted,
                                           ascending,
@@ -75,6 +74,4 @@ function SortableTableTH<T = unknown>({
         </th>
     )
 }
-
 SortableTableTH.displayName = 'SortableTableTH';
-export default SortableTableTH;

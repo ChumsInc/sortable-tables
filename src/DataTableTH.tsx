@@ -3,7 +3,7 @@ import type {DataTableTHProps} from "./types";
 import clsx from "clsx";
 
 
-function DataTableTH<T = unknown>({
+export default function DataTableTH<T = unknown>({
                                       field,
                                       className,
                                       children,
@@ -16,6 +16,4 @@ function DataTableTH<T = unknown>({
         </th>
     )
 }
-
 DataTableTH.displayName = 'DataTableTH';
-export default DataTableTH;

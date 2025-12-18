@@ -1,16 +1,16 @@
 import React, {type TableHTMLAttributes} from "react";
 import DataTableTH from "./DataTableTH";
 import clsx from "clsx";
-import {useTableFields} from "./TableProvider";
+import {useTableFields} from "./useTableFields";
 
 
-function DataTableHead<T = unknown>({...rest}: TableHTMLAttributes<HTMLTableSectionElement>) {
-    const fields = useTableFields<T>()
+export default function DataTableHead<T = unknown>({...rest}: TableHTMLAttributes<HTMLTableSectionElement>) {
+    const [fields] = useTableFields<T>()
     return (
         <thead {...rest}>
         <tr>
             {fields.map((field, index) => (
-                <DataTableTH key={field.id ?? index}
+                <DataTableTH key={String(field.id ?? index)}
                              {...field.thProps}
                              field={field}
                              className={clsx(
@@ -23,6 +23,4 @@ function DataTableHead<T = unknown>({...rest}: TableHTMLAttributes<HTMLTableSect
         </thead>
     )
 }
-
 DataTableHead.displayName = 'DataTableHead';
-export default DataTableHead;

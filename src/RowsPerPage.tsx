@@ -1,10 +1,10 @@
-import React, {ChangeEvent, useId} from 'react';
+import React, {type ChangeEvent, useId} from 'react';
 import type {RowsPerPageProps} from "./types";
 import clsx from "clsx";
 
 const defaultRowsPerPageValues: number[] = [10, 25, 50, 100, 250, 500, 1000];
 
-function RowsPerPage({
+export default function RowsPerPage({
                          value,
                          pageValues = defaultRowsPerPageValues,
                          size,
@@ -32,6 +32,4 @@ function RowsPerPage({
         </div>
     )
 }
-
 RowsPerPage.displayName = 'RowsPerPage';
-export default RowsPerPage;

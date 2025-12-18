@@ -3,7 +3,7 @@ import RowsPerPage from "./RowsPerPage";
 import type {TablePaginationProps} from "./types";
 import clsx from "clsx";
 
-function TablePagination({
+export default function TablePagination({
                              page,
                              rowsPerPage,
                              onChangePage,
@@ -67,6 +67,4 @@ function TablePagination({
         </div>
     )
 }
-
 TablePagination.displayname = 'TablePagination';
-export default TablePagination

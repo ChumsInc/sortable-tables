@@ -1,6 +1,7 @@
-import {createElement, ReactNode} from 'react';
+import {createElement, type ReactNode} from 'react';
 import type {DataTableCellProps} from "./types";
 import clsx from "clsx";
+
 
 export default function DataTableCell<T = unknown>({field, row, className, as, ...rest}: DataTableCellProps<T>) {
     const cellClassName = clsx(
@@ -26,3 +27,4 @@ export default function DataTableCell<T = unknown>({field, row, className, as, .
             )
     )
 }
+DataTableCell.displayName = 'DataTableCell';
