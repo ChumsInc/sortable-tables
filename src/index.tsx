@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 
+
 export {default as DataTable} from './StandaloneDataTable';
 export {default as DataTableRow} from './DataTableRow';
 export {default as DataTableTBody} from './DataTableTBody';
@@ -19,5 +20,24 @@ export {useTableSort} from './useTableSort'
 export {useTableContext} from './useTableContext'
 export {DataTableContext, type TableContextData} from './DataTableContext'
 export type {TableProviderProps} from './DataTableProvider'
-export * from './types';
+export type {
+    SortProps,
+    DataTableField,
+    SortableTableField,
+    DataTableColProps,
+    DataTableCellProps,
+    DataTableRowProps,
+    DataTableTBodyProps,
+    DataTableClassNames,
+    DataTableProps,
+    DataTableTHProps,
+    RowsPerPageProps,
+    SortableTableTHProps,
+    SortableTableHeadProps,
+    SortableTableProps,
+    TablePaginationProps,
+    UITableSize,
+    UISize,
+    UIFlexAlign
+} from './types';
 

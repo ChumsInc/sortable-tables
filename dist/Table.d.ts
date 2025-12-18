@@ -1,5 +1,6 @@
-import { default as React, TableHTMLAttributes } from 'react';
+import { RefObject, TableHTMLAttributes } from 'react';
 import { DataTableProps } from './types';
-export type StyledTableProps = TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps, 'sticky' | 'responsive'>;
-declare const _default: React.ForwardRefExoticComponent<React.TableHTMLAttributes<HTMLTableElement> & Pick<DataTableProps<unknown>, "sticky" | "responsive"> & React.RefAttributes<HTMLTableElement>>;
-export default _default;
+export interface StyledTableProps extends TableHTMLAttributes<HTMLTableElement>, Pick<DataTableProps, 'sticky' | 'responsive'> {
+    ref?: RefObject<HTMLTableElement>;
+}
+export default function Table({ sticky, responsive, children, className, ref, ...rest }: StyledTableProps): import("react/jsx-runtime").JSX.Element;

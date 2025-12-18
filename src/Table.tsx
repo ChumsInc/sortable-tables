@@ -4,7 +4,7 @@ import type {DataTableProps} from "./types";
 import clsx from "clsx";
 
 export interface StyledTableProps extends TableHTMLAttributes<HTMLTableElement>, Pick<DataTableProps, 'sticky' | 'responsive'> {
-    ref: RefObject<HTMLTableElement>;
+    ref?: RefObject<HTMLTableElement>;
 }
 
 const StyledTable = styled.table<StyledTableProps>`

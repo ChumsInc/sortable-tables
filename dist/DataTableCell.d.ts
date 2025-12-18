@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { DataTableCellProps } from './types';
-export default function DataTableCell<T = unknown>({ field, row, className, as, ...rest }: DataTableCellProps<T>): import('react').DetailedReactHTMLElement<{
+declare function DataTableCell<T = unknown>({ field, row, className, as, ...rest }: DataTableCellProps<T>): import('react').DetailedReactHTMLElement<{
     children?: ReactNode | undefined;
     align?: "left" | "center" | "right" | undefined;
     bgcolor?: string | undefined;
@@ -293,3 +293,7 @@ export default function DataTableCell<T = unknown>({ field, row, className, as, 
     scope: string | undefined;
     colSpan: number | undefined;
 }, HTMLElement>;
+declare namespace DataTableCell {
+    var displayName: string;
+}
+export default DataTableCell;

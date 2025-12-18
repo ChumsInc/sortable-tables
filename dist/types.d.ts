@@ -9,7 +9,7 @@ export type UITableSize = UISize | 'xs';
 export type DataTableClassNames<T = unknown> = string | ClassValue | ((row: T) => (string | ClassValue));
 export type UIFlexAlign = 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 export interface DataTableField<T = unknown> {
-    id?: number | string;
+    id?: keyof T | (number & {}) | (string & {});
     field: keyof T;
     title: ReactNode;
     as?: 'td' | 'th';
@@ -71,7 +71,6 @@ export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
     onChangeSort: (sort: SortProps<T>) => void;
 }
 export interface SortableTableHeadProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
-    currentSort: SortProps<T>;
     onChangeSort: (sort: SortProps<T>) => void;
 }
 export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps<T>, 'onClick'> {
