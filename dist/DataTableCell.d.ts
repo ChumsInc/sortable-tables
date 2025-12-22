@@ -292,7 +292,7 @@ declare function DataTableCell<T = unknown>({ field, row, className, as, ...rest
     className: string;
     scope: string | undefined;
     colSpan: number | undefined;
-}, HTMLElement>;
+}, HTMLElement> | null;
 declare namespace DataTableCell {
     var displayName: string;
 }

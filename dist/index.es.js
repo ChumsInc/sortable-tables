@@ -1,4 +1,4 @@
-import { jsx as l, jsxs as p } from "react/jsx-runtime";
+import { jsx as l, jsxs as f } from "react/jsx-runtime";
 import { createContext as G, useState as k, useCallback as v, useMemo as I, useContext as g, createElement as J, useId as L } from "react";
 import H from "@emotion/styled";
 const y = G(null);
@@ -7,29 +7,29 @@ function S({
   initialFields: a = [],
   initialSort: n = null
 }) {
-  const [e, s] = k(a), [i, c] = k(n), u = v(
+  const [e, s] = k(a), [r, o] = k(n), c = v(
     (m) => {
       s(m);
     },
     []
-  ), r = v(
+  ), i = v(
     (m) => {
-      c(m);
+      o(m);
     },
     []
-  ), d = v((m, f) => {
-    const N = e.map((T) => T.id === m ? { ...T, ...f } : T);
+  ), u = v((m, p) => {
+    const N = e.map((T) => T.id === m ? { ...T, ...p } : T);
     s(N);
-  }, [e]), o = v((m) => e.find((f) => f.id === m), [e]), b = I(
+  }, [e]), d = v((m) => e.find((p) => p.id === m), [e]), b = I(
     () => ({
       fields: e,
-      setFields: u,
-      sort: i,
-      setSort: r,
-      getField: o,
-      updateField: d
+      setFields: c,
+      sort: r,
+      setSort: i,
+      getField: d,
+      updateField: u
     }),
-    [e, u, i, r, d, o]
+    [e, c, r, i, u, d]
   );
   return /* @__PURE__ */ l(y.Provider, { value: b, children: t });
 }
@@ -66,16 +66,16 @@ function P({
   children: n,
   className: e,
   ref: s,
-  ...i
+  ...r
 }) {
   if (a) {
-    const c = h(e, {
+    const o = h(e, {
       "table-responsive": a === !0,
       [`table-responsive-${a}`]: a !== !0
     });
-    return /* @__PURE__ */ l("div", { className: c, children: /* @__PURE__ */ l(w, { ref: s, ...i, children: n }) });
+    return /* @__PURE__ */ l("div", { className: o, children: /* @__PURE__ */ l(w, { ref: s, ...r, children: n }) });
   }
-  return /* @__PURE__ */ l(w, { className: e, sticky: t, ref: s, ...i, children: n });
+  return /* @__PURE__ */ l(w, { className: e, sticky: t, ref: s, ...r, children: n });
 }
 function C({
   field: t,
@@ -83,6 +83,8 @@ function C({
   children: n,
   ...e
 }) {
+  if (t.visible === !1)
+    return null;
   const s = h({ [`text-${t.align}`]: !!t.align }, a);
   return /* @__PURE__ */ l("th", { className: s, scope: "col", ...e, children: n ?? t.title });
 }
@@ -98,7 +100,7 @@ function x() {
 }
 function j({ ...t }) {
   const [a] = x();
-  return /* @__PURE__ */ l("thead", { ...t, children: /* @__PURE__ */ l("tr", { children: a.filter((n) => n.visible !== !1).map((n, e) => /* @__PURE__ */ l(
+  return /* @__PURE__ */ l("thead", { ...t, children: /* @__PURE__ */ l("tr", { children: a.map((n, e) => /* @__PURE__ */ l(
     C,
     {
       ...n.thProps,
@@ -117,31 +119,31 @@ function E({
   responsive: n,
   sticky: e,
   data: s,
-  keyField: i,
-  rowClassName: c,
-  renderRow: u,
-  onSelectRow: r,
-  selected: d,
-  tableHeadProps: o,
+  keyField: r,
+  rowClassName: o,
+  renderRow: c,
+  onSelectRow: i,
+  selected: u,
+  tableHeadProps: d,
   children: b,
   tfoot: m,
-  ...f
+  ...p
 }) {
   const N = h("table", t, {
     [`table-${a}`]: !!a
   });
-  return /* @__PURE__ */ p(P, { sticky: e, responsive: n, className: N, ...f, children: [
+  return /* @__PURE__ */ f(P, { sticky: e, responsive: n, className: N, ...p, children: [
     /* @__PURE__ */ l($, {}),
-    /* @__PURE__ */ l(j, { ...o }),
+    /* @__PURE__ */ l(j, { ...d }),
     !!s.length && /* @__PURE__ */ l(
       D,
       {
         data: s,
-        keyField: i,
-        rowClassName: c,
-        renderRow: u,
-        onSelectRow: r,
-        selected: d
+        keyField: r,
+        rowClassName: o,
+        renderRow: c,
+        onSelectRow: i,
+        selected: u
       }
     ),
     b,
@@ -157,7 +159,9 @@ function W({
 }
 W.displayName = "StandaloneDataTable";
 function R({ field: t, row: a, className: n, as: e, ...s }) {
-  const i = h(
+  if (t.visible === !1)
+    return null;
+  const r = h(
     { [`text-${t.align}`]: !!t.align },
     n,
     typeof t.className == "function" ? t.className(a) : t.className
@@ -165,7 +169,7 @@ function R({ field: t, row: a, className: n, as: e, ...s }) {
   return J(
     e ?? t.as ?? "td",
     {
-      className: i,
+      className: r,
       scope: (e ?? t.as) === "th" ? "row" : void 0,
       colSpan: t.colSpan,
       ...t.cellProps,
@@ -181,20 +185,20 @@ function M({
   selected: n,
   row: e,
   trRef: s,
-  onClick: i,
-  ...c
+  onClick: r,
+  ...o
 }) {
-  const [u] = x(), r = (o) => {
-    i?.(e, o);
-  }, d = typeof a == "function" ? a(e) : a;
+  const [c] = x(), i = (d) => {
+    r?.(e, d);
+  }, u = typeof a == "function" ? a(e) : a;
   return e ? /* @__PURE__ */ l(
     "tr",
     {
       ref: s,
-      className: h({ "table-active": n }, t, d),
-      onClick: r,
-      ...c,
-      children: u.filter((o) => o.visible !== !1).map((o, b) => /* @__PURE__ */ l(R, { field: o, row: e }, String(o?.id ?? b)))
+      className: h({ "table-active": n }, t, u),
+      onClick: i,
+      ...o,
+      children: c.map((d, b) => /* @__PURE__ */ l(R, { field: d, row: e }, String(d?.id ?? b)))
     }
   ) : null;
 }
@@ -205,25 +209,25 @@ function D({
   rowClassName: n,
   renderRow: e,
   onSelectRow: s,
-  selected: i = "",
-  children: c,
-  ...u
+  selected: r = "",
+  children: o,
+  ...c
 }) {
-  return /* @__PURE__ */ p("tbody", { ...u, children: [
-    t.map((r) => {
-      const d = String(typeof a == "function" ? a(r) : r[a]), o = typeof i == "function" ? i(r) : d === i;
-      return e ? e(r) : /* @__PURE__ */ l(
+  return /* @__PURE__ */ f("tbody", { ...c, children: [
+    t.map((i) => {
+      const u = String(typeof a == "function" ? a(i) : i[a]), d = typeof r == "function" ? r(i) : u === r;
+      return e ? e(i) : /* @__PURE__ */ l(
         M,
         {
           onClick: s,
           rowClassName: n,
-          row: r,
-          selected: o
+          row: i,
+          selected: d
         },
-        d
+        u
       );
     }),
-    c
+    o
   ] });
 }
 D.displayName = "DataTableTBody";
@@ -260,21 +264,23 @@ function _({
   className: e,
   onClick: s
 }) {
+  if (t.visible === !1)
+    return null;
   if (!t.sortable)
     return /* @__PURE__ */ l(C, { field: t, className: e });
-  const { className: i, ...c } = t.thProps ?? {}, u = h(
+  const { className: r, ...o } = t.thProps ?? {}, c = h(
     e,
-    i,
+    r,
     { [`text-${t.align}`]: !!t.align }
-  ), r = () => {
+  ), i = () => {
     s({ field: t.field, ascending: a ? !n : !0 });
-  }, d = {
+  }, u = {
     "bi-arrow-down": n,
     "bi-arrow-up": !n
   };
-  return /* @__PURE__ */ l("th", { ...c, className: h("sortable", u), scope: "col", onClick: r, children: /* @__PURE__ */ p(K, { sorted: a, align: t.align, children: [
+  return /* @__PURE__ */ l("th", { ...o, className: h("sortable", c), scope: "col", onClick: i, children: /* @__PURE__ */ f(K, { sorted: a, align: t.align, children: [
     /* @__PURE__ */ l("div", { className: "field-title", children: t.title }),
-    /* @__PURE__ */ l("div", { className: h("me-1 sort-icon", d) })
+    /* @__PURE__ */ l("div", { className: h("me-1 sort-icon", u) })
   ] }) });
 }
 _.displayName = "SortableTableTH";
@@ -291,7 +297,7 @@ function A({
   onChangeSort: t
 }) {
   const [a] = x(), [n] = O();
-  return /* @__PURE__ */ l("thead", { children: /* @__PURE__ */ l("tr", { children: a.filter((e) => e.visible !== !1).map((e, s) => /* @__PURE__ */ l(
+  return /* @__PURE__ */ l("thead", { children: /* @__PURE__ */ l("tr", { children: a.map((e, s) => /* @__PURE__ */ l(
     _,
     {
       field: e,
@@ -312,32 +318,32 @@ function B({
   responsive: n,
   sticky: e,
   data: s,
-  keyField: i,
-  rowClassName: c,
-  renderRow: u,
-  onSelectRow: r,
-  selected: d,
-  tableHeadProps: o,
+  keyField: r,
+  rowClassName: o,
+  renderRow: c,
+  onSelectRow: i,
+  selected: u,
+  tableHeadProps: d,
   children: b,
   tfoot: m,
-  onChangeSort: f,
+  onChangeSort: p,
   ...N
 }) {
   const T = h("table", t, {
     [`table-${a}`]: !!a
   });
-  return /* @__PURE__ */ p(P, { className: T, responsive: n, sticky: e, ...N, children: [
+  return /* @__PURE__ */ f(P, { className: T, responsive: n, sticky: e, ...N, children: [
     /* @__PURE__ */ l($, {}),
-    /* @__PURE__ */ l(A, { onChangeSort: f, ...o }),
+    /* @__PURE__ */ l(A, { onChangeSort: p, ...d }),
     !!s.length && /* @__PURE__ */ l(
       D,
       {
         data: s,
-        keyField: i,
-        rowClassName: c,
-        renderRow: u,
-        onSelectRow: r,
-        selected: d
+        keyField: r,
+        rowClassName: o,
+        renderRow: c,
+        onSelectRow: i,
+        selected: u
       }
     ),
     b,
@@ -360,22 +366,22 @@ function V({
   size: n,
   label: e,
   className: s,
-  onChange: i,
-  ...c
+  onChange: r,
+  ...o
 }) {
-  const u = L(), r = (b) => i(Number(b.target.value)), d = s ?? h("form-select", { [`form-select-${n}`]: !!n }), o = h("input-group", {
+  const c = L(), i = (b) => r(Number(b.target.value)), u = s ?? h("form-select", { [`form-select-${n}`]: !!n }), d = h("input-group", {
     [`input-group-${n}`]: !!n
   });
-  return /* @__PURE__ */ p("div", { className: o, children: [
-    /* @__PURE__ */ l("label", { className: "input-group-text", htmlFor: u, children: e ?? "Rows" }),
+  return /* @__PURE__ */ f("div", { className: d, children: [
+    /* @__PURE__ */ l("label", { className: "input-group-text", htmlFor: c, children: e ?? "Rows" }),
     /* @__PURE__ */ l(
       "select",
       {
-        className: d,
-        id: u,
+        className: u,
+        id: c,
         value: t,
-        onChange: r,
-        ...c,
+        onChange: i,
+        ...o,
         children: a.map((b) => /* @__PURE__ */ l("option", { value: b, children: b }, b))
       }
     )
@@ -388,27 +394,27 @@ function X({
   onChangePage: n,
   count: e,
   size: s,
-  showFirst: i,
-  showLast: c,
-  className: u,
-  rowsPerPageProps: r,
-  ...d
+  showFirst: r,
+  showLast: o,
+  className: c,
+  rowsPerPageProps: i,
+  ...u
 }) {
-  const o = e === 0 ? 0 : t * a + 1, b = Math.min(t * a + a, e), m = a === 0 ? 0 : Math.floor((e - 1) / a), f = h("btn btn-link", { [`btn-${s}`]: !!s });
-  return /* @__PURE__ */ p("div", { className: h("row g-3 justify-content-end", u), ...d, children: [
-    !!r && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(V, { ...r, value: a, size: s }) }),
-    /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ p("div", { className: "row g-3 flex-nowrap align-items-baseline", children: [
-      /* @__PURE__ */ p("div", { className: "col-auto", children: [
-        o,
+  const d = e === 0 ? 0 : t * a + 1, b = Math.min(t * a + a, e), m = a === 0 ? 0 : Math.floor((e - 1) / a), p = h("btn btn-link", { [`btn-${s}`]: !!s });
+  return /* @__PURE__ */ f("div", { className: h("row g-3 justify-content-end", c), ...u, children: [
+    !!i && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(V, { ...i, value: a, size: s }) }),
+    /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ f("div", { className: "row g-3 flex-nowrap align-items-baseline", children: [
+      /* @__PURE__ */ f("div", { className: "col-auto", children: [
+        d,
         "-",
         b,
         " of ",
         e
       ] }),
-      i && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
+      r && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: f,
+          className: p,
           disabled: t === 0,
           onClick: () => n(0),
           "aria-label": "First page",
@@ -418,7 +424,7 @@ function X({
       /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: f,
+          className: p,
           disabled: t === 0,
           onClick: () => n(t - 1),
           "aria-label": "Previous page",
@@ -428,17 +434,17 @@ function X({
       /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: f,
+          className: p,
           disabled: t >= m,
           onClick: () => n(t + 1),
           "aria-label": "Next page",
           children: /* @__PURE__ */ l("span", { className: "bi-chevron-right", "aria-hidden": "true" })
         }
       ) }),
-      c && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
+      o && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(
         "button",
         {
-          className: f,
+          className: p,
           disabled: t >= m,
           onClick: () => n(m),
           "aria-label": "Last page",

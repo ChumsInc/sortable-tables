@@ -9,6 +9,9 @@ export default function DataTableTH<T = unknown>({
                                       children,
                                       ...rest
                                   }: DataTableTHProps<T>) {
+    if (field.visible === false) {
+        return null;
+    }
     const thClassName = clsx({[`text-${field.align}`]: !!field.align}, className);
     return (
         <th className={thClassName} scope="col" {...rest}>

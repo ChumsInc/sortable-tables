@@ -45,6 +45,9 @@ export default function SortableTableTH<T = unknown>({
                                           className,
                                           onClick
                                       }: SortableTableTHProps<T>) {
+    if (field.visible === false) {
+        return null;
+    }
     if (!field.sortable) {
         return (<DataTableTH field={field} className={className}/>)
     }

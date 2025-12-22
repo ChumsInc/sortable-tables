@@ -30,7 +30,6 @@ export default function DataTableRow<T = unknown>({
             onClick={clickHandler}
             {...rest}>
             {fields
-                .filter(field => field.visible !== false)
                 .map((field, index) => (
                     <DataTableCell key={String(field?.id ?? index)} field={field} row={row}/>
                 ))}

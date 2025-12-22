@@ -10,7 +10,6 @@ export default function DataTableHead<T = unknown>({...rest}: TableHTMLAttribute
         <thead {...rest}>
         <tr>
             {fields
-                .filter(field => field.visible !== false)
                 .map((field, index) => (
                 <DataTableTH key={String(field.id ?? index)}
                              {...field.thProps}

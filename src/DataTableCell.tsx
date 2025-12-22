@@ -4,6 +4,9 @@ import clsx from "clsx";
 
 
 export default function DataTableCell<T = unknown>({field, row, className, as, ...rest}: DataTableCellProps<T>) {
+    if (field.visible === false) {
+        return null;
+    }
     const cellClassName = clsx(
         {[`text-${field.align}`]: !!field.align},
         className,
