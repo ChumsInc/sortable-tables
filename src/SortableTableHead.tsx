@@ -13,7 +13,9 @@ export default function SortableTableHead<T = unknown>({
     return (
         <thead>
         <tr>
-            {fields.map((tableField, index) => (
+            {fields
+                .filter(field => field.visible !== false)
+                .map((tableField, index) => (
                 <SortableTableTH<T> key={index} field={tableField}
                                     sorted={sort?.field === tableField.field} ascending={sort?.ascending}
                                     className={clsx(

@@ -29,7 +29,7 @@ export interface DataTableField<T = unknown> {
     colSpan?: number;
     thProps?: Omit<DataTableTHProps<T>, 'field'>;
     cellProps?: TableHTMLAttributes<HTMLTableCellElement>;
-    collapse?: boolean;
+    visible?: boolean;
     colClassName?: string;
     sortable?: boolean;
 }

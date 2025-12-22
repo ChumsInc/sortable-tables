@@ -15,7 +15,7 @@ export const tableFields: SortableTableField<ProductLine>[] = [
         field: 'ProductLineDesc',
         title: 'Description',
         sortable: true,
-        collapse: true,
+        visible: false,
     },
     {
         id: 'prodType',
