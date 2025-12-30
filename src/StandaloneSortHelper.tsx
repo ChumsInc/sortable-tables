@@ -8,7 +8,10 @@ export interface StandaloneSortHelperProps<T = unknown> {
 export function StandaloneSortHelper<T = unknown>({nextSort}:StandaloneSortHelperProps<T>) {
     const [, setNextSort] = useTableSort<T>();
     useEffect(() => {
+        console.log('setNextSort', nextSort);
         setNextSort(nextSort);
     }, [nextSort, setNextSort]);
-    return null;
+    return (
+        <div className="text-danger">Sort Helper...</div>
+    );
 }

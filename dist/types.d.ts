@@ -71,6 +71,8 @@ export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
     onChangeSort: (sort: SortProps<T>) => void;
 }
 export interface SortableTableHeadProps<T = unknown> extends TableHTMLAttributes<HTMLTableSectionElement> {
+    fields: DataTableField<T>[];
+    currentSort: SortProps<T> | null;
     onChangeSort: (sort: SortProps<T>) => void;
 }
 export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps<T>, 'onClick'> {
