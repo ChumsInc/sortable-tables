@@ -169,3 +169,4 @@ Breaking changes from `chums-components`
 - TablePagination
   - The rows per page options were moved to a new attribute `rowsPerPageProps`
   - RowsPerPage now renders as a bootstrap InputGroup element
+- For old standalone tables without the ContextProvider use version 2.1.3
