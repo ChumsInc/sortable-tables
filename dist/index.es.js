@@ -362,7 +362,7 @@ function X({ nextSort: t }) {
   const [, a] = $();
   return q(() => {
     console.log("setNextSort", t), a(t);
-  }, [t, a]), /* @__PURE__ */ l("div", { className: "text-danger", children: "Sort Helper..." });
+  }, [t, a]), null;
 }
 function Y({
   fields: t,

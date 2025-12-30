@@ -41,4 +41,12 @@ export const tableFields: SortableTableField<ProductLine>[] = [
         render: (row) => <span className="badge bg-primary">{row.ExplodeKitItems}</span>,
         align: 'end'
     },
+    {
+        id: 'active',
+        field: 'active',
+        title: 'Active?',
+        sortable: true,
+        align: 'center',
+        render: (row) => <span className={`badge ${row.active ? 'bg-success' : 'bg-danger'}`}>{row.active ? 'Yes' : 'No'}</span>,
+    }
 ]

@@ -11,7 +11,5 @@ export function StandaloneSortHelper<T = unknown>({nextSort}:StandaloneSortHelpe
         console.log('setNextSort', nextSort);
         setNextSort(nextSort);
     }, [nextSort, setNextSort]);
-    return (
-        <div className="text-danger">Sort Helper...</div>
-    );
+    return null;
 }
