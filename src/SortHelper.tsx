@@ -5,7 +5,7 @@ import {useEffect} from "react";
 export interface StandaloneSortHelperProps<T = unknown> {
     nextSort: SortProps<T>
 }
-export function StandaloneSortHelper<T = unknown>({nextSort}:StandaloneSortHelperProps<T>) {
+export function SortHelper<T = unknown>({nextSort}:StandaloneSortHelperProps<T>) {
     const [, setNextSort] = useTableSort<T>();
     useEffect(() => {
         console.log('setNextSort', nextSort);

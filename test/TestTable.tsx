@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import type {ProductLine} from './data'
-import {SortableTable, type SortProps, useTableSort} from "../src";
+import {ContainedSortableTable, type SortProps, useTableSort} from "../src";
 import TablePagination from "../src/TablePagination";
 import TableColumnsHandler from "./TableColumnsHandler";
 
@@ -32,9 +32,9 @@ export default function TestTable({data, onChangeSort}: TestTableProps) {
     return (
         <div>
             <TableColumnsHandler/>
-            <SortableTable onChangeSort={sortChangeHandler} size="lg" responsive
-                           data={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-                           keyField="ProductLine" rowClassName={rowClassName}/>
+            <ContainedSortableTable onChangeSort={sortChangeHandler} size="lg" responsive
+                                    data={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+                                    keyField="ProductLine" rowClassName={rowClassName}/>
             <TablePagination page={page} onChangePage={setPage} size="sm"
                              rowsPerPage={rowsPerPage}
                              rowsPerPageProps={{

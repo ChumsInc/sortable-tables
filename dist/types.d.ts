@@ -1,4 +1,4 @@
-import { default as React, HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes } from 'react';
+import { HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes } from 'react';
 import { ClassValue } from 'clsx';
 export interface SortProps<T = unknown> {
     field: keyof T;
@@ -59,6 +59,7 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
     children?: ReactNode;
 }
 export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes<HTMLTableRowElement>, 'onClick'> {
+    fields: DataTableField<T>[];
     rowClassName?: string | ClassValue | ((row: T) => string | ClassValue);
     selected?: boolean;
     row: T;

@@ -1,4 +1,3 @@
-import React from "react";
 import DataTableTH from "./DataTableTH";
 import type {SortableTableTHProps, UIFlexAlign} from "./types";
 import styled from '@emotion/styled';

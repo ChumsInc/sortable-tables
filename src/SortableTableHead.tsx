@@ -1,4 +1,3 @@
-import React from "react";
 import SortableTableTH from "./SortableTableTH";
 import type {SortableTableHeadProps} from "./types";
 import clsx from "clsx";

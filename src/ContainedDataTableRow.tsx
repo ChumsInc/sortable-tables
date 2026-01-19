@@ -2,17 +2,19 @@ import {type MouseEvent} from 'react';
 import type {DataTableRowProps} from "./types";
 import DataTableCell from "./DataTableCell";
 import clsx from "clsx";
+import {useTableFields} from "./useTableFields";
 
-export default function DataTableRow<T = unknown>({
-                                                      fields,
-                                                      className,
-                                                      rowClassName,
-                                                      selected,
-                                                      row,
-                                                      trRef,
-                                                      onClick,
-                                                      ...rest
-                                                  }: DataTableRowProps<T>) {
+
+export default function ContainedDataTableRow<T = unknown>({
+                                       className,
+                                       rowClassName,
+                                       selected,
+                                       row,
+                                       trRef,
+                                       onClick,
+                                       ...rest
+                                   }: Omit<DataTableRowProps<T>, 'fields'>) {
+    const [fields] = useTableFields<T>()
     const clickHandler = (ev: MouseEvent<HTMLTableRowElement>) => {
         onClick?.(row, ev)
     }
@@ -34,4 +36,4 @@ export default function DataTableRow<T = unknown>({
         </tr>
     )
 }
-DataTableRow.displayName = 'DataTableRow';
+ContainedDataTableRow.displayName = 'ContainedDataTableRow';

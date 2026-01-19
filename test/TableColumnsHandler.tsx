@@ -1,10 +1,10 @@
 import {useTableContext} from "../src";
-import React, {useCallback, useId} from "react";
+import {type ChangeEvent, useCallback, useId, useState} from "react";
 import type {ProductLine} from "./data";
 
 export default function TableColumnsHandler() {
     const {updateField, getField} = useTableContext<ProductLine>();
-    const [visible, setVisible] = React.useState<boolean>(getField('ProductLineDesc')?.visible ?? true);
+    const [visible, setVisible] = useState<boolean>(getField('ProductLineDesc')?.visible ?? true);
     // const {sort} = useTableSort();
     const id = useId();
 
@@ -14,7 +14,7 @@ export default function TableColumnsHandler() {
         setVisible(next);
     }, [updateField]);
 
-    const handleVisibleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVisibleChange = (ev: ChangeEvent<HTMLInputElement>) => {
         toggleFieldCollapse('ProductLineDesc', ev.target.checked);
     }
 

@@ -1,13 +1,13 @@
 import { jsx as l, jsxs as h } from "react/jsx-runtime";
-import { createContext as I, useState as w, useCallback as g, useMemo as J, useContext as S, createElement as L, useEffect as q, useId as K } from "react";
+import { createContext as I, useState as w, useCallback as g, useMemo as J, useContext as C, createElement as L, useEffect as q, useId as K } from "react";
 import R from "@emotion/styled";
-const y = I(null);
+const T = I(null);
 function x({
   children: t,
-  initialFields: a = [],
-  initialSort: e = null
+  initialFields: e = [],
+  initialSort: a = null
 }) {
-  const [n, s] = w(a), [r, c] = w(e), u = g(
+  const [n, s] = w(e), [r, c] = w(a), u = g(
     (p) => {
       s(p);
     },
@@ -18,7 +18,7 @@ function x({
     },
     []
   ), d = g((p, f) => {
-    const N = n.map((T) => T.id === p ? { ...T, ...f } : T);
+    const N = n.map((y) => y.id === p ? { ...y, ...f } : y);
     s(N);
   }, [n]), o = g((p) => n.find((f) => f.id === p), [n]), b = J(
     () => ({
@@ -31,20 +31,20 @@ function x({
     }),
     [n, u, r, i, d, o]
   );
-  return /* @__PURE__ */ l(y.Provider, { value: b, children: t });
+  return /* @__PURE__ */ l(T.Provider, { value: b, children: t });
 }
 x.displayName = "DataTableProvider";
 function E(t) {
-  var a, e, n = "";
+  var e, a, n = "";
   if (typeof t == "string" || typeof t == "number") n += t;
   else if (typeof t == "object") if (Array.isArray(t)) {
     var s = t.length;
-    for (a = 0; a < s; a++) t[a] && (e = E(t[a])) && (n && (n += " "), n += e);
-  } else for (e in t) t[e] && (n && (n += " "), n += e);
+    for (e = 0; e < s; e++) t[e] && (a = E(t[e])) && (n && (n += " "), n += a);
+  } else for (a in t) t[a] && (n && (n += " "), n += a);
   return n;
 }
 function m() {
-  for (var t, a, e = 0, n = "", s = arguments.length; e < s; e++) (t = arguments[e]) && (a = E(t)) && (n && (n += " "), n += a);
+  for (var t, e, a = 0, n = "", s = arguments.length; a < s; a++) (t = arguments[a]) && (e = E(t)) && (n && (n += " "), n += e);
   return n;
 }
 const F = R.table`
@@ -62,35 +62,35 @@ const F = R.table`
 `;
 function P({
   sticky: t,
-  responsive: a,
-  children: e,
+  responsive: e,
+  children: a,
   className: n,
   ref: s,
   ...r
 }) {
-  if (a) {
+  if (e) {
     const c = m(n, {
-      "table-responsive": a === !0,
-      [`table-responsive-${a}`]: a !== !0
+      "table-responsive": e === !0,
+      [`table-responsive-${e}`]: e !== !0
     });
-    return /* @__PURE__ */ l("div", { className: c, children: /* @__PURE__ */ l(F, { ref: s, ...r, children: e }) });
+    return /* @__PURE__ */ l("div", { className: c, children: /* @__PURE__ */ l(F, { ref: s, ...r, children: a }) });
   }
-  return /* @__PURE__ */ l(F, { className: n, sticky: t, ref: s, ...r, children: e });
+  return /* @__PURE__ */ l(F, { className: n, sticky: t, ref: s, ...r, children: a });
 }
-function C({
+function S({
   field: t,
-  className: a,
-  children: e,
+  className: e,
+  children: a,
   ...n
 }) {
   if (t.visible === !1)
     return null;
-  const s = m({ [`text-${t.align}`]: !!t.align }, a);
-  return /* @__PURE__ */ l("th", { className: s, scope: "col", ...n, children: e ?? t.title });
+  const s = m({ [`text-${t.align}`]: !!t.align }, e);
+  return /* @__PURE__ */ l("th", { className: s, scope: "col", ...n, children: a ?? t.title });
 }
-C.displayName = "DataTableTH";
+S.displayName = "DataTableTH";
 function v() {
-  const t = S(y);
+  const t = C(T);
   if (!t)
     throw new Error("useTableContext must be used within a DataTableProvider");
   return [
@@ -99,24 +99,24 @@ function v() {
   ];
 }
 function j({ ...t }) {
-  const [a] = v();
-  return /* @__PURE__ */ l("thead", { ...t, children: /* @__PURE__ */ l("tr", { children: a.map((e, n) => /* @__PURE__ */ l(
-    C,
+  const [e] = v();
+  return /* @__PURE__ */ l("thead", { ...t, children: /* @__PURE__ */ l("tr", { children: e.map((a, n) => /* @__PURE__ */ l(
+    S,
     {
-      ...e.thProps,
-      field: e,
+      ...a.thProps,
+      field: a,
       className: m(
-        typeof e.className == "function" ? { [`text-${e.align}`]: !!e.align } : e.className
+        typeof a.className == "function" ? { [`text-${a.align}`]: !!a.align } : a.className
       )
     },
-    String(e.id ?? n)
+    String(a.id ?? n)
   )) }) });
 }
 j.displayName = "DataTableHead";
 function _({
   className: t,
-  size: a,
-  responsive: e,
+  size: e,
+  responsive: a,
   sticky: n,
   data: s,
   keyField: r,
@@ -130,9 +130,9 @@ function _({
   ...f
 }) {
   const N = m("table", t, {
-    [`table-${a}`]: !!a
+    [`table-${e}`]: !!e
   });
-  return /* @__PURE__ */ h(P, { sticky: n, responsive: e, className: N, ...f, children: [
+  return /* @__PURE__ */ h(P, { sticky: n, responsive: a, className: N, ...f, children: [
     /* @__PURE__ */ l(H, {}),
     /* @__PURE__ */ l(j, { ...o }),
     !!s.length && /* @__PURE__ */ l(
@@ -150,21 +150,21 @@ function _({
     p
   ] });
 }
-_.displayName = "DataTable";
+_.displayName = "ContainedDataTable";
 function O({
   fields: t,
-  ...a
+  ...e
 }) {
-  return /* @__PURE__ */ l(x, { initialFields: t, children: /* @__PURE__ */ l(_, { ...a }) });
+  return /* @__PURE__ */ l(x, { initialFields: t, children: /* @__PURE__ */ l(_, { ...e }) });
 }
-O.displayName = "StandaloneDataTable";
-function D({ field: t, row: a, className: e, as: n, ...s }) {
+O.displayName = "DataTable";
+function D({ field: t, row: e, className: a, as: n, ...s }) {
   if (t.visible === !1)
     return null;
   const r = m(
     { [`text-${t.align}`]: !!t.align },
-    e,
-    typeof t.className == "function" ? t.className(a) : t.className
+    a,
+    typeof t.className == "function" ? t.className(e) : t.className
   );
   return L(
     n ?? t.as ?? "td",
@@ -175,14 +175,14 @@ function D({ field: t, row: a, className: e, as: n, ...s }) {
       ...t.cellProps,
       ...s
     },
-    a[t.field] === void 0 && !t.render ? null : typeof t.render == "function" ? t.render(a) : a[t.field]
+    e[t.field] === void 0 && !t.render ? null : typeof t.render == "function" ? t.render(e) : e[t.field]
   );
 }
 D.displayName = "DataTableCell";
 function M({
   className: t,
-  rowClassName: a,
-  selected: e,
+  rowClassName: e,
+  selected: a,
   row: n,
   trRef: s,
   onClick: r,
@@ -190,23 +190,23 @@ function M({
 }) {
   const [u] = v(), i = (o) => {
     r?.(n, o);
-  }, d = typeof a == "function" ? a(n) : a;
+  }, d = typeof e == "function" ? e(n) : e;
   return n ? /* @__PURE__ */ l(
     "tr",
     {
       ref: s,
-      className: m({ "table-active": e }, t, d),
+      className: m({ "table-active": a }, t, d),
       onClick: i,
       ...c,
       children: u.map((o, b) => /* @__PURE__ */ l(D, { field: o, row: n }, String(o?.id ?? b)))
     }
   ) : null;
 }
-M.displayName = "DataTableRow";
+M.displayName = "ContainedDataTableRow";
 function Q({
   fields: t,
-  className: a,
-  rowClassName: e,
+  className: e,
+  rowClassName: a,
   selected: n,
   row: s,
   trRef: r,
@@ -215,23 +215,23 @@ function Q({
 }) {
   const i = (o) => {
     c?.(s, o);
-  }, d = typeof e == "function" ? e(s) : e;
+  }, d = typeof a == "function" ? a(s) : a;
   return s ? /* @__PURE__ */ l(
     "tr",
     {
       ref: r,
-      className: m({ "table-active": n }, a, d),
+      className: m({ "table-active": n }, e, d),
       onClick: i,
       ...u,
       children: t.map((o, b) => /* @__PURE__ */ l(D, { field: o, row: s }, String(o?.id ?? b)))
     }
   ) : null;
 }
-Q.displayName = "StandaloneDataTableRow";
+Q.displayName = "DataTableRow";
 function k({
   data: t,
-  keyField: a,
-  rowClassName: e,
+  keyField: e,
+  rowClassName: a,
   renderRow: n,
   onSelectRow: s,
   selected: r = "",
@@ -240,12 +240,12 @@ function k({
 }) {
   return /* @__PURE__ */ h("tbody", { ...u, children: [
     t.map((i) => {
-      const d = String(typeof a == "function" ? a(i) : i[a]), o = typeof r == "function" ? r(i) : d === r;
+      const d = String(typeof e == "function" ? e(i) : i[e]), o = typeof r == "function" ? r(i) : d === r;
       return n ? n(i) : /* @__PURE__ */ l(
         M,
         {
           onClick: s,
-          rowClassName: e,
+          rowClassName: a,
           row: i,
           selected: o
         },
@@ -257,7 +257,7 @@ function k({
 }
 k.displayName = "DataTableTBody";
 function $() {
-  const t = S(y);
+  const t = C(T);
   if (!t)
     throw new Error("useTableSort must be used within a DataTableProvider");
   return [
@@ -282,43 +282,43 @@ const U = (t) => t ? t === "end" ? "flex-end" : "center" : "flex-start", X = R.d
         transition: opacity 0.2s;
     }
 `;
-function W({
+function A({
   field: t,
-  sorted: a,
-  ascending: e,
+  sorted: e,
+  ascending: a,
   className: n,
   onClick: s
 }) {
   if (t.visible === !1)
     return null;
   if (!t.sortable)
-    return /* @__PURE__ */ l(C, { field: t, className: n });
+    return /* @__PURE__ */ l(S, { field: t, className: n });
   const { className: r, ...c } = t.thProps ?? {}, u = m(
     n,
     r,
     { [`text-${t.align}`]: !!t.align }
   ), i = () => {
-    s({ field: t.field, ascending: a ? !e : !0 });
+    s({ field: t.field, ascending: e ? !a : !0 });
   }, d = {
-    "bi-arrow-down": e,
-    "bi-arrow-up": !e
+    "bi-arrow-down": a,
+    "bi-arrow-up": !a
   };
-  return /* @__PURE__ */ l("th", { ...c, className: m("sortable", u), scope: "col", onClick: i, children: /* @__PURE__ */ h(X, { sorted: a, align: t.align, children: [
+  return /* @__PURE__ */ l("th", { ...c, className: m("sortable", u), scope: "col", onClick: i, children: /* @__PURE__ */ h(X, { sorted: e, align: t.align, children: [
     /* @__PURE__ */ l("div", { className: "field-title", children: t.title }),
     /* @__PURE__ */ l("div", { className: m("me-1 sort-icon", d) })
   ] }) });
 }
-W.displayName = "SortableTableTH";
-function A({
+A.displayName = "SortableTableTH";
+function B({
   onChangeSort: t
 }) {
-  const [a] = v(), [e] = $();
-  return /* @__PURE__ */ l("thead", { children: /* @__PURE__ */ l("tr", { children: a.map((n, s) => /* @__PURE__ */ l(
-    W,
+  const [e] = v(), [a] = $();
+  return /* @__PURE__ */ l("thead", { children: /* @__PURE__ */ l("tr", { children: e.map((n, s) => /* @__PURE__ */ l(
+    A,
     {
       field: n,
-      sorted: e?.field === n.field,
-      ascending: e?.ascending,
+      sorted: a?.field === n.field,
+      ascending: a?.ascending,
       className: m(
         typeof n.className == "function" ? { [`text-${n.align}`]: !!n.align } : n.className
       ),
@@ -327,18 +327,18 @@ function A({
     s
   )) }) });
 }
-A.displayName = "SortableTableHead";
-function B({
+B.displayName = "SortableTableHead";
+function V({
   onChangeSort: t
 }) {
-  const [a] = v(), [e] = $();
-  return /* @__PURE__ */ l(A, { fields: a, currentSort: e, onChangeSort: t });
+  const [e] = v(), [a] = $();
+  return /* @__PURE__ */ l(B, { fields: e, currentSort: a, onChangeSort: t });
 }
-B.displayName = "SortableTableHeadWrapper";
-function V({
+V.displayName = "SortableTableHeadWrapper";
+function W({
   className: t,
-  size: a,
-  responsive: e,
+  size: e,
+  responsive: a,
   sticky: n,
   data: s,
   keyField: r,
@@ -352,12 +352,12 @@ function V({
   onChangeSort: f,
   ...N
 }) {
-  const T = m("table", t, {
-    [`table-${a}`]: !!a
+  const y = m("table", t, {
+    [`table-${e}`]: !!e
   });
-  return /* @__PURE__ */ h(P, { className: T, responsive: e, sticky: n, ...N, children: [
+  return /* @__PURE__ */ h(P, { className: y, responsive: a, sticky: n, ...N, children: [
     /* @__PURE__ */ l(H, {}),
-    /* @__PURE__ */ l(B, { onChangeSort: f, ...o }),
+    /* @__PURE__ */ l(V, { onChangeSort: f, ...o }),
     !!s.length && /* @__PURE__ */ l(
       k,
       {
@@ -373,36 +373,36 @@ function V({
     p
   ] });
 }
-V.displayName = "SortableTable";
+W.displayName = "ContainedSortableTable";
 function Y({ nextSort: t }) {
-  const [, a] = $();
+  const [, e] = $();
   return q(() => {
-    console.log("setNextSort", t), a(t);
-  }, [t, a]), null;
+    console.log("setNextSort", t), e(t);
+  }, [t, e]), null;
 }
 function Z({
   fields: t,
-  currentSort: a,
-  ...e
+  currentSort: e,
+  ...a
 }) {
-  return /* @__PURE__ */ h(x, { initialFields: t, initialSort: a, children: [
-    /* @__PURE__ */ l(Y, { nextSort: a }),
-    /* @__PURE__ */ l(V, { ...e })
+  return /* @__PURE__ */ h(x, { initialFields: t, initialSort: e, children: [
+    /* @__PURE__ */ l(Y, { nextSort: e }),
+    /* @__PURE__ */ l(W, { ...a })
   ] });
 }
-Z.displayName = "StandaloneSortableTable";
+Z.displayName = "SortableTable";
 const z = [10, 25, 50, 100, 250, 500, 1e3];
 function G({
   value: t,
-  pageValues: a = z,
-  size: e,
+  pageValues: e = z,
+  size: a,
   label: n,
   className: s,
   onChange: r,
   ...c
 }) {
-  const u = K(), i = (b) => r(Number(b.target.value)), d = s ?? m("form-select", { [`form-select-${e}`]: !!e }), o = m("input-group", {
-    [`input-group-${e}`]: !!e
+  const u = K(), i = (b) => r(Number(b.target.value)), d = s ?? m("form-select", { [`form-select-${a}`]: !!a }), o = m("input-group", {
+    [`input-group-${a}`]: !!a
   });
   return /* @__PURE__ */ h("div", { className: o, children: [
     /* @__PURE__ */ l("label", { className: "input-group-text", htmlFor: u, children: n ?? "Rows" }),
@@ -414,7 +414,7 @@ function G({
         value: t,
         onChange: i,
         ...c,
-        children: a.map((b) => /* @__PURE__ */ l("option", { value: b, children: b }, b))
+        children: e.map((b) => /* @__PURE__ */ l("option", { value: b, children: b }, b))
       }
     )
   ] }, t);
@@ -422,8 +422,8 @@ function G({
 G.displayName = "RowsPerPage";
 function tt({
   page: t,
-  rowsPerPage: a,
-  onChangePage: e,
+  rowsPerPage: e,
+  onChangePage: a,
   count: n,
   size: s,
   showFirst: r,
@@ -432,9 +432,9 @@ function tt({
   rowsPerPageProps: i,
   ...d
 }) {
-  const o = n === 0 ? 0 : t * a + 1, b = Math.min(t * a + a, n), p = a === 0 ? 0 : Math.floor((n - 1) / a), f = m("btn btn-link", { [`btn-${s}`]: !!s });
+  const o = n === 0 ? 0 : t * e + 1, b = Math.min(t * e + e, n), p = e === 0 ? 0 : Math.floor((n - 1) / e), f = m("btn btn-link", { [`btn-${s}`]: !!s });
   return /* @__PURE__ */ h("div", { className: m("row g-3 justify-content-end", u), ...d, children: [
-    !!i && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(G, { ...i, value: a, size: s }) }),
+    !!i && /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ l(G, { ...i, value: e, size: s }) }),
     /* @__PURE__ */ l("div", { className: "col-auto", children: /* @__PURE__ */ h("div", { className: "row g-3 flex-nowrap align-items-baseline", children: [
       /* @__PURE__ */ h("div", { className: "col-auto", children: [
         o,
@@ -448,7 +448,7 @@ function tt({
         {
           className: f,
           disabled: t === 0,
-          onClick: () => e(0),
+          onClick: () => a(0),
           "aria-label": "First page",
           children: /* @__PURE__ */ l("span", { className: "bi-chevron-bar-left", "aria-hidden": "true" })
         }
@@ -458,7 +458,7 @@ function tt({
         {
           className: f,
           disabled: t === 0,
-          onClick: () => e(t - 1),
+          onClick: () => a(t - 1),
           "aria-label": "Previous page",
           children: /* @__PURE__ */ l("span", { className: "bi-chevron-left", "aria-hidden": "true" })
         }
@@ -468,7 +468,7 @@ function tt({
         {
           className: f,
           disabled: t >= p,
-          onClick: () => e(t + 1),
+          onClick: () => a(t + 1),
           "aria-label": "Next page",
           children: /* @__PURE__ */ l("span", { className: "bi-chevron-right", "aria-hidden": "true" })
         }
@@ -478,7 +478,7 @@ function tt({
         {
           className: f,
           disabled: t >= p,
-          onClick: () => e(p),
+          onClick: () => a(p),
           "aria-label": "Last page",
           children: /* @__PURE__ */ l("span", { className: "bi-chevron-bar-right", "aria-hidden": "true" })
         }
@@ -489,46 +489,46 @@ function tt({
 tt.displayname = "TablePagination";
 function H() {
   const [t] = v();
-  return /* @__PURE__ */ l("colgroup", { children: t.filter((a) => a.visible !== !1).map((a, e) => /* @__PURE__ */ l(
+  return /* @__PURE__ */ l("colgroup", { children: t.filter((e) => e.visible !== !1).map((e, a) => /* @__PURE__ */ l(
     "col",
     {
-      className: a.colClassName,
-      span: a.colSpan ?? 1
+      className: e.colClassName,
+      span: e.colSpan ?? 1
     },
-    e
+    a
   )) });
 }
 H.displayName = "DataTableCols";
 function lt(t) {
-  const a = S(y);
-  if (!a)
+  const e = C(T);
+  if (!e)
     throw new Error("useField must be used within a DataTableProvider");
   return [
-    a.fields.find((e) => e.id === t) ?? null,
-    a.updateField
+    e.fields.find((a) => a.id === t) ?? null,
+    e.updateField
   ];
 }
 function st() {
-  const t = S(y);
+  const t = C(T);
   if (!t)
     throw new Error("useTableContext must be used within a DataTableProvider");
   return t;
 }
 export {
+  _ as ContainedDataTable,
+  M as ContainedDataTableRow,
+  W as ContainedSortableTable,
   O as DataTable,
   H as DataTableCols,
-  y as DataTableContext,
+  T as DataTableContext,
   x as DataTableProvider,
-  M as DataTableRow,
+  Q as DataTableRow,
   k as DataTableTBody,
-  C as DataTableTH,
-  _ as DataTableWithContext,
+  S as DataTableTH,
   G as RowsPerPage,
-  V as SortableTable,
-  A as SortableTableHead,
-  W as SortableTableTH,
-  Q as StandaloneDataTableRow,
-  Z as StandaloneSortableTable,
+  Z as SortableTable,
+  B as SortableTableHead,
+  A as SortableTableTH,
   tt as TablePagination,
   lt as useField,
   st as useTableContext,

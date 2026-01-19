@@ -1,43 +1,20 @@
 import type {SortableTableProps} from "./types";
-import clsx from "clsx";
-import Table from "./Table";
-import {DataTableCols, DataTableTBody} from "./index";
-import React from "react";
-import SortableTableHeadWrapper from "./SortableTableHeadWrapper";
+import DataTableProvider from "./DataTableProvider";
+import ContainedSortableTable from "./ContainedSortableTable";
+import {SortHelper} from "./SortHelper";
+
 
 export default function SortableTable<T = unknown>({
-                                                       className,
-                                                       size,
-                                                       responsive,
-                                                       sticky,
-                                                       data,
-                                                       keyField,
-                                                       rowClassName,
-                                                       renderRow,
-                                                       onSelectRow,
-                                                       selected,
-                                                       tableHeadProps,
-                                                       children,
-                                                       tfoot,
-                                                       onChangeSort,
+                                                       fields,
+                                                       currentSort,
                                                        ...rest
-                                                   }: Omit<SortableTableProps<T>, 'fields' | 'currentSort'>) {
-    const tableClassName = clsx('table', className, {
-        [`table-${size}`]: !!size,
-    })
-
+                                                   }: SortableTableProps<T>) {
     return (
-        <Table className={tableClassName} responsive={responsive} sticky={sticky} {...rest}>
-            <DataTableCols/>
-            <SortableTableHeadWrapper onChangeSort={onChangeSort} {...tableHeadProps}/>
-            {!!data.length && (
-                <DataTableTBody data={data} keyField={keyField} rowClassName={rowClassName}
-                                renderRow={renderRow}
-                                onSelectRow={onSelectRow} selected={selected}/>
-            )}
-            {children}
-            {tfoot}
-        </Table>
+        <DataTableProvider initialFields={fields} initialSort={currentSort}>
+            <SortHelper nextSort={currentSort}/>
+            <ContainedSortableTable {...rest}/>
+        </DataTableProvider>
     )
 }
+
 SortableTable.displayName = 'SortableTable';

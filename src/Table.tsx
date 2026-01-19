@@ -1,4 +1,4 @@
-import React, {type RefObject, type TableHTMLAttributes} from 'react';
+import {type RefObject, type TableHTMLAttributes} from 'react';
 import styled from "@emotion/styled";
 import type {DataTableProps} from "./types";
 import clsx from "clsx";

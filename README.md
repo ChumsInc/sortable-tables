@@ -10,7 +10,7 @@ additional table size 'xs' for less padding.
 ## Usage
 ### Configure Columns
 ```tsx
-import {StandaloneSortableTable, SortableTableField, SortProps} from "@chumsinc/sortable-tables";
+import {SortableTable, SortableTableField, SortProps} from "@chumsinc/sortable-tables";
 import {ProductLine} from 'chums-types'
 
 const fields: SortableTableField<ProductLine>[] = [
@@ -123,7 +123,7 @@ function TableColumnsHandler() {
 ```
 ### Usage as a Standalone Table:
 ```tsx
-import {StandaloneSortableTable, SortableTableField, SortProps} from "@chumsinc/sortable-tables";
+import {SortableTable, SortableTableField, SortProps} from "@chumsinc/sortable-tables";
 import {ProductLine} from 'chums-type'
 import {fields} from './fields'
 
@@ -146,7 +146,7 @@ export default function ProductLinesList() {
 
   return (
           <div>
-            <StandaloneSortableTable currentSort={sort} onChangeSort={setSort} fields={fields} size="lg" responsive
+            <SortableTable currentSort={sort} onChangeSort={setSort} fields={fields} size="lg" responsive
                            data={list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
                            keyField="ProductLine" rowClassName={rowClassName}/>
             <TablePagination page={page} onChangePage={setPage} size="sm"

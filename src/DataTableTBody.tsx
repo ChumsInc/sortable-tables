@@ -1,5 +1,4 @@
-import React from 'react';
-import DataTableRow from "./DataTableRow";
+import ContainedDataTableRow from "./ContainedDataTableRow";
 import type {DataTableTBodyProps} from "./types";
 
 
@@ -22,9 +21,9 @@ export default function DataTableTBody<T = unknown>({
                 return renderRow(row);
             }
             return (
-                <DataTableRow key={keyValue} onClick={onSelectRow}
-                              rowClassName={rowClassName}
-                              row={row} selected={isSelected}/>
+                <ContainedDataTableRow key={keyValue} onClick={onSelectRow}
+                                       rowClassName={rowClassName}
+                                       row={row} selected={isSelected}/>
             )
         })}
         {children}

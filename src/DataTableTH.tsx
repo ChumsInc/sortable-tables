@@ -1,4 +1,3 @@
-import React from "react";
 import type {DataTableTHProps} from "./types";
 import clsx from "clsx";
 

@@ -1,4 +1,4 @@
-import React, {type ChangeEvent, useId} from 'react';
+import {type ChangeEvent, useId} from 'react';
 import type {RowsPerPageProps} from "./types";
 import clsx from "clsx";
 

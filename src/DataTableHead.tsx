@@ -1,4 +1,4 @@
-import React, {type TableHTMLAttributes} from "react";
+import {type TableHTMLAttributes} from "react";
 import DataTableTH from "./DataTableTH";
 import clsx from "clsx";
 import {useTableFields} from "./useTableFields";

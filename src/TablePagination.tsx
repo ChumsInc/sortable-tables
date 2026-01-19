@@ -1,4 +1,3 @@
-import React from 'react';
 import RowsPerPage from "./RowsPerPage";
 import type {TablePaginationProps} from "./types";
 import clsx from "clsx";
