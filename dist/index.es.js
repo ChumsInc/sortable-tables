@@ -240,16 +240,7 @@ function $() {
     t.setSort
   ];
 }
-const Q = (t) => {
-  if (!t)
-    return "flex-start";
-  switch (t) {
-    case "end":
-      return "flex-end";
-    default:
-      return "center";
-  }
-}, U = F.div`
+const Q = (t) => t ? t === "end" ? "flex-end" : "center" : "flex-start", U = F.div`
     display: flex;
     width: 100%;
     flex-direction: ${(t) => t.align === "end" ? "row-reverse" : "row"};
