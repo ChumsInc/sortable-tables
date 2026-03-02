@@ -1,5 +1,5 @@
-import { HTMLAttributes, MouseEvent, ReactNode, TableHTMLAttributes } from 'react';
-import { ClassValue } from 'clsx';
+import { type HTMLAttributes, type MouseEvent, type ReactNode, type TableHTMLAttributes } from 'react';
+import type { ClassValue } from "clsx";
 export interface SortProps<T = unknown> {
     field: keyof T;
     ascending: boolean;

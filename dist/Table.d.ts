@@ -1,5 +1,5 @@
-import { RefObject, TableHTMLAttributes } from 'react';
-import { DataTableProps } from './types';
+import { type RefObject, type TableHTMLAttributes } from 'react';
+import type { DataTableProps } from "./types";
 export interface StyledTableProps extends TableHTMLAttributes<HTMLTableElement>, Pick<DataTableProps, 'sticky' | 'responsive'> {
     ref?: RefObject<HTMLTableElement>;
 }

@@ -1,4 +1,4 @@
-import { SortProps } from './types';
+import type { SortProps } from "./types";
 export interface StandaloneSortHelperProps<T = unknown> {
     nextSort: SortProps<T>;
 }

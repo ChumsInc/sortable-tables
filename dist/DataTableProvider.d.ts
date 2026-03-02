@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { DataTableField, SortProps } from './types';
+import { type ReactNode } from "react";
+import type { DataTableField, SortProps } from "./types";
 export interface TableProviderProps<T = unknown> {
     initialFields: DataTableField<T>[];
     initialSort?: SortProps<T> | null;

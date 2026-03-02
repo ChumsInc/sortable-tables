@@ -1,4 +1,4 @@
-import { TableContextData } from './DataTableContext';
+import { type TableContextData } from "./DataTableContext";
 /**
  * Returns a tuple containing the fields and a function to update them.
  * @returns [fields, setFields]

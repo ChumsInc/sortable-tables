@@ -1,4 +1,4 @@
-import { TableContextData } from './DataTableContext';
+import { type TableContextData } from "./DataTableContext";
 /**
  * Returns a tuple containing the currentSort and a function to update the sort.
  * @returns [sort, setSort]

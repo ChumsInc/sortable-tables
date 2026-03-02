@@ -1,4 +1,4 @@
-import { DataTableField } from './types';
+import type { DataTableField } from "./types";
 export type UseFieldArg<T = unknown> = keyof T & ((string | number) & {});
 export declare function useField<T = unknown>(key: UseFieldArg<T>): [
     field: DataTableField<T> | null,

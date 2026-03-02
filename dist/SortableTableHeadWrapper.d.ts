@@ -1,4 +1,4 @@
-import { SortProps } from './types';
+import type { SortProps } from "./types";
 export interface SortableTableHeadWrapperProps<T = unknown> {
     onChangeSort: (sort: SortProps<T>) => void;
 }
