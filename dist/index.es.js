@@ -1,4 +1,4 @@
-import { jsx as l, jsxs as h, Fragment as J } from "react/jsx-runtime";
+import { jsx as l, Fragment as J, jsxs as h } from "react/jsx-runtime";
 import { createElement as L, createContext as q, useState as R, useCallback as g, useMemo as K, useContext as C, useEffect as O, useId as Q } from "react";
 import F from "@emotion/styled";
 function E(t) {
@@ -90,6 +90,9 @@ function x({ field: t, row: e, className: n, as: a, ...s }) {
   );
 }
 x.displayName = "DataTableCell";
+function U({ fields: t, row: e }) {
+  return /* @__PURE__ */ l(J, { children: t.map((n, a) => /* @__PURE__ */ l(x, { field: n, row: e }, String(n?.id ?? a))) });
+}
 const y = q(null);
 function S({
   children: t,
@@ -197,13 +200,13 @@ function M({
   ] });
 }
 M.displayName = "ContainedDataTable";
-function U({
+function X({
   fields: t,
   ...e
 }) {
   return /* @__PURE__ */ l(S, { initialFields: t, children: /* @__PURE__ */ l(M, { ...e }) });
 }
-U.displayName = "DataTable";
+X.displayName = "DataTable";
 function A({
   className: t,
   rowClassName: e,
@@ -228,9 +231,6 @@ function A({
   ) : null;
 }
 A.displayName = "ContainedDataTableRow";
-function X({ fields: t, row: e }) {
-  return /* @__PURE__ */ l(J, { children: t.map((n, a) => /* @__PURE__ */ l(x, { field: n, row: e }, String(n?.id ?? a))) });
-}
 function Y({
   fields: t,
   className: e,
@@ -251,7 +251,7 @@ function Y({
       trRef: r,
       onClick: o,
       ...c,
-      children: /* @__PURE__ */ l(X, { fields: t, row: s })
+      children: /* @__PURE__ */ l(U, { fields: t, row: s })
     }
   );
 }
@@ -546,12 +546,13 @@ export {
   M as ContainedDataTable,
   A as ContainedDataTableRow,
   G as ContainedSortableTable,
-  U as DataTable,
+  X as DataTable,
   x as DataTableCell,
   H as DataTableCols,
   y as DataTableContext,
   S as DataTableProvider,
   Y as DataTableRow,
+  U as DataTableRowCellSet,
   k as DataTableTBody,
   D as DataTableTH,
   j as DataTableTR,

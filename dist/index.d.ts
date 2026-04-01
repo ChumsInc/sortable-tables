@@ -1,6 +1,7 @@
 export { default as Table } from './Table';
 export { default as DataTableTR } from './DataTableTR';
 export { default as DataTableCell } from './DataTableCell';
+export { default as DataTableRowCellSet } from './DataTableRowCellSet';
 export { default as DataTable } from './DataTable';
 export { default as ContainedDataTableRow } from './ContainedDataTableRow';
 export { default as DataTableRow } from './DataTableRow';
