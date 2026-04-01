@@ -66,6 +66,10 @@ export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes
     trRef?: React.Ref<HTMLTableRowElement>;
     onClick?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
 }
+export interface DataTableTRProps<T = unknown> extends Omit<DataTableRowProps<T>, 'fields'> {
+    children: ReactNode;
+}
+export type DataTableCellSetProps<T = unknown> = Pick<DataTableRowProps<T>, 'fields' | 'row'>;
 export interface SortableTableProps<T = unknown> extends DataTableProps<T> {
     fields: DataTableField<T>[];
     currentSort: SortProps<T>;

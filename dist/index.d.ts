@@ -1,3 +1,6 @@
+export { default as Table } from './Table';
+export { default as DataTableTR } from './DataTableTR';
+export { default as DataTableCell } from './DataTableCell';
 export { default as DataTable } from './DataTable';
 export { default as ContainedDataTableRow } from './ContainedDataTableRow';
 export { default as DataTableRow } from './DataTableRow';
@@ -18,4 +21,4 @@ export { useTableSort } from './useTableSort';
 export { useTableContext } from './useTableContext';
 export { DataTableContext, type TableContextData } from './DataTableContext';
 export type { TableProviderProps } from './DataTableProvider';
-export type { SortProps, DataTableField, SortableTableField, DataTableColProps, DataTableCellProps, DataTableRowProps, DataTableTBodyProps, DataTableClassNames, DataTableProps, DataTableTHProps, RowsPerPageProps, SortableTableTHProps, SortableTableHeadProps, SortableTableProps, TablePaginationProps, UITableSize, UISize, UIFlexAlign } from './types';
+export type { SortProps, DataTableField, SortableTableField, DataTableColProps, DataTableCellProps, DataTableRowProps, DataTableTBodyProps, DataTableClassNames, DataTableProps, DataTableTHProps, RowsPerPageProps, SortableTableTHProps, SortableTableHeadProps, SortableTableProps, TablePaginationProps, UITableSize, UISize, UIFlexAlign, DataTableTRProps, DataTableCellSetProps, } from './types';
