@@ -1,7 +1,6 @@
-import {type MouseEvent} from 'react';
 import type {DataTableRowProps} from "./types";
-import DataTableCell from "./DataTableCell";
-import clsx from "clsx";
+import DataTableTR from "./DataTableTR";
+import DataTableRowCellSet from "./DataTableRowCellSet";
 
 export default function DataTableRow<T = unknown>({
                                                       fields,
@@ -13,25 +12,11 @@ export default function DataTableRow<T = unknown>({
                                                       onClick,
                                                       ...rest
                                                   }: DataTableRowProps<T>) {
-    const clickHandler = (ev: MouseEvent<HTMLTableRowElement>) => {
-        onClick?.(row, ev)
-    }
-
-    const _className = typeof rowClassName === 'function' ? rowClassName(row) : rowClassName;
-    if (!row) {
-        return null;
-    }
-
     return (
-        <tr ref={trRef}
-            className={clsx({'table-active': selected}, className, _className)}
-            onClick={clickHandler}
-            {...rest}>
-            {fields
-                .map((field, index) => (
-                    <DataTableCell key={String(field?.id ?? index)} field={field} row={row}/>
-                ))}
-        </tr>
+        <DataTableTR<T> className={className} rowClassName={rowClassName}
+                        row={row} selected={selected} trRef={trRef} onClick={onClick} {...rest} >
+            <DataTableRowCellSet<T> fields={fields} row={row}/>
+        </DataTableTR>
     )
 }
 DataTableRow.displayName = 'DataTableRow';
