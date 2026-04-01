@@ -163,6 +163,44 @@ export default function ProductLinesList() {
 } 
 ```
 
+### Usage in TableVirtuoso
+```tsx
+
+const components: TableComponents<DataRow> = {
+  Table: ({children, style}) => (
+          <Table style={style} className="table table-xs table-list">{children}</Table>
+  ),
+  TableRow: ({children, item, ...rest}) => (
+          <DataTableTR row={item} selected={item._id === selected} onClick={() => setSelected(item._id)} {...rest}>
+            {children}
+          </DataTableTR>
+  ),
+}
+return (
+        <TableContainer className="table-responsive">
+          <TableVirtuoso data={data} components={components}
+                         fixedItemHeight={25}
+                         fixedHeaderContent={() => (
+                                 <tr >
+                                   {fields
+                                           .map((tableField, index) => (
+                                                   <SortableTableTH key={index} field={tableField}
+                                                                    sorted={sort?.field === tableField.field}
+                                                                    ascending={sort?.ascending}
+                                                                    className={classNames({[`text-${tableField.align}`]: !!tableField.align})}
+                                                                    onClick={sortChangeHandler}/>
+                                           ))}
+                                 </tr>
+                         )}
+                         itemContent={(_index, row) => (
+                                 <DataTableRowCellSet fields={fields} row={row}/>
+                         )}
+          />
+        </TableContainer>
+)
+
+```
+
 ## 
 ## Breaking Changes
 Breaking changes from `chums-components`
