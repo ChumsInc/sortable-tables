@@ -1,11 +1,11 @@
 import React from 'react';
 import {createRoot} from "react-dom/client";
-import Main from "./Main";
+import TestVirtualTable from "./product-status/TestVirtualTable";
 
 const container = document.getElementById('app');
 const root = createRoot(container!);
 root.render(
     <React.StrictMode>
-        <Main/>
+        <TestVirtualTable/>
     </React.StrictMode>
 );

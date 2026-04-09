@@ -1,5 +1,5 @@
 import {useId, useState} from "react";
-import {DataTableProvider, type SortProps, StandaloneSortableTable} from "../src";
+import {DataTableProvider, type SortProps, SortableTable} from "../src";
 import {type ProductLine, productLines, productLineSorter} from "./data";
 import {tableFields} from "./tableFields";
 import TestTable from "./TestTable";
@@ -28,7 +28,7 @@ export default function Main() {
                     <TestTable data={list} onChangeSort={sortChangeHandler}/>
                 </DataTableProvider>
             )}
-            {!withProvider && <StandaloneSortableTable fields={tableFields.map(f => ({...f, visible: true}))} data={list}
+            {!withProvider && <SortableTable fields={tableFields.map(f => ({...f, visible: true}))} data={list}
                                                        keyField={(row) => row.ProductLine}
                                                        currentSort={sort} onChangeSort={sortChangeHandler}/>
             }
