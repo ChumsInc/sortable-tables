@@ -361,7 +361,7 @@ F.displayName = "ContainedSortableTable";
 function I({ nextSort: e }) {
 	let [, t] = k();
 	return i(() => {
-		console.log("setNextSort", e), t(e);
+		t(e);
 	}, [e, t]), null;
 }
 //#endregion
