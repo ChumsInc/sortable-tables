@@ -3,6 +3,7 @@ import {VirtualTable} from "../../src";
 import {tableFields} from "./cookie-consent-fields";
 import type {CookieConsentHistoryRecord, SortProps} from "chums-types";
 import {loadCookieConsentData} from "./cookie-consent-data";
+import {consentSorter} from "./utils";
 
 
 export interface VirtualTableProps {
@@ -36,8 +37,15 @@ export default function CookieConsentTable({
         loadData().catch(err => console.error(err));
     }, []);
 
+    const sortChangeHandler = (sort: SortProps<CookieConsentHistoryRecord>) => {
+        console.log('sortChangeHandler', sort);
+        setSort(sort);
+    }
+
+    const list = [...dataList].sort(consentSorter(sort));
+
     return (
-        <VirtualTable fields={tableFields} currentSort={sort} onChangeSort={setSort} data={dataList} keyField="uuid"
+        <VirtualTable fields={tableFields} currentSort={sort} onChangeSort={sortChangeHandler} data={list} keyField="uuid"
                       containerProps={{style: {maxHeight: '70vh'}}}
                       size="sm"/>
     )
