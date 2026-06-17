@@ -2,10 +2,13 @@ import {useTableFields} from "../useTableFields";
 import {useTableSort} from "../useTableSort";
 import clsx from "clsx";
 import SortableTableTH from "../SortableTableTH";
+import type {SortProps} from "chums-types";
 
-export default function FixedHeaderContent<T = unknown>() {
+export default function FixedHeaderContent<T = unknown>({onChangeSort}: {
+    onChangeSort: (sort: SortProps<T>) => void;
+}) {
     const [fields] = useTableFields<T>();
-    const [sort, setSort] = useTableSort<T>();
+    const [sort] = useTableSort<T>();
 
     return (
         <tr>
@@ -16,7 +19,7 @@ export default function FixedHeaderContent<T = unknown>() {
                                         typeof tableField.className === 'function'
                                             ? {[`text-${tableField.align}`]: !!tableField.align}
                                             : tableField.className
-                                    )} onClick={setSort}/>
+                                    )} onClick={onChangeSort}/>
             ))}
         </tr>
     )

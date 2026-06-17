@@ -1,8 +1,9 @@
-import {DataTableRowCellSet, useTableFields} from "../index";
+import {type DataTableClassNames, DataTableRowCellSet, useTableFields} from "../index";
 import type {ReactNode} from "react";
 
 export interface ItemContentProps<T = unknown> {
     row: T;
+    rowClassName?: DataTableClassNames<T>;
     renderRow?: (row: T) => ReactNode;
     onClick?: (row: T) => void;
     selected?: boolean;

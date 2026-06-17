@@ -47,5 +47,6 @@ export type {
     DataTableCellSetProps,
 } from './types';
 export {default as VirtualTable} from './virtual/VirtualTable';
+export {default as ContainedVirtualTable} from './virtual/ContainedVirtualTable'
 export {type VirtualTableProps} from './virtual/VirtualTableTypes'
 
