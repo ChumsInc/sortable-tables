@@ -1,21 +1,42 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {DataTableRowCellSet, DataTableTR, SortableTableTH, type SortProps, Table} from "../../src";
-import ProductStatusContainer from "./ProductStatusContainer";
 import {type TableComponents, TableVirtuoso} from "react-virtuoso";
 import type {ItemRecord} from "./product-status-types";
 import {loadProductStatusData} from "./product-status-data";
 import {tableFields} from "./tableFields";
 import {itemSorter} from "./utils";
+import VirtualTableContainer from "../virtuoso/VirtualTableContainer";
 
+export interface VirtualTableProps {
+    maxRows?: number;
+    rowHeight?: number;
+    headerHeight?: number;
+    maxHeight?: number;
+}
 
-export default function TestVirtualTable() {
+export default function ProductStatusTable({maxRows, rowHeight = 33, maxHeight = 500, headerHeight = 33}: VirtualTableProps) {
     const [dataList, setDataList] = useState<ItemRecord[]>([]);
     const [sort, setSort] = useState<SortProps<ItemRecord>>({field: 'ItemCode', ascending: true});
-
-    const loadData = async () => {
+    const [tableHeight, setTableHeight] = useState(maxHeight);
+    const loadData = useCallback(async () => {
         const data = await loadProductStatusData();
-        setDataList(data);
-    }
+        setDataList(data.slice(0, maxRows ?? data.length));
+
+    }, [maxRows]);
+
+    useEffect(() => {
+        if (!maxRows || maxRows > dataList.length) {
+            loadData().catch(err => console.error(err));
+            return;
+        }
+        setDataList(dataList.slice(0, maxRows));
+    }, [maxRows, dataList.length]);
+
+    // Calculate height based on rows or max limit
+    const handleTotalHeightChange = (totalHeight: number) => {
+        const calculatedHeight = totalHeight + headerHeight;
+        setTableHeight(Math.min(calculatedHeight, maxHeight));
+    };
     useEffect(() => {
         loadData().catch(err => console.error(err));
     }, []);
@@ -38,9 +59,11 @@ export default function TestVirtualTable() {
     }
 
     return (
-        <ProductStatusContainer>
+        <VirtualTableContainer style={{height: tableHeight, transition: 'height 0.3s ease-in-out'}}>
             <TableVirtuoso data={dataList}
                            components={components}
+                           totalListHeightChanged={handleTotalHeightChange}
+                           fixedItemHeight={rowHeight}
                            fixedHeaderContent={() => (
                                <tr>
                                    {tableFields.map((field, index) => (
@@ -57,6 +80,6 @@ export default function TestVirtualTable() {
                            )}
 
             />
-        </ProductStatusContainer>
+        </VirtualTableContainer>
     )
 }

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const ProductStatusContainer = styled.div`
+const VirtualTableContainer = styled.div`
     height: calc(100vh - 100px);
     max-height: calc(100vh - 100px);
     width: 100%;
@@ -19,5 +19,4 @@ const ProductStatusContainer = styled.div`
     } 
 `;
 
-
-export default ProductStatusContainer;
+export default VirtualTableContainer;

@@ -1,4 +1,4 @@
-import {useTableContext} from "../src";
+import {useTableContext} from "../../src";
 import {type ChangeEvent, useCallback, useId, useState} from "react";
 import type {ProductLine} from "./data";
 

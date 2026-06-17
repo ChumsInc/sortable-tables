@@ -1,37 +1,37 @@
-import {useId, useState} from "react";
-import {DataTableProvider, type SortProps, SortableTable} from "../src";
-import {type ProductLine, productLines, productLineSorter} from "./data";
-import {tableFields} from "./tableFields";
-import TestTable from "./TestTable";
+import {type ChangeEvent, useId, useState} from "react";
+import TestSortableTable from "./SortableTable/TestSortableTable";
+import TestCookieConsentTable from "./cookie-consent/TestCookieConsentTable";
+import TestProductStatus from "./product-status/TestProductStatus";
+
+type TableOption = 'sortable' | 'product-status' | 'cookie-consent';
 
 export default function Main() {
-    const initialSort: SortProps<ProductLine> = {field: 'ProductLine', ascending: true};
-    const [list, setList] = useState<ProductLine[]>([...productLines].sort(productLineSorter(initialSort)));
-    const [sort, setSort] = useState<SortProps<ProductLine>>(initialSort);
-    const [withProvider, setWithProvider] = useState(true);
-    const idProviderCheckbox = useId();
+    const id = useId();
+    const [value, setValue] = useState<TableOption>('sortable');
 
-    const sortChangeHandler = (sort: SortProps<ProductLine>) => {
-        setList([...productLines.sort(productLineSorter(sort))])
-        setSort(sort);
+    const changeHandler = (ev: ChangeEvent<HTMLSelectElement>) => {
+        setValue(ev.target.value as TableOption);
     }
 
     return (
         <div>
-            <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id={idProviderCheckbox} checked={withProvider}
-                       onChange={e => setWithProvider(e.target.checked)}/>
-                <label className="form-check-label" htmlFor={idProviderCheckbox}>With DataTableProvider</label>
+            <h1>Sortable Tables Testing</h1>
+            <div className="row g-3">
+                <div className="col-auto">
+                    <label htmlFor={id}>Test Option</label>
+                </div>
+                <div className="col-auto">
+                    <select className="form-select form-select-sm" id={id}
+                            value={value} onChange={changeHandler}>
+                        <option value="sortable">Sortable</option>
+                        <option value="product-status">Product Status</option>
+                        <option value="cookie-consent">Cookie Consent</option>
+                    </select>
+                </div>
             </div>
-            {withProvider && (
-                <DataTableProvider initialFields={tableFields} initialSort={initialSort}>
-                    <TestTable data={list} onChangeSort={sortChangeHandler}/>
-                </DataTableProvider>
-            )}
-            {!withProvider && <SortableTable fields={tableFields.map(f => ({...f, visible: true}))} data={list}
-                                                       keyField={(row) => row.ProductLine}
-                                                       currentSort={sort} onChangeSort={sortChangeHandler}/>
-            }
+            {value === 'sortable' && <TestSortableTable/>}
+            {value === 'cookie-consent' && <TestCookieConsentTable/>}
+            {value === 'product-status' && <TestProductStatus/>}
         </div>
     )
 }

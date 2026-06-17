@@ -1,4 +1,4 @@
-import type {SortProps} from "../src";
+import type {SortProps} from "chums-types";
 
 export interface ProductLine {
     ProductLine: string,

@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import type {ProductLine} from './data'
-import {ContainedSortableTable, type SortProps, useTableSort} from "../src";
-import TablePagination from "../src/TablePagination";
+import {ContainedSortableTable, type SortProps, useTableSort} from "../../src";
+import TablePagination from "../../src/TablePagination";
 import TableColumnsHandler from "./TableColumnsHandler";
 
 
@@ -45,6 +45,7 @@ export default function TestTable({data, onChangeSort}: TestTableProps) {
                              showFirst={data.length > rowsPerPage}
                              showLast={data.length > rowsPerPage}
                              count={data.length}/>
+            <div className="alert alert-info">Stuff below the table</div>
         </div>
 
     )
