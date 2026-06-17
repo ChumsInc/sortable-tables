@@ -7,4 +7,4 @@ export interface ItemContentProps<T = unknown> {
     onClick?: (row: T) => void;
     selected?: boolean;
 }
-export default function ItemContent<T = unknown>({ row, renderRow }: ItemContentProps<T>): string | number | bigint | boolean | Iterable<ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | import("react").JSX.Element | null | undefined;
+export default function ItemContent<T = unknown>({ row, rowClassName, onClick, selected, renderRow }: ItemContentProps<T>): string | number | bigint | boolean | Iterable<ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | import("react").JSX.Element | null | undefined;

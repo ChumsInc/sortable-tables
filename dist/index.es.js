@@ -3139,10 +3139,10 @@ function vi({ onChangeSort: e }) {
 }
 //#endregion
 //#region src/virtual/ItemContent.tsx
-function yi({ row: e, renderRow: t }) {
-	let [n] = w();
-	return t ? t(e) : /* @__PURE__ */ d(b, {
-		fields: n,
+function yi({ row: e, rowClassName: t, onClick: n, selected: r, renderRow: i }) {
+	let [a] = w();
+	return i ? i(e) : /* @__PURE__ */ d(b, {
+		fields: a,
 		row: e
 	});
 }
@@ -3184,11 +3184,17 @@ function xi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i
 			...b,
 			children: e
 		}),
-		TableRow: ({ children: e, item: t, ...n }) => /* @__PURE__ */ d(v, {
-			row: t,
-			...n,
-			children: e
-		}),
+		TableRow: ({ children: e, item: t, ...n }) => {
+			let r = String(typeof s == "function" ? s(t) : t[s]), i = typeof p == "function" ? p(t) : r === p;
+			return /* @__PURE__ */ d(v, {
+				row: t,
+				...n,
+				onClick: f,
+				rowClassName: l,
+				selected: i,
+				children: e
+			});
+		},
 		TableFoot: () => m || null
 	}, D = () => /* @__PURE__ */ d(vi, { onChangeSort: g });
 	return /* @__PURE__ */ d(bi, {
@@ -3203,16 +3209,10 @@ function xi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i
 			totalListHeightChanged: te,
 			fixedItemHeight: S,
 			fixedHeaderContent: D,
-			itemContent: (e, t) => {
-				let n = String(typeof s == "function" ? s(t) : t[s]);
-				return /* @__PURE__ */ d(yi, {
-					row: t,
-					onClick: f,
-					renderRow: u,
-					rowClassName: l,
-					selected: typeof p == "function" ? p(t) : n === p
-				}, e);
-			}
+			itemContent: (e, t) => /* @__PURE__ */ d(yi, {
+				row: t,
+				renderRow: u
+			}, e)
 		})
 	});
 }

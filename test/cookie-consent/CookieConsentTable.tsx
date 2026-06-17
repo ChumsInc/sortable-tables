@@ -18,6 +18,7 @@ export default function CookieConsentTable({
                                            }: VirtualTableProps) {
     const [dataList, setDataList] = useState<CookieConsentHistoryRecord[]>([]);
     const [sort, setSort] = useState<SortProps<CookieConsentHistoryRecord>>({field: 'uuid', ascending: true});
+    const [current, setCurrent] = useState<string | null>(null);
     const loadData = useCallback(async () => {
         const data = await loadCookieConsentData();
         setDataList(data.slice(0, maxRows ?? data.length));
@@ -44,9 +45,20 @@ export default function CookieConsentTable({
 
     const list = [...dataList].sort(consentSorter(sort));
 
+    function selectHandler(row: CookieConsentHistoryRecord, ...args: unknown[]) {
+        setCurrent(row.uuid);
+        console.log('selectHandler', row, args);
+    }
+
     return (
-        <VirtualTable fields={tableFields} currentSort={sort} onChangeSort={sortChangeHandler} data={list} keyField="uuid"
-                      containerProps={{style: {maxHeight: '70vh'}}}
-                      size="sm"/>
+        <div>
+            <div>Selected = {current}</div>
+            <VirtualTable fields={tableFields}
+                          currentSort={sort} onChangeSort={sortChangeHandler} data={list} keyField="uuid"
+                          selected={row => row.uuid === current}
+                          onSelectRow={selectHandler}
+                          containerProps={{style: {maxHeight: '70vh'}}}
+                          size="sm"/>
+        </div>
     )
 }

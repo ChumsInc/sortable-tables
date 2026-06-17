@@ -9,7 +9,7 @@ export interface ItemContentProps<T = unknown> {
     selected?: boolean;
 }
 
-export default function ItemContent<T = unknown>({row, renderRow}: ItemContentProps<T>) {
+export default function ItemContent<T = unknown>({row, rowClassName, onClick, selected, renderRow}: ItemContentProps<T>) {
     const [tableFields] = useTableFields<T>()
 
     if (renderRow) {

@@ -53,11 +53,15 @@ export default function ContainedVirtualTable<T = unknown>({
                 {children}
             </Table>
         ),
-        TableRow: ({children, item, ...rest}) => (
-            <DataTableTR row={item} {...rest}>
+        TableRow: ({children, item, ...rest}) => {
+            const keyValue = String(typeof keyField === "function" ? keyField(item) : item[keyField]);
+            const isSelected = typeof selected === 'function' ? selected(item) : keyValue === selected;
+            return (
+            <DataTableTR row={item} {...rest} onClick={onSelectRow} rowClassName={rowClassName} selected={isSelected}>
                 {children}
             </DataTableTR>
-        ),
+            )
+        },
         TableFoot: () => (tfoot ? tfoot : null)
     }
 
@@ -72,12 +76,9 @@ export default function ContainedVirtualTable<T = unknown>({
                               fixedItemHeight={vRowHeight}
                               fixedHeaderContent={fixedHeaderContent}
                               itemContent={(_index, row) => {
-                                  const keyValue = String(typeof keyField === "function" ? keyField(row) : row[keyField]);
-                                  const isSelected = typeof selected === 'function' ? selected(row) : keyValue === selected;
+
                                   return (
-                                      <ItemContent row={row} key={_index} onClick={onSelectRow} renderRow={renderRow}
-                                                   rowClassName={rowClassName}
-                                                   selected={isSelected}/>
+                                      <ItemContent row={row} key={_index} renderRow={renderRow}/>
                                   )
                               }}
             />
