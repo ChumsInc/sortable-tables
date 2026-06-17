@@ -3139,10 +3139,10 @@ function vi({ onChangeSort: e }) {
 }
 //#endregion
 //#region src/virtual/ItemContent.tsx
-function yi({ row: e, rowClassName: t, onClick: n, selected: r, renderRow: i }) {
-	let [a] = w();
-	return i ? i(e) : /* @__PURE__ */ d(b, {
-		fields: a,
+function yi({ row: e, renderRow: t }) {
+	let [n] = w();
+	return t ? t(e) : /* @__PURE__ */ d(b, {
+		fields: n,
 		row: e
 	});
 }
