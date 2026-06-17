@@ -4,8 +4,10 @@
 # CHUMS Sortable Table Component
 A strongly typed Table Component package to replace parts of the `chums-components` package.
 
-This components uses [Bootstrap 5.3](https://getbootstrap.com/docs/5.3/content/tables/) tables class names, with 
-additional table size 'xs' for less padding.
+This component uses [Bootstrap 5.3](https://getbootstrap.com/docs/5.3/content/tables/) tables class names, with 
+additional table size 'xs' for less padding and smaller font size.
+
+Table fields now allow dot notation for nested objects, but render function must be used for complex fields.
 
 ## Usage
 ### Configure Columns
