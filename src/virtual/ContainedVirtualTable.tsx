@@ -76,7 +76,6 @@ export default function ContainedVirtualTable<T = unknown>({
                               fixedItemHeight={vRowHeight}
                               fixedHeaderContent={fixedHeaderContent}
                               itemContent={(_index, row) => {
-
                                   return (
                                       <ItemContent row={row} key={_index} renderRow={renderRow}/>
                                   )
