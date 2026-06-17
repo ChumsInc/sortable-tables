@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import type {ProductLine} from './data'
-import {ContainedSortableTable, type SortProps, useTableSort} from "../../src";
-import TablePagination from "../../src/TablePagination";
+import {ContainedSortableTable, type SortProps, TablePagination, useTableSort} from "@chumsinc/sortable-tables";
 import TableColumnsHandler from "./TableColumnsHandler";
 
 

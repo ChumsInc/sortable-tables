@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {DataTableRowCellSet, DataTableTR, SortableTableTH, type SortProps, Table} from "../../src";
+import {DataTableRowCellSet, DataTableTR, SortableTableTH, type SortProps, Table} from "@chumsinc/sortable-tables";
 import {type TableComponents, TableVirtuoso} from "react-virtuoso";
 import type {ItemRecord} from "./product-status-types";
 import {loadProductStatusData} from "./product-status-data";

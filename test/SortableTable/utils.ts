@@ -1,4 +1,4 @@
-import type {SortProps} from "../src";
+import type {SortProps} from "chums-types";
 import type {ProductLine} from "./data";
 
 export const productLineSorter = (sort: SortProps<ProductLine>) => (a: ProductLine, b: ProductLine) => {

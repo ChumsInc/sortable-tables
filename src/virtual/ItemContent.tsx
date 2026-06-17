@@ -1,4 +1,4 @@
-import {type DataTableClassNames, DataTableRowCellSet, useTableFields} from "../index";
+import {DataTableRowCellSet, useTableFields} from "../index";
 import type {ReactNode} from "react";
 
 export interface ItemContentProps<T = unknown> {

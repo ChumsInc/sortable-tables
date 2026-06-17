@@ -21,7 +21,7 @@ export default function DataTableCell<T = unknown>({field, row, className, as, .
             ...field.cellProps,
             ...rest
         },
-        (field.field.includes('.') || row[field.field as keyof T] === undefined && !field.render)
+        ((field.field.includes('.') || row[field.field as keyof T] === undefined) && !field.render)
             ? null
             : (
                 typeof field.render === 'function'

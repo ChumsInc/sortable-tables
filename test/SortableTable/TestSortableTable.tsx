@@ -1,5 +1,5 @@
 import {useId, useState} from "react";
-import {DataTableProvider, type SortProps, SortableTable} from "../../src";
+import {DataTableProvider, type SortProps, SortableTable} from "@chumsinc/sortable-tables";
 import {type ProductLine, productLines, productLineSorter} from "./data";
 import {tableFields} from "./tableFields";
 import TestTable from "./TestTable";

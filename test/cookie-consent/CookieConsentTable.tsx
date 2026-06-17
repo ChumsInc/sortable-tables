@@ -58,7 +58,7 @@ export default function CookieConsentTable({
                           selected={row => row.uuid === current}
                           onSelectRow={selectHandler}
                           containerProps={{style: {maxHeight: '70vh'}}}
-                          size="sm"/>
+                          size="xs"/>
         </div>
     )
 }
