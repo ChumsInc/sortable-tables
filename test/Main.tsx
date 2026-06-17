@@ -7,7 +7,7 @@ type TableOption = 'sortable' | 'product-status' | 'cookie-consent';
 
 export default function Main() {
     const id = useId();
-    const [value, setValue] = useState<TableOption>('sortable');
+    const [value, setValue] = useState<TableOption>('cookie-consent');
 
     const changeHandler = (ev: ChangeEvent<HTMLSelectElement>) => {
         setValue(ev.target.value as TableOption);

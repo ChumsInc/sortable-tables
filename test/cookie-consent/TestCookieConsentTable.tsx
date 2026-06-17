@@ -2,7 +2,7 @@ import {type ChangeEvent, useState} from "react";
 import CookieConsentTable from "./CookieConsentTable";
 
 export default function TestCookieConsentTable() {
-    const [rows, setRows] = useState<number>(50);
+    const [rows, setRows] = useState<number>(500);
 
     const changeHandler = (ev: ChangeEvent<HTMLInputElement>) => {
         if (ev.target.value === '') return;

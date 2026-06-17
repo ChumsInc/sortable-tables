@@ -162,8 +162,25 @@ export default function ProductLinesList() {
                              count={list.length}/>
           </div>
   )
-} 
+}
 ```
+
+### Usage as VirtualTable
+```tsx
+import {VirtualTable} from "@chumsinc/sortable-tables";
+import {ProductLine} from 'chums-type'
+import {fields} from './fields'
+
+export default function ProductLinesList() {
+    const productLines = useProductLines();
+    return (
+        <VirtualTable fields={tableFields} currentSort={sort} onChangeSort={setSort} data={productLines} keyField="ProductLine"
+                      containerProps={{style: {maxHeight: '70vh'}}}
+                      size="sm"/>
+    )
+}
+```
+
 
 ### Usage in TableVirtuoso
 ```tsx
