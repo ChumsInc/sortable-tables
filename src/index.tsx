@@ -46,4 +46,6 @@ export type {
     DataTableTRProps,
     DataTableCellSetProps,
 } from './types';
+export {default as VirtualTable} from './virtual/VirtualTable';
+export {type VirtualTableProps} from './virtual/VirtualTableTypes'
 
