@@ -1,16 +1,14 @@
-import { type HTMLAttributes, type MouseEvent, type ReactNode, type TableHTMLAttributes } from 'react';
+import { type HTMLAttributes, type MouseEvent, type ReactElement, type ReactNode, type Ref, type TableHTMLAttributes } from 'react';
 import type { ClassValue } from "clsx";
-export interface SortProps<T = unknown> {
-    field: keyof T;
-    ascending: boolean;
-}
+import type { SortablePaths, SortProps } from 'chums-types';
+export type { SortablePaths, SortProps } from 'chums-types';
 export type UISize = 'sm' | 'lg' | '';
 export type UITableSize = UISize | 'xs';
 export type DataTableClassNames<T = unknown> = string | ClassValue | ((row: T) => (string | ClassValue));
 export type UIFlexAlign = 'start' | 'end' | 'center' | 'baseline' | 'stretch';
 export interface DataTableField<T = unknown> {
     id?: keyof T | (number & {}) | (string & {});
-    field: keyof T;
+    field: SortablePaths<T>;
     title: ReactNode;
     as?: 'td' | 'th';
     align?: 'start' | 'center' | 'end';
@@ -32,10 +30,10 @@ export interface DataTableProps<T = unknown> extends TableHTMLAttributes<HTMLTab
     sticky?: boolean;
     responsive?: boolean | "sm" | "md" | "lg" | "xl" | 'xxl';
     rowClassName?: DataTableClassNames<T>;
-    renderRow?: (row: T) => React.ReactNode;
+    renderRow?: (row: T) => ReactNode;
     onSelectRow?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
-    tfoot?: React.ReactElement<HTMLTableSectionElement>;
+    tfoot?: ReactElement<HTMLTableSectionElement>;
     tableHeadProps?: TableHTMLAttributes<HTMLTableSectionElement>;
     children?: ReactNode;
 }
@@ -44,7 +42,7 @@ export interface DataTableCellProps<T = unknown> extends Omit<TableHTMLAttribute
     row: T;
     as?: 'td' | 'th';
     className?: string | ClassValue;
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 export interface DataTableTHProps<T = unknown> extends Omit<DataTableCellProps<T>, 'row'> {
     as?: 'th';
@@ -53,7 +51,7 @@ export interface DataTableTBodyProps<T = unknown> extends TableHTMLAttributes<HT
     data: T[];
     keyField: keyof T | ((row: T) => string | number);
     rowClassName?: DataTableClassNames<T>;
-    renderRow?: (row: T) => React.ReactNode;
+    renderRow?: (row: T) => ReactNode;
     onSelectRow?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
     selected?: string | number | ((row: T) => boolean);
     children?: ReactNode;
@@ -63,7 +61,7 @@ export interface DataTableRowProps<T = unknown> extends Omit<TableHTMLAttributes
     rowClassName?: string | ClassValue | ((row: T) => string | ClassValue);
     selected?: boolean;
     row: T;
-    trRef?: React.Ref<HTMLTableRowElement>;
+    trRef?: Ref<HTMLTableRowElement>;
     onClick?: (row: T, ev?: MouseEvent<HTMLTableRowElement>) => void;
 }
 export interface DataTableTRProps<T = unknown> extends Omit<DataTableRowProps<T>, 'fields'> {
@@ -89,7 +87,7 @@ export interface SortableTableTHProps<T = unknown> extends Omit<DataTableTHProps
 export interface RowsPerPageProps extends Omit<HTMLAttributes<HTMLSelectElement>, 'onChange'> {
     value: number;
     pageValues?: number[];
-    label?: string | React.ReactNode;
+    label?: string | ReactNode;
     size?: UISize;
     className?: string;
     onChange: (value: number) => void;

@@ -75,7 +75,7 @@ function _({ field: e, row: n, className: r, as: i, ...a }) {
 		colSpan: e.colSpan,
 		...e.cellProps,
 		...a
-	}, n[e.field] === void 0 && !e.render ? null : typeof e.render == "function" ? e.render(n) : n[e.field]);
+	}, e.field.includes(".") || n[e.field] === void 0 && !e.render ? null : typeof e.render == "function" ? e.render(n) : n[e.field]);
 }
 _.displayName = "DataTableCell";
 //#endregion

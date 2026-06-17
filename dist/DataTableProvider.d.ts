@@ -5,7 +5,7 @@ export interface TableProviderProps<T = unknown> {
     initialSort?: SortProps<T> | null;
     children: ReactNode;
 }
-declare function DataTableProvider<T = unknown>({ children, initialFields, initialSort, }: TableProviderProps<T>): import("react/jsx-runtime").JSX.Element;
+declare function DataTableProvider<T = unknown>({ children, initialFields, initialSort, }: TableProviderProps<T>): import("react").JSX.Element;
 declare namespace DataTableProvider {
     var displayName: string;
 }
