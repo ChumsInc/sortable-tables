@@ -21,12 +21,12 @@ export default function DataTableCell<T = unknown>({field, row, className, as, .
             ...field.cellProps,
             ...rest
         },
-        (row[field.field] === undefined && !field.render)
+        (field.field.includes('.') || row[field.field as keyof T] === undefined && !field.render)
             ? null
             : (
                 typeof field.render === 'function'
                     ? field.render(row)
-                    : row[field.field] as ReactNode
+                    : row[field.field as keyof T] as ReactNode
             )
     )
 }
