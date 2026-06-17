@@ -23,3 +23,5 @@ export { useTableContext } from './useTableContext';
 export { DataTableContext, type TableContextData } from './DataTableContext';
 export type { TableProviderProps } from './DataTableProvider';
 export type { SortProps, DataTableField, SortableTableField, DataTableColProps, DataTableCellProps, DataTableRowProps, DataTableTBodyProps, DataTableClassNames, DataTableProps, DataTableTHProps, RowsPerPageProps, SortableTableTHProps, SortableTableHeadProps, SortableTableProps, TablePaginationProps, UITableSize, UISize, UIFlexAlign, DataTableTRProps, DataTableCellSetProps, } from './types';
+export { default as VirtualTable } from './virtual/VirtualTable';
+export { type VirtualTableProps } from './virtual/VirtualTableTypes';
