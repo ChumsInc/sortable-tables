@@ -27,6 +27,7 @@
     "useDefineForClassFields": true,
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*"],
+  "rootDir": "./src/",
+  "include": ["./src/**/*"],
   "exclude": ["node_modules","dist"]
 }
