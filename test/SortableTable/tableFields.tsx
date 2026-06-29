@@ -1,4 +1,4 @@
-import type {SortableTableField} from "@chumsinc/sortable-tables";
+import type {SortableTableField} from "../../src";
 import type {ProductLine} from "./data";
 
 export const tableFields: SortableTableField<ProductLine>[] = [

@@ -1,6 +1,6 @@
-import {useTableContext} from "@chumsinc/sortable-tables";
 import {type ChangeEvent, useCallback, useId, useState} from "react";
 import type {ProductLine} from "./data";
+import {useTableContext} from "../../src";
 
 export default function TableColumnsHandler() {
     const {updateField, getField} = useTableContext<ProductLine>();
