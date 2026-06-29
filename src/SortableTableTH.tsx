@@ -22,17 +22,18 @@ type FieldTitleProps = {
 const FieldTitle = styled.div<FieldTitleProps>`
     display: flex;
     width: 100%;
-    flex-direction: ${props => props.align === 'end' ? 'row-reverse' : 'row'};
+    // flex-direction: ${props => props.align === 'end' ? 'row-reverse' : 'row'};
     justify-content: ${props => flexJustifyContent(props.align)};
 
     .sort-icon {
-        flex-grow: ${props => props.align === 'end' ? '1' : '0'};
-        opacity: ${props => props.sorted ? 1 : 0};
+        flex-grow: 0;
+        opacity: ${props => props.sorted ? 1 : 0.25};
+        padding-right: 0.25rem;
     }
 
     &:hover .sort-icon {
         color: ${props => props.sorted ? 'unset' : 'var(--bs-primary)'};
-        opacity: 0.75;
+        opacity: 1;
         transition: opacity 0.2s;
     }
 `
@@ -63,15 +64,16 @@ export default function SortableTableTH<T = unknown>({
     }
 
     const iconClassName = {
-        'bi-arrow-down': ascending,
-        'bi-arrow-up': !ascending,
+        'bi-arrow-down': sorted && ascending,
+        'bi-arrow-up': sorted && !ascending,
+        'bi-arrow-down-up': !sorted,
     }
 
     return (
         <th {...thProps} className={clsx("sortable", thClassName)} scope="col" onClick={clickHandler}>
             <FieldTitle sorted={sorted} align={field.align}>
                 <div className="field-title">{field.title}</div>
-                <div className={clsx('me-1 sort-icon', iconClassName)}/>
+                <div className={clsx('ms-1 sort-icon', iconClassName)}/>
             </FieldTitle>
         </th>
     )

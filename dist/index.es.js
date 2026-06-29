@@ -260,17 +260,18 @@ var ie = (e) => {
 }, ae = l.div`
     display: flex;
     width: 100%;
-    flex-direction: ${(e) => e.align === "end" ? "row-reverse" : "row"};
+    // flex-direction: ${(e) => e.align === "end" ? "row-reverse" : "row"};
     justify-content: ${(e) => ie(e.align)};
 
     .sort-icon {
-        flex-grow: ${(e) => e.align === "end" ? "1" : "0"};
-        opacity: ${(e) => +!!e.sorted};
+        flex-grow: 0;
+        opacity: ${(e) => e.sorted ? 1 : .25};
+        padding-right: 0.25rem;
     }
 
     &:hover .sort-icon {
         color: ${(e) => e.sorted ? "unset" : "var(--bs-primary)"};
-        opacity: 0.75;
+        opacity: 1;
         transition: opacity 0.2s;
     }
 `;
@@ -286,8 +287,9 @@ function oe({ field: e, sorted: t, ascending: n, className: r, onClick: i }) {
 			ascending: t ? !n : !0
 		});
 	}, l = {
-		"bi-arrow-down": n,
-		"bi-arrow-up": !n
+		"bi-arrow-down": t && n,
+		"bi-arrow-up": t && !n,
+		"bi-arrow-down-up": !t
 	};
 	return /* @__PURE__ */ d("th", {
 		...o,
@@ -300,7 +302,7 @@ function oe({ field: e, sorted: t, ascending: n, className: r, onClick: i }) {
 			children: [/* @__PURE__ */ d("div", {
 				className: "field-title",
 				children: e.title
-			}), /* @__PURE__ */ d("div", { className: h("me-1 sort-icon", l) })]
+			}), /* @__PURE__ */ d("div", { className: h("ms-1 sort-icon", l) })]
 		})
 	});
 }
