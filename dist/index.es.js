@@ -266,7 +266,7 @@ var ie = (e) => {
     .sort-icon {
         flex-grow: 0;
         opacity: ${(e) => e.sorted ? 1 : .25};
-        padding-right: 0.25rem;
+        padding-left: 0.25rem;
     }
 
     &:hover .sort-icon {
@@ -302,7 +302,7 @@ function oe({ field: e, sorted: t, ascending: n, className: r, onClick: i }) {
 			children: [/* @__PURE__ */ d("div", {
 				className: "field-title",
 				children: e.title
-			}), /* @__PURE__ */ d("div", { className: h("ms-1 sort-icon", l) })]
+			}), /* @__PURE__ */ d("div", { className: h("sort-icon", l) })]
 		})
 	});
 }

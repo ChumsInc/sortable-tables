@@ -28,7 +28,7 @@ const FieldTitle = styled.div<FieldTitleProps>`
     .sort-icon {
         flex-grow: 0;
         opacity: ${props => props.sorted ? 1 : 0.25};
-        padding-right: 0.25rem;
+        padding-left: 0.25rem;
     }
 
     &:hover .sort-icon {
@@ -73,7 +73,7 @@ export default function SortableTableTH<T = unknown>({
         <th {...thProps} className={clsx("sortable", thClassName)} scope="col" onClick={clickHandler}>
             <FieldTitle sorted={sorted} align={field.align}>
                 <div className="field-title">{field.title}</div>
-                <div className={clsx('ms-1 sort-icon', iconClassName)}/>
+                <div className={clsx('sort-icon', iconClassName)}/>
             </FieldTitle>
         </th>
     )
