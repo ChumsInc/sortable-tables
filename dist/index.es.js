@@ -6,10 +6,12 @@ import p from "react-dom";
 function m(e) {
 	var t, n, r = "";
 	if (typeof e == "string" || typeof e == "number") r += e;
-	else if (typeof e == "object") if (Array.isArray(e)) {
-		var i = e.length;
-		for (t = 0; t < i; t++) e[t] && (n = m(e[t])) && (r && (r += " "), r += n);
-	} else for (n in e) e[n] && (r && (r += " "), r += n);
+	else if (typeof e == "object") {
+		if (Array.isArray(e)) {
+			var i = e.length;
+			for (t = 0; t < i; t++) e[t] && (n = m(e[t])) && (r && (r += " "), r += n);
+		} else for (n in e) e[n] && (r && (r += " "), r += n);
+	}
 	return r;
 }
 function h() {
@@ -32,17 +34,21 @@ var g = l.table`
     }
 `;
 function _({ sticky: e, responsive: t, children: n, className: r, ref: i, ...a }) {
-	return t ? /* @__PURE__ */ d("div", {
-		className: h(r, {
+	if (t) {
+		let e = h(r, {
 			"table-responsive": t === !0,
 			[`table-responsive-${t}`]: t !== !0
-		}),
-		children: /* @__PURE__ */ d(g, {
-			ref: i,
-			...a,
-			children: n
-		})
-	}) : /* @__PURE__ */ d(g, {
+		});
+		return /* @__PURE__ */ d("div", {
+			className: e,
+			children: /* @__PURE__ */ d(g, {
+				ref: i,
+				...a,
+				children: n
+			})
+		});
+	}
+	return /* @__PURE__ */ d(g, {
 		className: r,
 		sticky: e,
 		ref: i,
@@ -98,10 +104,11 @@ function S({ children: e, initialFields: t = [], initialSort: n = null }) {
 	}, []), f = r((e) => {
 		l(e);
 	}, []), p = r((e, t) => {
-		a(i.map((n) => n.id === e ? {
+		let n = i.map((n) => n.id === e ? {
 			...n,
 			...t
-		} : n));
+		} : n);
+		a(n);
 	}, [i]), m = r((e) => i.find((t) => t.id === e), [i]), h = s(() => ({
 		fields: i,
 		setFields: u,
@@ -126,8 +133,10 @@ S.displayName = "DataTableProvider";
 //#endregion
 //#region src/DataTableTH.tsx
 function C({ field: e, className: t, children: n, ...r }) {
-	return e.visible === !1 ? null : /* @__PURE__ */ d("th", {
-		className: h({ [`text-${e.align}`]: !!e.align }, t),
+	if (e.visible === !1) return null;
+	let i = h({ [`text-${e.align}`]: !!e.align }, t);
+	return /* @__PURE__ */ d("th", {
+		className: i,
 		scope: "col",
 		...r,
 		children: n ?? e.title
@@ -158,10 +167,11 @@ T.displayName = "DataTableHead";
 //#endregion
 //#region src/ContainedDataTable.tsx
 function E({ className: e, size: t, responsive: n, sticky: r, data: i, keyField: a, rowClassName: o, renderRow: s, onSelectRow: c, selected: l, tableHeadProps: u, children: p, tfoot: m, ...g }) {
+	let v = h("table", e, { [`table-${t}`]: !!t });
 	return /* @__PURE__ */ f(_, {
 		sticky: r,
 		responsive: n,
-		className: h("table", e, { [`table-${t}`]: !!t }),
+		className: v,
 		...g,
 		children: [
 			/* @__PURE__ */ d(he, {}),
@@ -284,7 +294,7 @@ function oe({ field: e, sorted: t, ascending: n, className: r, onClick: i }) {
 	let { className: a, ...o } = e.thProps ?? {}, s = h(r, a, { [`text-${e.align}`]: !!e.align }), c = () => {
 		i({
 			field: e.field,
-			ascending: t ? !n : !0
+			ascending: !t || !n
 		});
 	}, l = {
 		"bi-arrow-down": t && n,
@@ -334,8 +344,9 @@ ce.displayName = "SortableTableHeadWrapper";
 //#endregion
 //#region src/ContainedSortableTable.tsx
 function le({ className: e, size: t, responsive: n, sticky: r, data: i, keyField: a, rowClassName: o, renderRow: s, onSelectRow: c, selected: l, tableHeadProps: u, children: p, tfoot: m, onChangeSort: g, ...v }) {
+	let y = h("table", e, { [`table-${t}`]: !!t });
 	return /* @__PURE__ */ f(_, {
-		className: h("table", e, { [`table-${t}`]: !!t }),
+		className: y,
 		responsive: n,
 		sticky: r,
 		...v,
@@ -389,9 +400,9 @@ var fe = [
 	1e3
 ];
 function pe({ value: e, pageValues: t = fe, size: n, label: r, className: i, onChange: a, ...s }) {
-	let c = o(), l = (e) => a(Number(e.target.value)), u = i ?? h("form-select", { [`form-select-${n}`]: !!n });
+	let c = o(), l = (e) => a(Number(e.target.value)), u = i ?? h("form-select", { [`form-select-${n}`]: !!n }), p = h("input-group", { [`input-group-${n}`]: !!n });
 	return /* @__PURE__ */ f("div", {
-		className: h("input-group", { [`input-group-${n}`]: !!n }),
+		className: p,
 		children: [/* @__PURE__ */ d("label", {
 			className: "input-group-text",
 			htmlFor: c,
@@ -648,7 +659,7 @@ function Be(e) {
 	};
 }
 function L(...e) {
-	let t = Array(e.length), n = 0, r = null, i = 2 ** e.length - 1;
+	let t = Array.from({ length: e.length }), n = 0, r = null, i = 2 ** e.length - 1;
 	return e.forEach((e, a) => {
 		let o = 2 ** a;
 		k(e, (e) => {
@@ -704,7 +715,7 @@ function B() {
 				});
 				return;
 			case xe:
-				e.splice(0, e.length);
+				e.splice(0);
 				return;
 			case be: return e.push(n), () => {
 				let t = e.indexOf(n);
@@ -716,16 +727,18 @@ function B() {
 function V(e) {
 	return je(B(), (t) => M(e, t));
 }
-function H(e, t = [], { singleton: n } = { singleton: !0 }) {
+var Ue = { singleton: !0 };
+function H(e, t = [], n = Ue) {
+	let { singleton: r } = n;
 	return {
 		constructor: e,
 		dependencies: t,
-		id: Ue(),
-		singleton: n
+		id: We(),
+		singleton: r
 	};
 }
-var Ue = () => Symbol();
-function We(e) {
+var We = () => /* @__PURE__ */ Symbol("id");
+function Ge(e) {
 	let t = /* @__PURE__ */ new Map(), n = ({ constructor: e, dependencies: r, id: i, singleton: a }) => {
 		if (a && t.has(i)) return t.get(i);
 		let o = e(r.map((e) => n(e)));
@@ -734,7 +747,7 @@ function We(e) {
 	return n(e);
 }
 function U(...e) {
-	let t = B(), n = Array(e.length), r = 0, i = 2 ** e.length - 1;
+	let t = B(), n = Array.from({ length: e.length }), r = 0, i = 2 ** e.length - 1;
 	return e.forEach((e, a) => {
 		let o = 2 ** a;
 		k(e, (e) => {
@@ -752,7 +765,7 @@ function U(...e) {
 function W(e, t = Ie) {
 	return I(e, N(t));
 }
-function Ge(...e) {
+function Ke(...e) {
 	return function(t, n) {
 		switch (t) {
 			case xe: return;
@@ -765,43 +778,37 @@ var G = {
 	INFO: 1,
 	WARN: 2,
 	ERROR: 3
-}, Ke = {
+}, qe = {
 	[G.DEBUG]: "debug",
 	[G.ERROR]: "error",
 	[G.INFO]: "log",
 	[G.WARN]: "warn"
-}, qe = () => typeof globalThis > "u" ? window : globalThis, Je = H(() => {
+}, Je = () => typeof globalThis > "u" ? window : globalThis, Ye = H(() => {
 	let e = R(G.ERROR);
 	return {
 		log: R((t, n, r = G.INFO) => {
-			r >= (qe().VIRTUOSO_LOG_LEVEL ?? j(e)) && console[Ke[r]]("%creact-virtuoso: %c%s %o", "color: #0253b3; font-weight: bold", "color: initial", t, n);
+			r >= (Je().VIRTUOSO_LOG_LEVEL ?? j(e)) && console[qe[r]]("%creact-virtuoso: %c%s %o", "color: #0253b3; font-weight: bold", "color: initial", t, n);
 		}),
 		logLevel: e
 	};
-}, [], { singleton: !0 }), Ye = /* @__PURE__ */ new WeakMap();
+}, [], { singleton: !0 });
 function Xe(e) {
 	return "self" in e ? e.document.documentElement : e;
 }
 function Ze(e) {
-	let t = Xe(e), n = Ye.get(t);
-	if (n !== void 0) return n;
-	let r = t.ownerDocument.defaultView.getComputedStyle(t).direction === "rtl";
-	return Ye.set(t, r), r;
+	let t = Xe(e);
+	return t.ownerDocument.defaultView.getComputedStyle(t).direction === "rtl";
 }
-function Qe(e) {
-	Ye.delete(Xe(e));
+function Qe(e, t) {
+	return Ze(e) ? -t : t;
 }
 function $e(e, t) {
 	return Ze(e) ? -t : t;
 }
-var et = $e;
-function tt(e, t) {
-	return $e(e, t);
+function et(e, t, n) {
+	return tt(e, t, n).callbackRef;
 }
-function nt(e, t, n) {
-	return rt(e, t, n).callbackRef;
-}
-function rt(t, n, r) {
+function tt(t, n, r) {
 	let i = e.useRef(null), a = (e) => {}, o = e.useMemo(() => typeof ResizeObserver < "u" ? new ResizeObserver((e) => {
 		let n = () => {
 			let n = e[0].target;
@@ -816,18 +823,18 @@ function rt(t, n, r) {
 		ref: i
 	};
 }
-function it(t, n, r, i, a, o, s, c, l) {
-	return rt(e.useCallback((e) => {
-		let r = at(e.children, n, c ? "offsetWidth" : "offsetHeight", a), l = e.parentElement;
+function nt(t, n, r, i, a, o, s, c, l) {
+	return tt(e.useCallback((e) => {
+		let r = rt(e.children, n, c ? "offsetWidth" : "offsetHeight", a), l = e.parentElement;
 		for (; l.dataset.virtuosoScroller === void 0;) l = l.parentElement;
-		let u = l.lastElementChild.dataset.viewportType === "window", d;
+		let u = l.lastElementChild?.dataset.viewportType === "window", d;
 		u && (d = l.ownerDocument.defaultView);
-		let f = s ? c ? s.scrollWidth : s.scrollHeight : u ? c ? d.document.documentElement.scrollWidth : d.document.documentElement.scrollHeight : c ? l.scrollWidth : l.scrollHeight, p = s ? c ? s.offsetWidth : s.offsetHeight : u ? c ? d.innerWidth : d.innerHeight : c ? l.offsetWidth : l.offsetHeight, m = s ? c ? et(s, s.scrollLeft) : s.scrollTop : u ? c ? et(d, d.scrollX || d.document.documentElement.scrollLeft) : d.scrollY || d.document.documentElement.scrollTop : c ? et(l, l.scrollLeft) : l.scrollTop;
+		let f = s ? c ? s.scrollWidth : s.scrollHeight : u ? c ? d.document.documentElement.scrollWidth : d.document.documentElement.scrollHeight : c ? l.scrollWidth : l.scrollHeight, p = s ? c ? s.offsetWidth : s.offsetHeight : u ? c ? d.innerWidth : d.innerHeight : c ? l.offsetWidth : l.offsetHeight, m = s ? c ? Qe(s, s.scrollLeft) : s.scrollTop : u ? c ? Qe(d, d.scrollX || d.document.documentElement.scrollLeft) : d.scrollY || d.document.documentElement.scrollTop : c ? Qe(l, l.scrollLeft) : l.scrollTop;
 		i({
 			scrollHeight: f,
 			scrollTop: Math.max(m, 0),
 			viewportHeight: p
-		}), o?.(c ? ot("column-gap", getComputedStyle(e).columnGap, a) : ot("row-gap", getComputedStyle(e).rowGap, a)), r !== null && t(r);
+		}), o?.(c ? it("column-gap", getComputedStyle(e).columnGap, a) : it("row-gap", getComputedStyle(e).rowGap, a)), r !== null && t(r);
 	}, [
 		t,
 		n,
@@ -838,14 +845,14 @@ function it(t, n, r, i, a, o, s, c, l) {
 		c
 	]), r, l);
 }
-function at(e, t, n, r) {
+function rt(e, t, n, r) {
 	let i = e.length;
 	if (i === 0) return null;
 	let a = [];
 	for (let o = 0; o < i; o++) {
 		let i = e.item(o);
 		if (i.dataset.index === void 0) continue;
-		let s = parseInt(i.dataset.index), c = parseFloat(i.dataset.knownSize), l = t(i, n);
+		let s = parseInt(i.dataset.index, 10), c = parseFloat(i.dataset.knownSize), l = t(i, n);
 		if (l === 0 && r("Zero-sized element, this should not happen", { child: i }, G.ERROR), l === c) continue;
 		let u = a[a.length - 1];
 		a.length === 0 || u.size !== l || u.endIndex !== s - 1 ? a.push({
@@ -856,10 +863,11 @@ function at(e, t, n, r) {
 	}
 	return a;
 }
-function ot(e, t, n) {
+function it(e, t, n) {
 	return t !== "normal" && t?.endsWith("px") !== !0 && n(`${e} was not resolved to pixel value correctly`, t, G.WARN), t === "normal" ? 0 : parseInt(t ?? "0", 10);
 }
-function st(t, n, r) {
+var at = typeof document > "u" ? e.useEffect : e.useLayoutEffect;
+function ot(t, n, r) {
 	let i = e.useRef(null), a = e.useCallback((e) => {
 		if (!e?.offsetParent) return;
 		let r = e.getBoundingClientRect(), a = r.width, o, c;
@@ -876,7 +884,7 @@ function st(t, n, r) {
 			visibleHeight: c,
 			visibleWidth: a
 		}, t(i.current);
-	}, [t, n]), { callbackRef: o, ref: s } = rt(a, !0, r), c = e.useCallback(() => {
+	}, [t, n]), { callbackRef: o, ref: s } = tt(a, !0, r), c = e.useCallback(() => {
 		a(s.current);
 	}, [a, s]);
 	return e.useEffect(() => {
@@ -900,27 +908,28 @@ function st(t, n, r) {
 	]), o;
 }
 var K = H(() => {
-	let e = B(), t = B(), n = R(0), r = B(), i = R(0), a = B(), o = B(), s = R(0), c = R(0), l = R(0), u = R(0), d = B(), f = B(), p = R(!1), m = R(!1), h = R(!1);
-	return M(I(e, F(({ scrollTop: e }) => e)), t), M(I(e, F(({ scrollHeight: e }) => e)), o), M(t, i), {
+	let e = B(), t = B(), n = R(0), r = B(), i = B(), a = R(0), o = B(), s = B(), c = R(0), l = R(0), u = R(0), d = R(0), f = B(), p = B(), m = R(!1), h = R(!1), g = R(!1);
+	return M(I(e, F(({ scrollTop: e }) => e)), t), M(I(e, F(({ scrollHeight: e }) => e)), s), M(t, a), {
 		deviation: n,
-		fixedFooterHeight: l,
-		fixedHeaderHeight: c,
-		footerHeight: u,
-		headerHeight: s,
-		horizontalDirection: m,
-		scrollBy: f,
+		deviationCommitted: r,
+		fixedFooterHeight: u,
+		fixedHeaderHeight: l,
+		footerHeight: d,
+		headerHeight: c,
+		horizontalDirection: h,
+		scrollBy: p,
 		scrollContainerState: e,
-		scrollHeight: o,
-		scrollingInProgress: p,
-		scrollTo: d,
+		scrollHeight: s,
+		scrollingInProgress: m,
+		scrollTo: f,
 		scrollTop: t,
-		skipAnimationFrameInResizeObserver: h,
-		smoothScrollTargetReached: r,
-		statefulScrollTop: i,
-		viewportHeight: a
+		skipAnimationFrameInResizeObserver: g,
+		smoothScrollTargetReached: i,
+		statefulScrollTop: a,
+		viewportHeight: o
 	};
-}, [], { singleton: !0 }), ct = { lvl: 0 };
-function lt(e, t) {
+}, [], { singleton: !0 }), st = { lvl: 0 };
+function ct(e, t) {
 	let n = e.length;
 	if (n === 0) return [];
 	let { index: r, value: i } = t(e[0]), a = [];
@@ -933,54 +942,54 @@ function lt(e, t) {
 		}), r = n, i = s;
 	}
 	return a.push({
-		end: Infinity,
+		end: 1 / 0,
 		start: r,
 		value: i
 	}), a;
 }
 function q(e) {
-	return e === ct;
+	return e === st;
 }
-function ut(e, t) {
-	if (!q(e)) return t === e.k ? e.v : t < e.k ? ut(e.l, t) : ut(e.r, t);
+function lt(e, t) {
+	if (!q(e)) return t === e.k ? e.v : t < e.k ? lt(e.l, t) : lt(e.r, t);
 }
-function dt(e, t, n = "k") {
-	if (q(e)) return [-Infinity, void 0];
+function ut(e, t, n = "k") {
+	if (q(e)) return [-1 / 0, void 0];
 	if (Number(e[n]) === t) return [e.k, e.v];
 	if (Number(e[n]) < t) {
-		let r = dt(e.r, t, n);
-		return r[0] === -Infinity ? [e.k, e.v] : r;
+		let r = ut(e.r, t, n);
+		return r[0] === -1 / 0 ? [e.k, e.v] : r;
 	}
-	return dt(e.l, t, n);
+	return ut(e.l, t, n);
 }
-function J(e, t, n) {
-	return q(e) ? xt(t, n, 1) : t === e.k ? Y(e, {
+function dt(e, t, n) {
+	return q(e) ? xt(t, n, 1) : t === e.k ? J(e, {
 		k: t,
 		v: n
-	}) : t < e.k ? St(Y(e, { l: J(e.l, t, n) })) : St(Y(e, { r: J(e.r, t, n) }));
+	}) : t < e.k ? St(J(e, { l: dt(e.l, t, n) })) : St(J(e, { r: dt(e.r, t, n) }));
 }
 function ft() {
-	return ct;
+	return st;
 }
 function pt(e, t, n) {
 	if (q(e)) return [];
-	let r = dt(e, t)[0];
+	let r = ut(e, t)[0];
 	return Tt(gt(e, r, n));
 }
 function mt(e, t) {
-	if (q(e)) return ct;
+	if (q(e)) return st;
 	let { k: n, l: r, r: i } = e;
 	if (t === n) {
 		if (q(r)) return i;
 		if (q(i)) return r;
 		let [t, n] = bt(r);
-		return _t(Y(e, {
+		return _t(J(e, {
 			k: t,
 			l: vt(r),
 			v: n
 		}));
 	}
-	return _t(t < n ? Y(e, { l: mt(r, t) }) : Y(e, { r: mt(i, t) }));
+	return _t(t < n ? J(e, { l: mt(r, t) }) : J(e, { r: mt(i, t) }));
 }
 function ht(e) {
 	return q(e) ? [] : [
@@ -1004,27 +1013,27 @@ function _t(e) {
 	let { l: t, lvl: n, r } = e;
 	if (r.lvl >= n - 1 && t.lvl >= n - 1) return e;
 	if (n > r.lvl + 1) {
-		if (yt(t)) return Ct(Y(e, { lvl: n - 1 }));
-		if (!q(t) && !q(t.r)) return Y(t.r, {
-			l: Y(t, { r: t.r.l }),
+		if (yt(t)) return Ct(J(e, { lvl: n - 1 }));
+		if (!q(t) && !q(t.r)) return J(t.r, {
+			l: J(t, { r: t.r.l }),
 			lvl: n,
-			r: Y(e, {
+			r: J(e, {
 				l: t.r.r,
 				lvl: n - 1
 			})
 		});
 		throw Error("Unexpected empty nodes");
 	}
-	if (yt(e)) return wt(Y(e, { lvl: n - 1 }));
+	if (yt(e)) return wt(J(e, { lvl: n - 1 }));
 	if (!q(r) && !q(r.l)) {
 		let t = r.l, i = yt(t) ? r.lvl - 1 : r.lvl;
-		return Y(t, {
-			l: Y(e, {
+		return J(t, {
+			l: J(e, {
 				lvl: n - 1,
 				r: t.l
 			}),
 			lvl: t.lvl + 1,
-			r: wt(Y(r, {
+			r: wt(J(r, {
 				l: t.r,
 				lvl: i
 			}))
@@ -1032,11 +1041,11 @@ function _t(e) {
 	}
 	throw Error("Unexpected empty nodes");
 }
-function Y(e, t) {
+function J(e, t) {
 	return xt(t.k === void 0 ? e.k : t.k, t.v === void 0 ? e.v : t.v, t.lvl === void 0 ? e.lvl : t.lvl, t.l === void 0 ? e.l : t.l, t.r === void 0 ? e.r : t.r);
 }
 function vt(e) {
-	return q(e.r) ? e.l : _t(Y(e, { r: vt(e.r) }));
+	return q(e.r) ? e.l : _t(J(e, { r: vt(e.r) }));
 }
 function yt(e) {
 	return q(e) || e.lvl > e.r.lvl;
@@ -1044,7 +1053,7 @@ function yt(e) {
 function bt(e) {
 	return q(e.r) ? [e.k, e.v] : bt(e.r);
 }
-function xt(e, t, n, r = ct, i = ct) {
+function xt(e, t, n, r = st, i = st) {
 	return {
 		k: e,
 		l: r,
@@ -1058,17 +1067,17 @@ function St(e) {
 }
 function Ct(e) {
 	let { l: t } = e;
-	return !q(t) && t.lvl === e.lvl ? Y(t, { r: Y(e, { l: t.r }) }) : e;
+	return !q(t) && t.lvl === e.lvl ? J(t, { r: J(e, { l: t.r }) }) : e;
 }
 function wt(e) {
 	let { lvl: t, r: n } = e;
-	return !q(n) && !q(n.r) && n.lvl === t && n.r.lvl === t ? Y(n, {
-		l: Y(e, { r: n.l }),
+	return !q(n) && !q(n.r) && n.lvl === t && n.r.lvl === t ? J(n, {
+		l: J(e, { r: n.l }),
 		lvl: t + 1
 	}) : e;
 }
 function Tt(e) {
-	return lt(e, ({ k: e, v: t }) => ({
+	return ct(e, ({ k: e, v: t }) => ({
 		index: e,
 		value: t
 	}));
@@ -1123,23 +1132,23 @@ function Ft() {
 	};
 }
 function It(e, t) {
-	let n = q(e) ? 0 : Infinity;
+	let n = q(e) ? 0 : 1 / 0;
 	for (let r of t) {
 		let { endIndex: t, size: i, startIndex: a } = r;
 		if (n = Math.min(n, a), q(e)) {
-			e = J(e, 0, i);
+			e = dt(e, 0, i);
 			continue;
 		}
 		let o = pt(e, a - 1, t + 1);
 		if (o.some(Jt(r))) continue;
 		let s = !1, c = !1;
-		for (let { end: n, start: r, value: a } of o) s ? (t >= r || i === a) && (e = mt(e, r)) : (c = a !== i, s = !0), n > t && t >= r && a !== i && (e = J(e, t + 1, a));
-		c && (e = J(e, a, i));
+		for (let { end: n, start: r, value: a } of o) s ? (t >= r || i === a) && (e = mt(e, r)) : (c = a !== i, s = !0), n > t && t >= r && a !== i && (e = dt(e, t + 1, a));
+		c && (e = dt(e, a, i));
 	}
 	return [e, n];
 }
 function Lt(e) {
-	return typeof e.groupIndex < "u";
+	return e.groupIndex !== void 0;
 }
 function Rt({ offset: e }, t) {
 	return t === e ? 0 : t < e ? -1 : 1;
@@ -1158,23 +1167,23 @@ function Bt(e, t) {
 function Vt(e, t, n) {
 	if (Lt(e)) return t.groupIndices[e.groupIndex] + 1;
 	let r = Bt(e.index === "LAST" ? n : e.index, t);
-	return r = Math.max(0, r, Math.min(n, r)), r;
+	return r = Math.max(0, Math.min(n, r)), r;
 }
 function Ht(e, t, n, r = 0) {
-	return r > 0 && (t = Math.max(t, kt(e, r, Pt).offset)), lt(jt(e, t, n, Rt), qt);
+	return r > 0 && (t = Math.max(t, kt(e, r, Pt).offset)), ct(jt(e, t, n, Rt), qt);
 }
 function Ut(e, [t, n, r, i]) {
 	t.length > 0 && r("received item sizes", t, G.DEBUG);
 	let a = e.sizeTree, o = a, s = 0;
 	if (n.length > 0 && q(a) && t.length === 2) {
 		let e = t[0].size, r = t[1].size;
-		o = n.reduce((t, n) => J(J(t, n, e), n + 1, r), o);
+		o = n.reduce((t, n) => dt(dt(t, n, e), n + 1, r), o);
 	} else [o, s] = It(o, t);
 	if (o === a) return e;
 	let { lastIndex: c, lastOffset: l, lastSize: u, offsetTree: d } = Kt(e.offsetTree, s, o, i);
 	return {
 		groupIndices: n,
-		groupOffsetTree: n.reduce((e, t) => J(e, t, zt(t, d, i)), ft()),
+		groupOffsetTree: n.reduce((e, t) => dt(e, t, zt(t, d, i)), ft()),
 		lastIndex: c,
 		lastOffset: l,
 		lastSize: u,
@@ -1186,7 +1195,7 @@ function Wt(e) {
 	return ht(e).map(({ k: e, v: t }, n, r) => {
 		let i = r[n + 1];
 		return {
-			endIndex: i === void 0 ? Infinity : i.k - 1,
+			endIndex: i === void 0 ? 1 / 0 : i.k - 1,
 			size: t,
 			startIndex: e
 		};
@@ -1199,12 +1208,13 @@ function Gt(e, t) {
 }
 function Kt(e, t, n, r) {
 	let i = e, a = 0, o = 0, s = 0, c = 0;
-	if (t !== 0) {
+	if (t === 0) i = [];
+	else {
 		c = At(i, t - 1, Pt), s = i[c].offset;
-		let e = dt(n, t - 1);
-		a = e[0], o = e[1], i.length && i[c].size === dt(n, t)[1] && --c, i = i.slice(0, c + 1);
-	} else i = [];
-	for (let { start: e, value: c } of pt(n, t, Infinity)) {
+		let e = ut(n, t - 1);
+		a = e[0], o = e[1], i.length && i[c].size === ut(n, t)[1] && --c, i = i.slice(0, c + 1);
+	}
+	for (let { start: e, value: c } of pt(n, t, 1 / 0)) {
 		let t = e - a, n = t * o + s + t * r;
 		i.push({
 			index: e,
@@ -1227,7 +1237,7 @@ function qt(e) {
 }
 function Jt(e) {
 	let { endIndex: t, size: n, startIndex: r } = e;
-	return (e) => e.start === r && (e.end === t || e.end === Infinity) && e.value === n;
+	return (e) => e.start === r && (e.end === t || e.end === 1 / 0) && e.value === n;
 }
 var Yt = {
 	offsetHeight: "height",
@@ -1241,7 +1251,7 @@ var Yt = {
 		prev: []
 	}), F(({ prev: e }) => e)), []);
 	M(I(c, P((e) => e.length > 0), L(_, h), F(([e, t, n]) => {
-		let r = e.reduce((e, r, i) => J(e, r, zt(r, t.offsetTree, n) || i), ft());
+		let r = e.reduce((e, r, i) => dt(e, r, zt(r, t.offsetTree, n) || i), ft());
 		return {
 			...t,
 			groupIndices: e,
@@ -1326,9 +1336,9 @@ var Yt = {
 	M(I(a, L(_), F(([e, t]) => {
 		let n = t.groupIndices.length > 0, r = [], i = t.lastSize;
 		if (n) {
-			let n = ut(t.sizeTree, 0), a = 0, o = 0;
+			let n = lt(t.sizeTree, 0), a = 0, o = 0;
 			for (; a < e;) {
-				let e = t.groupIndices[o], s = t.groupIndices.length === o + 1 ? Infinity : t.groupIndices[o + 1] - e - 1;
+				let e = t.groupIndices[o], s = t.groupIndices.length === o + 1 ? 1 / 0 : t.groupIndices[o + 1] - e - 1;
 				r.push({
 					endIndex: e,
 					size: n,
@@ -1381,11 +1391,11 @@ var Yt = {
 				let e = i[o + 1] - s - 1;
 				o++, a += e + 1;
 			}
-			if (r = ht(t.sizeTree).reduce((t, { k: n, v: r }) => J(t, Math.max(0, n + e), r), r), a !== -e) {
-				let n = ut(t.sizeTree, s);
-				r = J(r, 0, n);
-				let i = dt(t.sizeTree, -e + 1)[1];
-				r = J(r, 1, i);
+			if (r = ht(t.sizeTree).reduce((t, { k: n, v: r }) => dt(t, Math.max(0, n + e), r), r), a !== -e) {
+				let n = lt(t.sizeTree, s);
+				r = dt(r, 0, n);
+				let i = ut(t.sizeTree, -e + 1)[1];
+				r = dt(r, 1, i);
 			}
 			return {
 				...t,
@@ -1393,7 +1403,7 @@ var Yt = {
 				...Kt(t.offsetTree, 0, r, n)
 			};
 		}
-		let r = ht(t.sizeTree).reduce((t, { k: n, v: r }) => J(t, Math.max(0, n + e), r), ft());
+		let r = ht(t.sizeTree).reduce((t, { k: n, v: r }) => dt(t, Math.max(0, n + e), r), ft());
 		return {
 			...t,
 			sizeTree: r,
@@ -1420,7 +1430,7 @@ var Yt = {
 		trackItemSizes: y,
 		unshiftWith: a
 	};
-}, O(Je, Ot), { singleton: !0 });
+}, O(Ye, Ot), { singleton: !0 });
 function Zt(e) {
 	return e.reduce((e, t) => (e.groupIndices.push(e.totalCount), e.totalCount += t + 1, e), {
 		groupIndices: [],
@@ -1429,7 +1439,7 @@ function Zt(e) {
 }
 var Qt = H(([{ groupIndices: e, sizes: t, totalCount: n }, { headerHeight: r, scrollTop: i }]) => {
 	let a = B(), o = B(), s = V(I(a, F(Zt)));
-	return M(I(s, F((e) => e.totalCount)), n), M(I(s, F((e) => e.groupIndices)), e), M(I(U(i, t, r), P(([e, t]) => Nt(t)), F(([e, t, n]) => dt(t.groupOffsetTree, Math.max(e - n, 0), "v")[0]), N(), F((e) => [e])), o), {
+	return M(I(s, F((e) => e.totalCount)), n), M(I(s, F((e) => e.groupIndices)), e), M(I(U(i, t, r), P(([e, t]) => Nt(t)), F(([e, t, n]) => ut(t.groupOffsetTree, Math.max(e - n, 0), "v")[0]), N(), F((e) => [e])), o), {
 		groupCounts: a,
 		topItemsIndexes: o
 	};
@@ -1441,9 +1451,9 @@ var Qt = H(([{ groupIndices: e, sizes: t, totalCount: n }, { headerHeight: r, sc
 		didMount: n,
 		propsReady: t
 	};
-}, O(Je), { singleton: !0 }), en = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
+}, O(Ye), { singleton: !0 }), en = typeof document < "u" && "scrollBehavior" in document.documentElement.style;
 function tn(e) {
-	let t = typeof e == "number" ? { index: e } : e;
+	let t = typeof e == "number" ? { index: e } : { ...e };
 	return t.align ||= "start", (!t.behavior || !en) && (t.behavior = "auto"), t.offset === void 0 && (t.offset = 0), t;
 }
 var nn = H(([{ gap: e, listRefresh: t, sizes: n, totalCount: r }, { fixedFooterHeight: i, fixedHeaderHeight: a, footerHeight: o, headerHeight: s, scrollingInProgress: c, scrollTo: l, smoothScrollTargetReached: u, viewportHeight: d }, { log: f }]) => {
@@ -1453,7 +1463,7 @@ var nn = H(([{ gap: e, listRefresh: t, sizes: n, totalCount: r }, { fixedFooterH
 	}
 	return M(I(p, L(n, d, r, h, s, o, f), L(e, a, i), F(([[e, n, r, i, a, o, s, l], d, f, h]) => {
 		let b = tn(e), { align: x, behavior: S, offset: C } = b, w = i - 1, T = Vt(b, n, w), E = zt(T, n.offsetTree, d) + o;
-		x === "end" ? (E += f + dt(n.sizeTree, T)[1] - r + h, T === w && (E += s)) : x === "center" ? E += (f + dt(n.sizeTree, T)[1] - r + h) / 2 : E -= a, C !== void 0 && C !== 0 && (E += C);
+		x === "end" ? (E += f + ut(n.sizeTree, T)[1] - r + h, T === w && (E += s)) : x === "center" ? E += (f + ut(n.sizeTree, T)[1] - r + h) / 2 : E -= a, C !== void 0 && C !== 0 && (E += C);
 		let ee = (t) => {
 			y(), t ? (l("retrying to scroll to", { location: e }, G.DEBUG), A(p, e)) : (A(m, !0), l("list did not change, scroll successful", {}, G.DEBUG));
 		};
@@ -1480,7 +1490,7 @@ var nn = H(([{ gap: e, listRefresh: t, sizes: n, totalCount: r }, { fixedFooterH
 		scrollToIndex: p,
 		topListHeight: h
 	};
-}, O(Xt, K, Je), { singleton: !0 });
+}, O(Xt, K, Ye), { singleton: !0 });
 function rn(e) {
 	return (t) => {
 		let n = setTimeout(() => {
@@ -1497,12 +1507,20 @@ function an(e, t) {
 	});
 }
 function on(e, t) {
-	let n = t - 1;
-	return typeof e == "number" ? e : e.index === "LAST" ? n : e.index;
+	if (e === void 0) return 0;
+	let n = t - 1, r = typeof e == "number" ? e : e.index === "LAST" ? n : e.index;
+	return Math.max(0, Math.min(r, n));
 }
-var sn = H(([{ defaultItemSize: e, listRefresh: t, sizes: n }, { scrollTop: r }, { scrollTargetReached: i, scrollToIndex: a }, { didMount: o }]) => {
+function sn(e) {
+	return e === void 0 ? !0 : typeof e == "number" ? e === 0 : e.index === 0 && (e.align === void 0 || e.align === "start") && (e.offset === void 0 || e.offset === 0);
+}
+var cn = H(([{ defaultItemSize: e, listRefresh: t, sizes: n }, { scrollTop: r }, { scrollTargetReached: i, scrollToIndex: a }, { didMount: o }]) => {
 	let s = R(!0), c = R(0), l = R(!0);
-	return M(I(o, L(c), P(([e, t]) => t !== 0), Le(!1)), s), M(I(o, L(c), P(([e, t]) => t !== 0), Le(!1)), l), k(I(U(t, o), L(s, n, e, l), P(([[, e], t, { sizeTree: n }, r, i]) => e && (!q(n) || Oe(r)) && !t && !i), L(c)), ([, e]) => {
+	return M(I(o, L(c), P(([e, t]) => !sn(t)), Le(!1)), s), M(I(o, L(c), P(([e, t]) => !sn(t)), Le(!1)), l), k(I(U(t, o), L(s, n, e, l), P(([[, e], t, { sizeTree: n }, r, i]) => e && (!q(n) || Oe(r)) && !t && !i), L(c)), ([, e]) => {
+		if (e === void 0) {
+			A(s, !0), A(l, !0);
+			return;
+		}
 		Pe(i, () => {
 			A(l, !0);
 		}), an(4, () => {
@@ -1516,10 +1534,10 @@ var sn = H(([{ defaultItemSize: e, listRefresh: t, sizes: n }, { scrollTop: r },
 		scrolledToInitialItem: s
 	};
 }, O(Xt, K, nn, $t), { singleton: !0 });
-function cn(e, t) {
+function ln(e, t) {
 	return Math.abs(e - t) < 1.01;
 }
-var ln = "up", un = "down", dn = "none", fn = {
+var un = "up", dn = "down", fn = "none", pn = {
 	atBottom: !1,
 	notAtBottomBecause: "NOT_SHOWING_LAST_ITEM",
 	state: {
@@ -1528,8 +1546,8 @@ var ln = "up", un = "down", dn = "none", fn = {
 		scrollTop: 0,
 		viewportHeight: 0
 	}
-}, pn = 0, mn = H(([{ footerHeight: e, headerHeight: t, scrollBy: n, scrollContainerState: r, scrollTop: i, viewportHeight: a }]) => {
-	let o = R(!1), s = R(!0), c = B(), l = B(), u = R(4), d = R(pn), f = z(I(Ge(I(W(i), ze(1), Le(!0)), I(W(i), ze(1), Le(!1), Fe(100))), N()), !1), p = z(I(Ge(I(n, Le(!0)), I(n, Le(!1), Fe(200))), N()), !1);
+}, mn = 0, hn = H(([{ footerHeight: e, headerHeight: t, scrollBy: n, scrollContainerState: r, scrollTop: i, viewportHeight: a }]) => {
+	let o = R(!1), s = R(!0), c = B(), l = B(), u = R(4), d = R(mn), f = z(I(Ke(I(W(i), ze(1), Le(!0)), I(W(i), ze(1), Le(!1), Fe(100))), N()), !1), p = z(I(Ke(I(n, Le(!0)), I(n, Le(!1), Fe(200))), N()), !1);
 	M(I(U(W(i), W(d)), F(([e, t]) => e <= t), N()), s), M(I(s, Be(50)), l);
 	let m = V(I(U(r, W(a), W(t), W(e), W(u)), Re((e, [{ scrollHeight: t, scrollTop: n }, r, i, a, o]) => {
 		let s = n + r - t > -o, c = {
@@ -1552,8 +1570,8 @@ var ln = "up", un = "down", dn = "none", fn = {
 			notAtBottomBecause: l,
 			state: c
 		};
-	}, fn), N((e, t) => e !== void 0 && e.atBottom === t.atBottom))), h = z(I(r, Re((e, { scrollHeight: t, scrollTop: n, viewportHeight: r }) => {
-		if (!cn(e.scrollHeight, t)) {
+	}, pn), N((e, t) => e !== void 0 && e.atBottom === t.atBottom))), h = z(I(r, Re((e, { scrollHeight: t, scrollTop: n, viewportHeight: r }) => {
+		if (!ln(e.scrollHeight, t)) {
 			let i = t - (n + r) < 1;
 			return e.scrollTop !== n && i ? {
 				changed: !0,
@@ -1580,17 +1598,17 @@ var ln = "up", un = "down", dn = "none", fn = {
 		scrollTop: 0
 	}), P((e) => e.changed), F((e) => e.jump)), 0);
 	M(I(m, F((e) => e.atBottom)), o), M(I(o, Be(50)), c);
-	let g = R(un);
+	let g = R(dn);
 	M(I(r, F(({ scrollTop: e }) => e), N(), Re((e, t) => j(p) ? {
 		direction: e.direction,
 		prevScrollTop: t
 	} : {
-		direction: t < e.prevScrollTop ? ln : un,
+		direction: t < e.prevScrollTop ? un : dn,
 		prevScrollTop: t
 	}, {
-		direction: un,
+		direction: dn,
 		prevScrollTop: 0
-	}), F((e) => e.direction)), g), M(I(r, Be(50), Le(dn)), g);
+	}), F((e) => e.direction)), g), M(I(r, Be(50), Le(fn)), g);
 	let _ = R(0);
 	return M(I(f, P((e) => !e), Le(0)), _), M(I(i, Be(100), L(f), P(([e, t]) => t), Re(([e, t], [n]) => [t, n], [0, 0]), F(([e, t]) => t - e)), _), {
 		atBottomState: m,
@@ -1605,14 +1623,14 @@ var ln = "up", un = "down", dn = "none", fn = {
 		scrollDirection: g,
 		scrollVelocity: _
 	};
-}, O(K)), hn = "top", gn = "bottom", _n = "none";
-function vn(e, t, n) {
-	return typeof e == "number" ? n === ln && t === hn || n === un && t === gn ? e : 0 : n === ln ? t === hn ? e.main : e.reverse : t === gn ? e.main : e.reverse;
+}, O(K)), gn = "top", _n = "bottom", vn = "none";
+function yn(e, t, n) {
+	return typeof e == "number" ? n === un && t === gn || n === dn && t === _n ? e : 0 : n === un ? t === gn ? e.main : e.reverse : t === _n ? e.main : e.reverse;
 }
-function yn(e, t) {
+function bn(e, t) {
 	return typeof e == "number" ? e : e[t] ?? 0;
 }
-var bn = H(([{ deviation: e, fixedHeaderHeight: t, headerHeight: n, scrollTop: r, viewportHeight: i }]) => {
+var xn = H(([{ deviation: e, fixedHeaderHeight: t, headerHeight: n, scrollTop: r, viewportHeight: i }]) => {
 	let a = B(), o = R(0), s = R(0), c = R(0);
 	return {
 		increaseViewportBy: s,
@@ -1620,16 +1638,16 @@ var bn = H(([{ deviation: e, fixedHeaderHeight: t, headerHeight: n, scrollTop: r
 		overscan: c,
 		topListHeight: o,
 		visibleRange: z(I(U(W(r), W(i), W(n), W(a, Dt), W(c), W(o), W(t), W(e), W(s)), F(([e, t, n, [r, i], a, o, s, c, l]) => {
-			let u = e - c, d = o + s, f = Math.max(n - u, 0), p = _n, m = yn(l, hn), h = yn(l, gn);
-			return r -= c, r += n + s, i += n + s, i -= c, r > e + d - m && (p = ln), i < e - f + t + h && (p = un), p === _n ? null : [Math.max(u - n - vn(a, hn, p) - m, 0), u - f - s + t + vn(a, gn, p) + h];
+			let u = e - c, d = o + s, f = Math.max(n - u, 0), p = vn, m = bn(l, gn), h = bn(l, _n);
+			return r -= c, r += n + s, i += n + s, i -= c, r > e + d - m && (p = un), i < e - f + t + h && (p = dn), p === vn ? null : [Math.max(u - n - yn(a, gn, p) - m, 0), u - f - s + t + yn(a, _n, p) + h];
 		}), P((e) => e !== null), N(Dt)), [0, 0])
 	};
 }, O(K), { singleton: !0 });
-function xn(e, t, n) {
+function Sn(e, t, n) {
 	if (Nt(t)) {
 		let r = Bt(e, t);
 		return [{
-			index: dt(t.groupOffsetTree, r)[0],
+			index: ut(t.groupOffsetTree, r)[0],
 			offset: 0,
 			size: 0
 		}, {
@@ -1646,7 +1664,7 @@ function xn(e, t, n) {
 		size: 0
 	}];
 }
-var Sn = {
+var Cn = {
 	bottom: 0,
 	firstItemIndex: 0,
 	items: [],
@@ -1657,7 +1675,7 @@ var Sn = {
 	topListHeight: 0,
 	totalCount: 0
 };
-function Cn(e, t, n, r, i, a) {
+function wn(e, t, n, r, i, a) {
 	let { lastIndex: o, lastOffset: s, lastSize: c } = i, l = 0, u = 0;
 	if (e.length > 0) {
 		l = e[0].offset;
@@ -1668,30 +1686,30 @@ function Cn(e, t, n, r, i, a) {
 	return {
 		bottom: u,
 		firstItemIndex: a,
-		items: Tn(e, i, a),
+		items: En(e, i, a),
 		offsetBottom: m,
 		offsetTop: l,
 		top: p,
-		topItems: Tn(t, i, a),
+		topItems: En(t, i, a),
 		topListHeight: t.reduce((e, t) => t.size + e, 0),
 		totalCount: n
 	};
 }
-function wn(e, t, n, r, i, a) {
+function Tn(e, t, n, r, i, a) {
 	let o = 0;
 	if (n.groupIndices.length > 0) for (let t of n.groupIndices) {
 		if (t - o >= e) break;
 		o++;
 	}
-	let s = e + o, c = on(t, s);
-	return Cn(Array.from({ length: s }).map((e, t) => ({
-		data: a[t + c],
-		index: t + c,
+	let s = e + o, c = a !== void 0, l = a?.length ?? 0, u = on(t, c ? l : s), d = c ? Math.max(0, Math.min(s, l - u)) : s;
+	return wn(Array.from({ length: d }).map((e, t) => ({
+		data: a?.[t + u],
+		index: t + u,
 		offset: 0,
 		size: 0
-	})), [], s, i, n, r);
+	})), [], d, i, n, r);
 }
-function Tn(e, t, n) {
+function En(e, t, n) {
 	if (e.length === 0) return [];
 	if (!Nt(t)) return e.map((e) => ({
 		...e,
@@ -1718,30 +1736,30 @@ function Tn(e, t, n) {
 	}
 	return a;
 }
-function En(e, t) {
+function Dn(e, t) {
 	return e === void 0 ? 0 : typeof e == "number" ? e : e[t] ?? 0;
 }
-var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a, { listBoundary: o, topListHeight: s, visibleRange: c }, { initialTopMostItemIndex: l, scrolledToInitialItem: u }, { topListHeight: d }, f, { didMount: p }, { recalcInProgress: m }]) => {
+var On = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a, { listBoundary: o, topListHeight: s, visibleRange: c }, { initialTopMostItemIndex: l, scrolledToInitialItem: u }, { topListHeight: d }, f, { didMount: p }, { recalcInProgress: m }]) => {
 	let h = R([]), g = R(0), _ = B(), v = R(0);
 	M(a.topItemsIndexes, h);
-	let y = z(I(U(p, m, W(c, Dt), W(i), W(r), W(l), u, W(h), W(t), W(n), W(v), e), P(([e, t, , n, , , , , , , , r]) => {
+	let y = z(I(U(p, m, W(c, Dt), W(i), W(r), W(l), u, W(h), W(t), W(n), W(v), e, W(g)), P(([e, t, , n, , , , , , , , r]) => {
 		let i = r !== void 0 && r.length !== n;
 		return e && !t && !i;
-	}), F(([, , [e, t], n, r, i, a, o, s, c, l, u]) => {
-		let d = r, { offsetTree: f, sizeTree: p } = d, m = j(g);
+	}), F(([, , [e, t], n, r, i, a, o, s, c, l, u, d]) => {
+		let f = r, { offsetTree: p, sizeTree: m } = f;
 		if (n === 0) return {
-			...Sn,
+			...Cn,
 			totalCount: n
 		};
-		if (e === 0 && t === 0) return m === 0 ? {
-			...Sn,
+		if (e === 0 && t === 0) return d === 0 ? {
+			...Cn,
 			totalCount: n
-		} : wn(m, i, r, s, c, u || []);
-		if (q(p)) return m > 0 ? null : Cn(xn(on(i, n), d, u), [], n, c, d, s);
+		} : Tn(d, i, r, s, c, u);
+		if (q(m)) return d > 0 ? null : wn(Sn(on(i, n), f, u), [], n, c, f, s);
 		let h = [];
 		if (o.length > 0) {
 			let e = o[0], t = o[o.length - 1], n = 0;
-			for (let r of pt(p, e, t)) {
+			for (let r of pt(m, e, t)) {
 				let i = r.value, a = Math.max(r.start, e), o = Math.min(r.end, t);
 				for (let e = a; e <= o; e++) h.push({
 					data: u?.[e],
@@ -1751,19 +1769,19 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 				}), n += i;
 			}
 		}
-		if (!a) return Cn([], h, n, c, d, s);
-		let _ = o.length > 0 ? o[o.length - 1] + 1 : 0, v = Ht(f, e, t, _);
-		if (v.length === 0) return null;
-		let y = n - 1, b = je([], (n) => {
-			for (let r of v) {
+		if (!a) return wn([], h, n, c, f, s);
+		let g = o.length > 0 ? o[o.length - 1] + 1 : 0, _ = Ht(p, e, t, g);
+		if (_.length === 0) return null;
+		let v = n - 1, y = je([], (n) => {
+			for (let r of _) {
 				let i = r.value, a = i.offset, o = r.start, s = i.size;
 				if (i.offset < e) {
 					o += Math.floor((e - i.offset + c) / (s + c));
 					let t = o - r.start;
 					a += t * s + t * c;
 				}
-				o < _ && (a += (_ - o) * s, o = _);
-				let l = Math.min(r.end, y);
+				o < g && (a += (g - o) * s, o = g);
+				let l = Math.min(r.end, v);
 				for (let e = o; e <= l && !(a >= t); e++) n.push({
 					data: u?.[e],
 					index: e,
@@ -1771,13 +1789,13 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 					size: s
 				}), a += s + c;
 			}
-		}), x = En(l, hn), S = En(l, gn);
-		if (b.length > 0 && (x > 0 || S > 0)) {
-			let e = b[0], t = b[b.length - 1];
-			if (x > 0 && e.index > _) {
-				let t = Math.min(x, e.index - _), n = [], r = e.offset;
+		}), b = Dn(l, gn), x = Dn(l, _n);
+		if (y.length > 0 && (b > 0 || x > 0)) {
+			let e = y[0], t = y[y.length - 1];
+			if (b > 0 && e.index > g) {
+				let t = Math.min(b, e.index - g), n = [], r = e.offset;
 				for (let i = e.index - 1; i >= e.index - t; i--) {
-					let t = pt(p, i, i)[0]?.value ?? e.size;
+					let t = pt(m, i, i)[0]?.value ?? e.size;
 					r -= t + c, n.unshift({
 						data: u?.[i],
 						index: i,
@@ -1785,13 +1803,13 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 						size: t
 					});
 				}
-				b.unshift(...n);
+				y.unshift(...n);
 			}
-			if (S > 0 && t.index < y) {
-				let e = Math.min(S, y - t.index), n = t.offset + t.size + c;
+			if (x > 0 && t.index < v) {
+				let e = Math.min(x, v - t.index), n = t.offset + t.size + c;
 				for (let r = t.index + 1; r <= t.index + e; r++) {
-					let e = pt(p, r, r)[0]?.value ?? t.size;
-					b.push({
+					let e = pt(m, r, r)[0]?.value ?? t.size;
+					y.push({
 						data: u?.[r],
 						index: r,
 						offset: n,
@@ -1800,8 +1818,8 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 				}
 			}
 		}
-		return Cn(b, h, n, c, d, s);
-	}), P((e) => e !== null), N()), Sn);
+		return wn(y, h, n, c, f, s);
+	}), P((e) => e !== null), N()), Cn);
 	M(I(e, P(Oe), F((e) => e?.length)), i), M(I(y, F((e) => e.topListHeight)), d), M(d, s), M(I(y, F((e) => [e.top, e.bottom])), o), M(I(y, F((e) => e.items)), _);
 	let b = V(I(y, P(({ items: e }) => e.length > 0), L(i, e), P(([{ items: e }, t]) => e[e.length - 1].originalIndex === t - 1), F(([, e, t]) => [e - 1, t]), N(Dt), F(([e]) => e))), x = V(I(y, Be(200), P(({ items: e, topItems: t }) => e.length > 0 && e[0].originalIndex === t.length), F(({ items: e }) => e[0].index), N()));
 	return {
@@ -1823,19 +1841,19 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 		topItemsIndexes: h,
 		...f
 	};
-}, O(Xt, Qt, bn, sn, nn, mn, $t, Ot), { singleton: !0 }), On = H(([{ fixedFooterHeight: e, fixedHeaderHeight: t, footerHeight: n, headerHeight: r }, { listState: i }]) => {
+}, O(Xt, Qt, xn, cn, nn, hn, $t, Ot), { singleton: !0 }), kn = H(([{ fixedFooterHeight: e, fixedHeaderHeight: t, footerHeight: n, headerHeight: r }, { listState: i }]) => {
 	let a = B(), o = z(I(U(n, e, r, t, i), F(([e, t, n, r, i]) => e + t + n + r + i.offsetBottom + i.bottom)), 0);
 	return M(W(o), a), {
 		totalListHeight: o,
 		totalListHeightChanged: a
 	};
-}, O(K, Dn), { singleton: !0 }), kn = H(([{ viewportHeight: e }, { totalListHeight: t }]) => {
+}, O(K, On), { singleton: !0 }), An = H(([{ viewportHeight: e }, { totalListHeight: t }]) => {
 	let n = R(!1);
 	return {
 		alignToBottom: n,
 		paddingTopAddition: z(I(U(n, e, t), P(([e]) => e), F(([, e, t]) => Math.max(0, e - t)), Be(0), N()), 0)
 	};
-}, O(K, On), { singleton: !0 }), An = H(() => ({ context: R(null) })), jn = ({ itemBottom: e, itemTop: t, locationParams: { align: n, behavior: r, ...i }, viewportBottom: a, viewportTop: o }) => t < o ? {
+}, O(K, kn), { singleton: !0 }), jn = H(() => ({ context: R(null) })), Mn = ({ itemBottom: e, itemTop: t, locationParams: { align: n, behavior: r, ...i }, viewportBottom: a, viewportTop: o }) => t < o ? {
 	...i,
 	align: n ?? "start",
 	...r === void 0 ? {} : { behavior: r }
@@ -1843,10 +1861,10 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 	...i,
 	align: n ?? "end",
 	...r === void 0 ? {} : { behavior: r }
-} : null, Mn = H(([{ gap: e, sizes: t, totalCount: n }, { fixedFooterHeight: r, fixedHeaderHeight: i, headerHeight: a, scrollingInProgress: o, scrollTop: s, viewportHeight: c }, { scrollToIndex: l }]) => {
+} : null, Nn = H(([{ gap: e, sizes: t, totalCount: n }, { fixedFooterHeight: r, fixedHeaderHeight: i, headerHeight: a, scrollingInProgress: o, scrollTop: s, viewportHeight: c }, { scrollToIndex: l }]) => {
 	let u = B();
 	return M(I(u, L(t, c, n, a, i, r, s), L(e), F(([[e, t, n, r, i, a, s, c], l]) => {
-		let { calculateViewLocation: u = jn, done: d, ...f } = e, p = Vt(e, t, r - 1), m = zt(p, t.offsetTree, l) + i + a, h = m + dt(t.sizeTree, p)[1], g = c + a, _ = u({
+		let { calculateViewLocation: u = Mn, done: d, ...f } = e, p = Vt(e, t, r - 1), m = zt(p, t.offsetTree, l) + i + a, h = m + ut(t.sizeTree, p)[1], g = c + a, _ = u({
 			itemBottom: h,
 			itemTop: m,
 			locationParams: f,
@@ -1855,11 +1873,11 @@ var Dn = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r, totalCount: i }, a,
 		});
 		return _ === null ? d?.() : d && Pe(I(o, P((e) => !e), ze(j(o) ? 1 : 2)), d), _;
 	}), P((e) => e !== null)), l), { scrollIntoView: u };
-}, O(Xt, K, nn, Dn, Je), { singleton: !0 });
-function Nn(e) {
+}, O(Xt, K, nn, On, Ye), { singleton: !0 });
+function Pn(e) {
 	return e === !1 ? !1 : e === "smooth" ? "smooth" : "auto";
 }
-var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ listRefresh: e, totalCount: t, fixedItemSize: n, data: r }, { atBottomState: i, isAtBottom: a }, { scrollToIndex: o }, { scrolledToInitialItem: s }, { didMount: c, propsReady: l }, { log: u }, { scrollingInProgress: d }, { context: f }, { scrollIntoView: p }]) => {
+var Fn = (e, t) => typeof e == "function" ? Pn(e(t)) : t && Pn(e), In = H(([{ listRefresh: e, totalCount: t, fixedItemSize: n, data: r }, { atBottomState: i, isAtBottom: a }, { scrollToIndex: o }, { scrolledToInitialItem: s }, { didMount: c, propsReady: l }, { log: u }, { scrollingInProgress: d }, { context: f }, { scrollIntoView: p }]) => {
 	let m = R(!1), h = B(), g = null;
 	function _(e) {
 		A(o, {
@@ -1870,7 +1888,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 	}
 	k(I(U(I(W(t), ze(1)), c), L(W(m), a, s, d), F(([[e, t], n, r, i, a]) => {
 		let o = t && i, s = "auto";
-		return o && (s = Pn(n, r || a), o &&= s !== !1), {
+		return o && (s = Fn(n, r || a), o &&= s !== !1), {
 			followOutputBehavior: s,
 			shouldFollow: o,
 			totalCount: e
@@ -1902,7 +1920,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 		e !== !1 && !t.atBottom && t.notAtBottomBecause === "VIEWPORT_HEIGHT_DECREASING" && _("auto");
 	});
 	let y = R(null), b = B();
-	return M(Ge(I(W(r), F((e) => e?.length ?? 0)), I(W(t))), b), k(I(U(I(b, ze(1)), c), L(W(y), s, d, f), F(([[e, t], n, r, i, a]) => t && r && n?.({
+	return M(Ke(I(W(r), F((e) => e?.length ?? 0)), I(W(t))), b), k(I(U(I(b, ze(1)), c), L(W(y), s, d, f), F(([[e, t], n, r, i, a]) => t && r && n?.({
 		context: a,
 		totalCount: e,
 		scrollingInProgress: i
@@ -1917,7 +1935,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 		followOutput: m,
 		scrollIntoViewOnChange: y
 	};
-}, O(Xt, mn, nn, sn, $t, Je, K, An, Mn)), In = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r }, { initialTopMostItemIndex: i }, { initialItemCount: a, listState: o }, { didMount: s }]) => (M(I(s, L(a), P(([, e]) => e !== 0), L(i, r, t, n, e), F(([[, e], t, n, r, i, a = []]) => wn(e, t, n, r, i, a))), o), {}), O(Xt, sn, Dn, $t), { singleton: !0 }), Ln = H(([{ didMount: e }, { scrollTo: t }, { listState: n }]) => {
+}, O(Xt, hn, nn, cn, $t, Ye, K, jn, Nn)), Ln = H(([{ data: e, firstItemIndex: t, gap: n, sizes: r }, { initialTopMostItemIndex: i }, { initialItemCount: a, listState: o }, { didMount: s }]) => (M(I(s, L(a), P(([, e]) => e !== 0), L(i, r, t, n, e), F(([[, e], t, n, r, i, a]) => Tn(e, t, n, r, i, a))), o), {}), O(Xt, cn, On, $t), { singleton: !0 }), Rn = H(([{ didMount: e }, { scrollTo: t }, { listState: n }]) => {
 	let r = R(0);
 	return k(I(e, L(r), P(([, e]) => e !== 0), F(([, e]) => ({ top: e }))), (e) => {
 		Pe(I(n, ze(1), P((e) => e.items.length > 1)), () => {
@@ -1926,7 +1944,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 			});
 		});
 	}), { initialScrollTop: r };
-}, O($t, K, Dn), { singleton: !0 }), Rn = H(([{ scrollVelocity: e }]) => {
+}, O($t, K, On), { singleton: !0 }), zn = H(([{ scrollVelocity: e }]) => {
 	let t = R(!1), n = B(), r = R(!1);
 	return M(I(e, L(r, t, n), P(([e, t]) => t !== !1 && t !== void 0), F(([e, t, n, r]) => {
 		let { enter: i, exit: a } = t;
@@ -1942,7 +1960,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 		scrollSeekRangeChanged: n,
 		scrollVelocity: e
 	};
-}, O(mn), { singleton: !0 }), zn = H(([{ scrollContainerState: e, scrollTo: t }]) => {
+}, O(hn), { singleton: !0 }), Bn = H(([{ scrollContainerState: e, scrollTo: t }]) => {
 	let n = B(), r = B(), i = B(), a = R(!1), o = R(void 0);
 	return M(I(U(n, r), F(([{ scrollTop: e, viewportHeight: t }, { offsetTop: n, listHeight: r }]) => ({
 		scrollHeight: r,
@@ -1958,7 +1976,7 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 		windowScrollTo: i,
 		windowViewportRect: r
 	};
-}, O(K)), Bn = H(([{ sizeRanges: e, sizes: t }, { headerHeight: n, scrollTop: r }, { initialTopMostItemIndex: i }, { didMount: a }, { useWindowScroll: o, windowScrollContainerState: s, windowViewportRect: c }]) => {
+}, O(K)), Vn = H(([{ sizeRanges: e, sizes: t }, { headerHeight: n, scrollTop: r }, { initialTopMostItemIndex: i }, { didMount: a }, { useWindowScroll: o, windowScrollContainerState: s, windowViewportRect: c }]) => {
 	let l = B(), u = R(void 0), d = R(null), f = R(null);
 	return M(s, d), M(c, f), k(I(l, L(t, r, o, d, f, n)), ([e, t, n, r, i, a, o]) => {
 		let s = Wt(t.sizeTree);
@@ -1966,29 +1984,29 @@ var Pn = (e, t) => typeof e == "function" ? Nn(e(t)) : t && Nn(e), Fn = H(([{ li
 			ranges: s,
 			scrollTop: n
 		});
-	}), M(I(u, P(Oe), F(Vn)), i), M(I(a, L(u), P(([, e]) => e !== void 0), N(), F(([, e]) => e.ranges)), e), {
+	}), M(I(u, P(Oe), F(Hn)), i), M(I(a, L(u), P(([, e]) => e !== void 0), N(), F(([, e]) => e.ranges)), e), {
 		getState: l,
 		restoreStateFrom: u
 	};
-}, O(Xt, K, sn, $t, zn));
-function Vn(e) {
+}, O(Xt, K, cn, $t, Bn));
+function Hn(e) {
 	return {
 		align: "start",
 		index: 0,
 		offset: e.scrollTop
 	};
 }
-var Hn = H(([{ topItemsIndexes: e }]) => {
+var Un = H(([{ topItemsIndexes: e }]) => {
 	let t = R(0);
 	return M(I(t, P((e) => e >= 0), F((e) => Array.from({ length: e }).map((e, t) => t))), e), { topItemCount: t };
-}, O(Dn));
-function Un(e) {
+}, O(On));
+function Wn(e) {
 	let t = !1, n;
 	return (() => (t || (t = !0, n = e()), n));
 }
-var Wn = Un(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Gn = H(([{ data: e, defaultItemSize: t, firstItemIndex: n, fixedItemSize: r, fixedGroupSize: i, gap: a, groupIndices: o, heightEstimates: s, itemSize: c, sizeRanges: l, sizes: u, statefulTotalCount: d, totalCount: f, trackItemSizes: p }, { initialItemFinalLocationReached: m, initialTopMostItemIndex: h, scrolledToInitialItem: g }, _, v, y, b, { scrollToIndex: x }, S, { topItemCount: C }, { groupCounts: w }, T]) => {
+var Gn = Wn(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(navigator.userAgent)), Kn = H(([{ data: e, defaultItemSize: t, firstItemIndex: n, fixedItemSize: r, fixedGroupSize: i, gap: a, groupIndices: o, heightEstimates: s, itemSize: c, sizeRanges: l, sizes: u, statefulTotalCount: d, totalCount: f, trackItemSizes: p }, { initialItemFinalLocationReached: m, initialTopMostItemIndex: h, scrolledToInitialItem: g }, _, v, y, b, { scrollToIndex: x }, S, { topItemCount: C }, { groupCounts: w }, T]) => {
 	let { listState: E, minOverscanItemCount: ee, topItemsIndexes: te, rangeChanged: ne, ...re } = b;
-	return M(ne, T.scrollSeekRangeChanged), M(I(T.windowViewportRect, F((e) => e.visibleHeight)), _.viewportHeight), {
+	return M(ne, T.scrollSeekRangeChanged), M(I(U(T.windowViewportRect, _.headerHeight, _.fixedHeaderHeight), F(([e, t, n]) => Math.max(t + n + 1, e.visibleHeight))), _.viewportHeight), {
 		data: e,
 		defaultItemHeight: t,
 		firstItemIndex: n,
@@ -2019,8 +2037,8 @@ var Wn = Un(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		sizes: u,
 		...v
 	};
-}, O(Xt, sn, K, Bn, Fn, Dn, nn, H(([{ deviation: e, scrollBy: t, scrollingInProgress: n, scrollTop: r }, { isAtBottom: i, isScrolling: a, lastJumpDueToItemResize: o, scrollDirection: s }, { listState: c }, { beforeUnshiftWith: l, gap: u, shiftWithOffset: d, sizes: f }, { log: p }, { recalcInProgress: m }]) => {
-	let h = V(I(c, L(o), Re(([, e, t, n], [{ bottom: r, items: i, offsetBottom: a, totalCount: o }, s]) => {
+}, O(Xt, cn, K, Vn, In, On, nn, H(([{ deviation: e, deviationCommitted: t, scrollBy: n, scrollingInProgress: r, scrollTop: i }, { isAtBottom: a, isScrolling: o, lastJumpDueToItemResize: s, scrollDirection: c }, { listState: l }, { beforeUnshiftWith: u, gap: d, shiftWithOffset: f, sizes: p }, { log: m }, { recalcInProgress: h }]) => {
+	let g = V(I(l, L(s), Re(([, e, t, n], [{ bottom: r, items: i, offsetBottom: a, totalCount: o }, s]) => {
 		let c = r + a, l = 0;
 		return t === o && e.length > 0 && i.length > 0 && (i[0].originalIndex === 0 && e[0].originalIndex === 0 || (l = c - n, l !== 0 && (l += s))), [
 			l,
@@ -2033,38 +2051,48 @@ var Wn = Un(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 		[],
 		0,
 		0
-	]), P(([e]) => e !== 0), L(r, s, n, i, p, m), P(([, e, t, n, , , r]) => !r && !n && e !== 0 && t === ln), F(([[e], , , , , t]) => (t("Upward scrolling compensation", { amount: e }, G.DEBUG), e))));
-	function g(n) {
-		n > 0 ? (A(t, {
+	]), P(([e]) => e !== 0), L(i, c, r, a, m, h), P(([, e, t, n, , , r]) => !r && !n && e !== 0 && t === un), F(([[e], , , , , t]) => (t("Upward scrolling compensation", { amount: e }, G.DEBUG), e))));
+	function _(t) {
+		t > 0 ? (A(n, {
 			behavior: "auto",
-			top: -n
-		}), A(e, 0)) : (A(e, 0), A(t, {
+			top: -t
+		}), A(e, 0)) : (A(e, 0), A(n, {
 			behavior: "auto",
-			top: -n
+			top: -t
 		}));
 	}
-	return k(I(h, L(e, a)), ([t, n, r]) => {
-		r && Wn() ? A(e, n - t) : g(-t);
-	}), k(I(U(z(a, !1), e, m), P(([e, t, n]) => !e && !n && t !== 0), F(([e, t]) => t), Be(1)), g), M(I(d, F((e) => ({ top: -e }))), t), k(I(l, L(f, u), F(([e, { groupIndices: t, lastSize: n, sizeTree: r }, i]) => {
+	k(I(g, L(e, o)), ([t, n, r]) => {
+		r && Gn() ? A(e, n - t) : _(-t);
+	}), k(I(U(z(o, !1), e, h), P(([e, t, n]) => !e && !n && t !== 0), F(([e, t]) => t), Be(1)), _), M(I(f, F((e) => ({ top: -e }))), n);
+	let v = null;
+	function y() {
+		if (v === null) return;
+		let { offset: t } = v;
+		v = null, A(n, { top: t }), requestAnimationFrame(() => {
+			A(e, 0), A(h, !1);
+		});
+	}
+	return k(t, (e) => {
+		v === null || !v.acknowledgeable || e === v.offset && y();
+	}), k(I(u, L(p, d), F(([e, { groupIndices: t, lastSize: n, sizeTree: r }, i]) => {
 		function a(e) {
 			return e * (n + i);
 		}
 		if (t.length === 0) return a(e);
-		let o = 0, s = ut(r, 0), c = 0, l = 0;
+		let o = 0, s = lt(r, 0), c = 0, l = 0;
 		for (; c < e;) {
 			c++, o += s;
-			let n = t.length === l + 1 ? Infinity : t[l + 1] - t[l] - 1;
+			let n = t.length === l + 1 ? 1 / 0 : t[l + 1] - t[l] - 1;
 			c + n > e && (o -= s, n = e - c + 1), c += n, o += a(n), l++;
 		}
 		return o;
-	})), (n) => {
-		A(e, n), requestAnimationFrame(() => {
-			A(t, { top: n }), requestAnimationFrame(() => {
-				A(e, 0), A(m, !1);
-			});
-		});
+	})), (t) => {
+		v = {
+			acknowledgeable: j(e) !== t,
+			offset: t
+		}, A(e, t), requestAnimationFrame(y);
 	}), { deviation: e };
-}, O(K, mn, Dn, Xt, Je, Ot)), Hn, Qt, H(([e, t, n, r, i, a, o, s, c, l, u]) => ({
+}, O(K, hn, On, Xt, Ye, Ot)), Un, Qt, H(([e, t, n, r, i, a, o, s, c, l, u]) => ({
 	...e,
 	...t,
 	...n,
@@ -2076,15 +2104,15 @@ var Wn = Un(() => /iP(ad|od|hone)/i.test(navigator.userAgent) && /WebKit/i.test(
 	...c,
 	...l,
 	...u
-}), O(bn, In, $t, Rn, On, Ln, kn, zn, Mn, Je, An))));
-function Kn(e, t) {
+}), O(xn, Ln, $t, zn, kn, Rn, An, Bn, Nn, Ye, jn))));
+function qn(e, t) {
 	let n = {}, r = {}, i = 0, a = e.length;
 	for (; i < a;) r[e[i]] = 1, i += 1;
 	for (let e in t) Object.hasOwn(r, e) || (n[e] = t[e]);
 	return n;
 }
-var qn = typeof document < "u" ? e.useLayoutEffect : e.useEffect;
-function Jn(t, n, r) {
+var Jn = typeof document > "u" ? e.useEffect : e.useLayoutEffect;
+function Yn(t, n, r) {
 	let i = Object.keys(n.required || {}), a = Object.keys(n.optional || {}), o = Object.keys(n.methods || {}), s = Object.keys(n.events || {}), c = e.createContext({});
 	function l(e, t) {
 		e.propsReady !== void 0 && A(e.propsReady, !1);
@@ -2109,10 +2137,10 @@ function Jn(t, n, r) {
 	}
 	return {
 		Component: e.forwardRef(function(n, o) {
-			let { children: p, ...m } = n, [h] = e.useState(() => je(We(t), (e) => {
+			let { children: p, ...m } = n, [h] = e.useState(() => je(Ge(t), (e) => {
 				l(e, m);
 			})), [g] = e.useState(Ee(f, h));
-			qn(() => {
+			Jn(() => {
 				for (let e of s) e in m && k(g[e], m[e]);
 				return () => {
 					Object.values(g).map(Ne);
@@ -2121,14 +2149,14 @@ function Jn(t, n, r) {
 				m,
 				g,
 				h
-			]), qn(() => {
+			]), Jn(() => {
 				l(h, m);
 			}), e.useImperativeHandle(o, Ce(u(h)));
 			let _ = r;
 			return /* @__PURE__ */ d(c.Provider, {
 				value: h,
 				children: r === void 0 ? p : /* @__PURE__ */ d(_, {
-					...Kn([
+					...qn([
 						...i,
 						...a,
 						...s
@@ -2139,14 +2167,14 @@ function Jn(t, n, r) {
 		}),
 		useEmitter: (t, n) => {
 			let r = e.useContext(c)[t];
-			qn(() => k(r, n), [n, r]);
+			Jn(() => k(r, n), [n, r]);
 		},
-		useEmitterValue: parseInt(e.version) >= 18 ? (t) => {
+		useEmitterValue: parseInt(e.version, 10) >= 18 ? (t) => {
 			let n = e.useContext(c)[t], r = e.useCallback((e) => k(n, e), [n]);
 			return e.useSyncExternalStore(r, () => j(n), () => j(n));
 		} : (t) => {
 			let n = e.useContext(c)[t], [r, i] = e.useState(Ee(j, n));
-			return qn(() => k(n, (e) => {
+			return Jn(() => k(n, (e) => {
 				e !== r && i(Ce(e));
 			}), [n, r]), r;
 		},
@@ -2158,11 +2186,11 @@ function Jn(t, n, r) {
 		}
 	};
 }
-var Yn = e.createContext(void 0), Xn = e.createContext(void 0), Zn = "-webkit-sticky", Qn = "sticky", $n = Un(() => {
-	if (typeof document > "u") return Qn;
+var Xn = e.createContext(void 0), Zn = e.createContext(void 0), Qn = "-webkit-sticky", $n = "sticky", er = Wn(() => {
+	if (typeof document > "u") return $n;
 	let e = document.createElement("div");
-	return e.style.position = Zn, e.style.position === Zn ? Zn : Qn;
-}), er = typeof document < "u" ? e.useLayoutEffect : e.useEffect;
+	return e.style.position = Qn, e.style.position === Qn ? Qn : $n;
+});
 function tr(e) {
 	return "self" in e;
 }
@@ -2174,8 +2202,8 @@ function rr(t, n, r, i = Ae, a, o) {
 		let r, i, a, s = e.target;
 		if (nr(s) || tr(s)) {
 			let e = tr(s) ? s : s.defaultView;
-			a = o === !0 ? et(e, e.scrollX) : e.scrollY, r = o === !0 ? e.document.documentElement.scrollWidth : e.document.documentElement.scrollHeight, i = o === !0 ? e.innerWidth : e.innerHeight;
-		} else a = o === !0 ? et(s, s.scrollLeft) : s.scrollTop, r = o === !0 ? s.scrollWidth : s.scrollHeight, i = o === !0 ? s.offsetWidth : s.offsetHeight;
+			a = o === !0 ? Qe(e, e.scrollX) : e.scrollY, r = o === !0 ? e.document.documentElement.scrollWidth : e.document.documentElement.scrollHeight, i = o === !0 ? e.innerWidth : e.innerHeight;
+		} else a = o === !0 ? Qe(s, s.scrollLeft) : s.scrollTop, r = o === !0 ? s.scrollWidth : s.scrollHeight, i = o === !0 ? s.offsetWidth : s.offsetHeight;
 		let u = () => {
 			t({
 				scrollHeight: r,
@@ -2190,12 +2218,12 @@ function rr(t, n, r, i = Ae, a, o) {
 		o
 	]);
 	e.useEffect(() => {
-		let e = a || s.current;
-		return Qe(e), i(a || s.current), u({
+		let e = a ?? s.current;
+		return i(a ?? s.current), u({
 			suppressFlushSync: !0,
 			target: e
 		}), e.addEventListener("scroll", u, { passive: !0 }), () => {
-			Qe(e), i(null), e.removeEventListener("scroll", u);
+			i(null), e.removeEventListener("scroll", u);
 		};
 	}, [
 		s,
@@ -2208,14 +2236,14 @@ function rr(t, n, r, i = Ae, a, o) {
 		let r = s.current;
 		if (!r || (o === !0 ? "offsetWidth" in r && r.offsetWidth === 0 : "offsetHeight" in r && r.offsetHeight === 0)) return;
 		let i = e.behavior === "smooth", a, u, d;
-		tr(r) ? (u = Math.max(Mt(r.document.documentElement, o === !0 ? "width" : "height"), o === !0 ? r.document.documentElement.scrollWidth : r.document.documentElement.scrollHeight), a = o === !0 ? r.innerWidth : r.innerHeight, d = o === !0 ? et(r, r.scrollX) : r.scrollY) : (u = r[o === !0 ? "scrollWidth" : "scrollHeight"], a = Mt(r, o === !0 ? "width" : "height"), d = o === !0 ? et(r, r.scrollLeft) : r.scrollTop);
+		tr(r) ? (u = Math.max(Mt(r.document.documentElement, o === !0 ? "width" : "height"), o === !0 ? r.document.documentElement.scrollWidth : r.document.documentElement.scrollHeight), a = o === !0 ? r.innerWidth : r.innerHeight, d = o === !0 ? Qe(r, r.scrollX) : r.scrollY) : (u = r[o === !0 ? "scrollWidth" : "scrollHeight"], a = Mt(r, o === !0 ? "width" : "height"), d = o === !0 ? Qe(r, r.scrollLeft) : r.scrollTop);
 		let f = u - a;
 		if (e.top === void 0) {
 			r.scrollTo(e);
 			return;
 		}
 		let p = Math.ceil(Math.max(Math.min(f, e.top), 0));
-		if (e.top = p, cn(a, u) || p === d) {
+		if (e.top = p, ln(a, u) || p === d) {
 			t({
 				scrollHeight: u,
 				scrollTop: d,
@@ -2227,17 +2255,16 @@ function rr(t, n, r, i = Ae, a, o) {
 			l.current = null, c.current = null, n(!0);
 		}, 1e3)) : c.current = null, o === !0 && (e = {
 			...e.behavior === void 0 ? {} : { behavior: e.behavior },
-			left: tt(r, p)
+			left: $e(r, p)
 		}), r.scrollTo(e);
 	}
-	function f(e) {
-		o === !0 && (e = {
-			...e.behavior === void 0 ? {} : { behavior: e.behavior },
-			...e.top === void 0 ? {} : { left: tt(s.current, e.top) }
-		}), s.current.scrollBy(e);
-	}
 	return {
-		scrollByCallback: f,
+		scrollByCallback: e.useCallback((e) => {
+			o === !0 && (e = {
+				...e.behavior === void 0 ? {} : { behavior: e.behavior },
+				...e.top === void 0 ? {} : { left: $e(s.current, e.top) }
+			}), s.current.scrollBy(e);
+		}, [o]),
 		scrollerRef: s,
 		scrollToCallback: d
 	};
@@ -2248,7 +2275,7 @@ function ir(e) {
 var ar = /* @__PURE__ */ H(([e, t]) => ({
 	...e,
 	...t
-}), O(Gn, /* @__PURE__ */ H(() => {
+}), O(Kn, /* @__PURE__ */ H(() => {
 	let e = R((e) => `Item ${e}`), t = R((e) => `Group ${e}`), n = R({}), r = R(ir), i = R("div"), a = R(Ae), o = (e, t = null) => z(I(n, F((t) => t[e]), N()), t);
 	return {
 		components: n,
@@ -2269,64 +2296,68 @@ var ar = /* @__PURE__ */ H(([e, t]) => ({
 	};
 }))), or = ({ height: e }) => /* @__PURE__ */ d("div", { style: { height: e } }), sr = {
 	overflowAnchor: "none",
-	position: $n(),
+	position: er(),
 	zIndex: 1
 }, cr = { overflowAnchor: "none" }, lr = {
 	...cr,
 	display: "inline-block",
 	height: "100%"
 }, ur = /* @__PURE__ */ e.memo(function({ showTopList: t = !1 }) {
-	let r = Z("listState"), i = Er("sizeRanges"), a = Z("useWindowScroll"), o = Z("customScrollParent"), s = Er("windowScrollContainerState"), c = Er("scrollContainerState"), l = o || a ? s : c, u = Z("itemContent"), f = Z("context"), p = Z("groupContent"), m = Z("trackItemSizes"), h = Z("itemSize"), g = Z("log"), _ = Er("gap"), v = Z("horizontalDirection"), { callbackRef: y } = it(i, h, m, t ? Ae : l, g, _, o, v, Z("skipAnimationFrameInResizeObserver")), [b, x] = e.useState(0);
+	let r = X("listState"), i = Z("sizeRanges"), a = X("useWindowScroll"), o = X("customScrollParent"), s = Z("windowScrollContainerState"), c = Z("scrollContainerState"), l = o || a ? s : c, u = X("itemContent"), f = X("context"), p = X("groupContent"), m = X("trackItemSizes"), h = X("itemSize"), g = X("log"), _ = Z("gap"), v = X("horizontalDirection"), { callbackRef: y } = nt(i, h, m, t ? Ae : l, g, _, o, v, X("skipAnimationFrameInResizeObserver")), [b, x] = e.useState(0);
 	Tr("deviation", (e) => {
 		b !== e && x(e);
 	});
-	let S = Z("EmptyPlaceholder"), C = Z("ScrollSeekPlaceholder") ?? or, w = Z("ListComponent"), T = Z("ItemComponent"), E = Z("GroupComponent"), ee = Z("computeItemKey"), te = Z("isSeeking"), ne = Z("groupIndices").length > 0, re = Z("alignToBottom"), D = Z("initialItemFinalLocationReached"), ie = t ? {} : {
+	let S = Z("deviationCommitted");
+	at(() => {
+		S(b);
+	}, [b, S]);
+	let C = X("EmptyPlaceholder"), w = X("ScrollSeekPlaceholder") ?? or, T = X("ListComponent"), E = X("ItemComponent"), ee = X("GroupComponent"), te = X("computeItemKey"), ne = X("isSeeking"), re = X("groupIndices").length > 0, D = X("alignToBottom"), ie = X("initialItemFinalLocationReached"), ae = t ? {} : {
 		boxSizing: "border-box",
 		...v ? {
 			display: "inline-block",
 			height: "100%",
-			marginInlineStart: b === 0 ? re ? "auto" : 0 : b,
+			marginInlineStart: b === 0 ? D ? "auto" : 0 : b,
 			paddingInlineEnd: r.offsetBottom,
 			paddingInlineStart: r.offsetTop,
 			whiteSpace: "nowrap"
 		} : {
-			marginTop: b === 0 ? re ? "auto" : 0 : b,
+			marginTop: b === 0 ? D ? "auto" : 0 : b,
 			paddingBottom: r.offsetBottom,
 			paddingTop: r.offsetTop
 		},
-		...D ? {} : { visibility: "hidden" }
+		...ie ? {} : { visibility: "hidden" }
 	};
-	return !t && r.totalCount === 0 && S != null ? /* @__PURE__ */ d(S, { ...X(S, f) }) : /* @__PURE__ */ d(w, {
-		...X(w, f),
+	return !t && r.totalCount === 0 && C != null ? /* @__PURE__ */ d(C, { ...Y(C, f) }) : /* @__PURE__ */ d(T, {
+		...Y(T, f),
 		"data-testid": t ? "virtuoso-top-item-list" : "virtuoso-item-list",
 		ref: y,
-		style: ie,
+		style: ae,
 		children: (t ? r.topItems : r.items).map((e) => {
-			let t = e.originalIndex, i = ee(t + r.firstItemIndex, e.data, f);
-			return te ? /* @__PURE__ */ n(C, {
-				...X(C, f),
+			let t = e.originalIndex, i = te(t + r.firstItemIndex, e.data, f);
+			return ne ? /* @__PURE__ */ n(w, {
+				...Y(w, f),
 				height: e.size,
 				index: e.index,
 				key: i,
 				type: e.type || "item",
 				...e.type === "group" ? {} : { groupIndex: e.groupIndex }
-			}) : e.type === "group" ? /* @__PURE__ */ n(E, {
-				...X(E, f),
+			}) : e.type === "group" ? /* @__PURE__ */ n(ee, {
+				...Y(ee, f),
 				"data-index": t,
 				"data-item-index": e.index,
 				"data-known-size": e.size,
 				key: i,
 				style: sr
-			}, p(e.index, f)) : /* @__PURE__ */ n(T, {
-				...X(T, f),
-				...gr(T, e.data),
+			}, p(e.index, f)) : /* @__PURE__ */ n(E, {
+				...Y(E, f),
+				...gr(E, e.data),
 				"data-index": t,
 				"data-item-group-index": e.groupIndex,
 				"data-item-index": e.index,
 				"data-known-size": e.size,
 				key: i,
 				style: v ? lr : cr
-			}, ne ? u(e.index, e.groupIndex, e.data, f) : u(e.index, e.data, f));
+			}, re ? u(e.index, e.groupIndex, e.data, f) : u(e.index, e.data, f));
 		})
 	});
 }), dr = {
@@ -2353,32 +2384,32 @@ var ar = /* @__PURE__ */ H(([e, t]) => ({
 	position: t ? "relative" : "absolute",
 	top: t ? -n : 0
 }), hr = {
-	position: $n(),
+	position: er(),
 	top: 0,
 	width: "100%",
 	zIndex: 1
 };
-function X(e, t) {
+function Y(e, t) {
 	if (typeof e != "string") return { context: t };
 }
 function gr(e, t) {
 	return { item: typeof e == "string" ? void 0 : t };
 }
 var _r = /* @__PURE__ */ e.memo(function() {
-	let t = Z("HeaderComponent"), n = Er("headerHeight"), r = Z("HeaderFooterTag"), i = nt(e.useMemo(() => (e) => {
+	let t = X("HeaderComponent"), n = Z("headerHeight"), r = X("HeaderFooterTag"), i = et(e.useMemo(() => (e) => {
 		n(Mt(e, "height"));
-	}, [n]), !0, Z("skipAnimationFrameInResizeObserver")), a = Z("context");
+	}, [n]), !0, X("skipAnimationFrameInResizeObserver")), a = X("context");
 	return t == null ? null : /* @__PURE__ */ d(r, {
 		ref: i,
-		children: /* @__PURE__ */ d(t, { ...X(t, a) })
+		children: /* @__PURE__ */ d(t, { ...Y(t, a) })
 	});
 }), vr = /* @__PURE__ */ e.memo(function() {
-	let t = Z("FooterComponent"), n = Er("footerHeight"), r = Z("HeaderFooterTag"), i = nt(e.useMemo(() => (e) => {
+	let t = X("FooterComponent"), n = Z("footerHeight"), r = X("HeaderFooterTag"), i = et(e.useMemo(() => (e) => {
 		n(Mt(e, "height"));
-	}, [n]), !0, Z("skipAnimationFrameInResizeObserver")), a = Z("context");
+	}, [n]), !0, X("skipAnimationFrameInResizeObserver")), a = X("context");
 	return t == null ? null : /* @__PURE__ */ d(r, {
 		ref: i,
-		children: /* @__PURE__ */ d(t, { ...X(t, a) })
+		children: /* @__PURE__ */ d(t, { ...Y(t, a) })
 	});
 });
 function yr({ useEmitter: t, useEmitterValue: n, usePublisher: r }) {
@@ -2394,7 +2425,7 @@ function yr({ useEmitter: t, useEmitterValue: n, usePublisher: r }) {
 			},
 			tabIndex: 0,
 			...o,
-			...X(c, a),
+			...Y(c, a),
 			children: e
 		});
 	});
@@ -2402,7 +2433,7 @@ function yr({ useEmitter: t, useEmitterValue: n, usePublisher: r }) {
 function br({ useEmitter: t, useEmitterValue: n, usePublisher: r }) {
 	return e.memo(function({ children: i, style: a, context: o, ...s }) {
 		let c = r("windowScrollContainerState"), l = n("ScrollerComponent"), u = r("smoothScrollTargetReached"), f = n("totalListHeight"), p = n("deviation"), m = n("customScrollParent"), h = e.useRef(null), { scrollByCallback: g, scrollerRef: _, scrollToCallback: v } = rr(c, u, l, n("scrollerRef"), m);
-		return er(() => (_.current = m || h.current?.ownerDocument.defaultView, () => {
+		return at(() => (_.current = m ?? h.current?.ownerDocument.defaultView, () => {
 			_.current = null;
 		}), [_, m]), t("windowScrollTo", v), t("scrollBy", g), /* @__PURE__ */ d(l, {
 			ref: h,
@@ -2413,13 +2444,13 @@ function br({ useEmitter: t, useEmitterValue: n, usePublisher: r }) {
 				...f === 0 ? void 0 : { height: f + p }
 			},
 			...s,
-			...X(l, o),
+			...Y(l, o),
 			children: i
 		});
 	});
 }
 var xr = ({ children: t }) => {
-	let n = e.useContext(Yn), r = Er("viewportHeight"), i = Er("fixedItemHeight"), a = Z("alignToBottom"), o = Z("horizontalDirection"), s = nt(e.useMemo(() => Te(r, (e) => Mt(e, o ? "width" : "height")), [r, o]), !0, Z("skipAnimationFrameInResizeObserver"));
+	let n = e.useContext(Xn), r = Z("viewportHeight"), i = Z("fixedItemHeight"), a = X("alignToBottom"), o = X("horizontalDirection"), s = et(e.useMemo(() => Te(r, (e) => Mt(e, o ? "width" : "height")), [r, o]), !0, X("skipAnimationFrameInResizeObserver"));
 	return e.useEffect(() => {
 		n && (r(n.viewportHeight), i(n.itemHeight));
 	}, [
@@ -2433,7 +2464,7 @@ var xr = ({ children: t }) => {
 		children: t
 	});
 }, Sr = ({ children: t }) => {
-	let n = e.useContext(Yn), r = Er("windowViewportRect"), i = Er("fixedItemHeight"), a = Z("customScrollParent"), o = Z("useWindowScroll"), s = Z("topListHeight"), c = st(r, a, Z("skipAnimationFrameInResizeObserver")), l = Z("alignToBottom");
+	let n = e.useContext(Xn), r = Z("windowViewportRect"), i = Z("fixedItemHeight"), a = X("customScrollParent"), o = X("useWindowScroll"), s = X("topListHeight"), c = ot(r, a, X("skipAnimationFrameInResizeObserver")), l = X("alignToBottom");
 	return e.useEffect(() => {
 		n && (i(n.itemHeight), r({
 			listHeight: 0,
@@ -2452,16 +2483,16 @@ var xr = ({ children: t }) => {
 		children: t
 	});
 }, Cr = ({ children: e }) => {
-	let t = Z("TopItemListComponent") ?? "div", n = Z("headerHeight");
+	let t = X("TopItemListComponent") ?? "div", n = X("headerHeight"), r = {
+		...hr,
+		marginTop: `${n}px`
+	}, i = X("context");
 	return /* @__PURE__ */ d(t, {
-		style: {
-			...hr,
-			marginTop: `${n}px`
-		},
-		...X(t, Z("context")),
+		style: r,
+		...Y(t, i),
 		children: e
 	});
-}, { Component: wr, useEmitter: Tr, useEmitterValue: Z, usePublisher: Er } = /* @__PURE__ */ Jn(ar, {
+}, { Component: wr, useEmitter: Tr, useEmitterValue: X, usePublisher: Z } = /* @__PURE__ */ Yn(ar, {
 	optional: {
 		restoreStateFrom: "restoreStateFrom",
 		context: "context",
@@ -2519,8 +2550,8 @@ var xr = ({ children: t }) => {
 		groupIndices: "groupIndices"
 	}
 }, /* @__PURE__ */ e.memo(function(e) {
-	let t = Z("useWindowScroll"), n = Z("topItemsIndexes").length > 0, r = Z("customScrollParent"), i = Z("context");
-	return /* @__PURE__ */ f(r || t ? Or : Dr, {
+	let t = X("useWindowScroll"), n = X("topItemsIndexes").length > 0, r = X("customScrollParent"), i = X("context");
+	return /* @__PURE__ */ f(r || t ? Dr : Er, {
 		...e,
 		context: i,
 		children: [n && /* @__PURE__ */ d(Cr, { children: /* @__PURE__ */ d(ur, { showTopList: !0 }) }), /* @__PURE__ */ f(r || t ? Sr : xr, { children: [
@@ -2529,18 +2560,18 @@ var xr = ({ children: t }) => {
 			/* @__PURE__ */ d(vr, {})
 		] })]
 	});
-})), Dr = /* @__PURE__ */ yr({
+})), Er = /* @__PURE__ */ yr({
 	useEmitter: Tr,
-	useEmitterValue: Z,
-	usePublisher: Er
-}), Or = /* @__PURE__ */ br({
+	useEmitterValue: X,
+	usePublisher: Z
+}), Dr = /* @__PURE__ */ br({
 	useEmitter: Tr,
-	useEmitterValue: Z,
-	usePublisher: Er
-}), kr = /* @__PURE__ */ H(([e, t]) => ({
+	useEmitterValue: X,
+	usePublisher: Z
+}), Or = /* @__PURE__ */ H(([e, t]) => ({
 	...e,
 	...t
-}), O(Gn, /* @__PURE__ */ H(() => {
+}), O(Kn, /* @__PURE__ */ H(() => {
 	let e = R((e) => /* @__PURE__ */ f("td", { children: ["Item $", e] })), t = R(null), n = R((e) => /* @__PURE__ */ f("td", {
 		colSpan: 1e3,
 		children: ["Group ", e]
@@ -2565,36 +2596,36 @@ var xr = ({ children: t }) => {
 		TableRowComponent: c("TableRow", "tr"),
 		GroupComponent: c("Group", "tr")
 	};
-}))), Ar = ({ height: e }) => /* @__PURE__ */ d("tr", { children: /* @__PURE__ */ d("td", { style: { height: e } }) }), jr = ({ height: e }) => /* @__PURE__ */ d("tr", { children: /* @__PURE__ */ d("td", { style: {
+}))), kr = ({ height: e }) => /* @__PURE__ */ d("tr", { children: /* @__PURE__ */ d("td", { style: { height: e } }) }), Ar = ({ height: e }) => /* @__PURE__ */ d("tr", { children: /* @__PURE__ */ d("td", { style: {
 	border: 0,
 	height: e,
 	padding: 0
-} }) }), Mr = { overflowAnchor: "none" }, Nr = {
-	position: $n(),
+} }) }), jr = { overflowAnchor: "none" }, Mr = {
+	position: er(),
 	zIndex: 2,
 	overflowAnchor: "none"
-}, Pr = /* @__PURE__ */ e.memo(function({ showTopList: e = !1 }) {
-	let t = Q("listState"), r = Q("computeItemKey"), i = Q("firstItemIndex"), a = Q("context"), o = Q("isSeeking"), s = Q("fixedHeaderHeight"), c = Q("groupIndices").length > 0, l = Q("itemContent"), u = Q("groupContent"), d = Q("ScrollSeekPlaceholder") ?? Ar, f = Q("GroupComponent"), p = Q("TableRowComponent"), m = (e ? t.topItems : []).reduce((e, t, n) => (n === 0 ? e.push(t.size) : e.push(e[n - 1] + t.size), e), []);
+}, Nr = /* @__PURE__ */ e.memo(function({ showTopList: e = !1 }) {
+	let t = Q("listState"), r = Q("computeItemKey"), i = Q("firstItemIndex"), a = Q("context"), o = Q("isSeeking"), s = Q("fixedHeaderHeight"), c = Q("groupIndices").length > 0, l = Q("itemContent"), u = Q("groupContent"), d = Q("ScrollSeekPlaceholder") ?? kr, f = Q("GroupComponent"), p = Q("TableRowComponent"), m = (e ? t.topItems : []).reduce((e, t, n) => (n === 0 ? e.push(t.size) : e.push(e[n - 1] + t.size), e), []);
 	return (e ? t.topItems : t.items).map((t) => {
 		let h = t.originalIndex, g = r(h + i, t.data, a), _ = e ? h === 0 ? 0 : m[h - 1] : 0;
 		return o ? /* @__PURE__ */ n(d, {
-			...X(d, a),
+			...Y(d, a),
 			height: t.size,
 			index: t.index,
 			key: g,
 			type: t.type || "item"
 		}) : t.type === "group" ? /* @__PURE__ */ n(f, {
-			...X(f, a),
+			...Y(f, a),
 			"data-index": h,
 			"data-item-index": t.index,
 			"data-known-size": t.size,
 			key: g,
 			style: {
-				...Nr,
+				...Mr,
 				top: s
 			}
 		}, u(t.index, a)) : /* @__PURE__ */ n(p, {
-			...X(p, a),
+			...Y(p, a),
 			...gr(p, t.data),
 			"data-index": h,
 			"data-item-index": t.index,
@@ -2602,38 +2633,42 @@ var xr = ({ children: t }) => {
 			"data-item-group-index": t.groupIndex,
 			key: g,
 			style: e ? {
-				...Nr,
+				...Mr,
 				top: s + _
-			} : Mr
+			} : jr
 		}, c ? l(t.index, t.groupIndex, t.data, a) : l(t.index, t.data, a));
 	});
-}), Fr = /* @__PURE__ */ e.memo(function() {
-	let t = Q("listState"), n = Q("topItemsIndexes").length > 0, r = Br("sizeRanges"), i = Q("useWindowScroll"), a = Q("customScrollParent"), o = Br("windowScrollContainerState"), s = Br("scrollContainerState"), c = a || i ? o : s, l = Q("trackItemSizes"), { callbackRef: u, ref: p } = it(r, Q("itemSize"), l, c, Q("log"), void 0, a, !1, Q("skipAnimationFrameInResizeObserver")), [m, h] = e.useState(0);
-	zr("deviation", (e) => {
+}), Pr = /* @__PURE__ */ e.memo(function() {
+	let t = Q("listState"), n = Q("topItemsIndexes").length > 0, r = zr("sizeRanges"), i = Q("useWindowScroll"), a = Q("customScrollParent"), o = zr("windowScrollContainerState"), s = zr("scrollContainerState"), c = a || i ? o : s, l = Q("trackItemSizes"), { callbackRef: u, ref: p } = nt(r, Q("itemSize"), l, c, Q("log"), void 0, a, !1, Q("skipAnimationFrameInResizeObserver")), [m, h] = e.useState(0);
+	Rr("deviation", (e) => {
 		m !== e && (p.current.style.marginTop = `${e}px`, h(e));
 	});
-	let g = Q("EmptyPlaceholder"), _ = Q("FillerRow") ?? jr, v = Q("TableBodyComponent"), y = Q("paddingTopAddition"), b = Q("statefulTotalCount"), x = Q("context");
-	if (b === 0 && g != null) return /* @__PURE__ */ d(g, { ...X(g, x) });
-	let S = (n ? t.topItems : []).reduce((e, t) => e + t.size, 0), C = t.offsetTop + y + m - S, w = t.offsetBottom, T = C > 0 ? /* @__PURE__ */ d(_, {
-		context: x,
-		height: C
-	}, "padding-top") : null, E = w > 0 ? /* @__PURE__ */ d(_, {
-		context: x,
+	let g = zr("deviationCommitted");
+	at(() => {
+		g(m);
+	}, [m, g]);
+	let _ = Q("EmptyPlaceholder"), v = Q("FillerRow") ?? Ar, y = Q("TableBodyComponent"), b = Q("paddingTopAddition"), x = Q("statefulTotalCount"), S = Q("context");
+	if (x === 0 && _ != null) return /* @__PURE__ */ d(_, { ...Y(_, S) });
+	let C = (n ? t.topItems : []).reduce((e, t) => e + t.size, 0), w = t.offsetTop + b + m - C, T = t.offsetBottom, E = w > 0 ? /* @__PURE__ */ d(v, {
+		context: S,
 		height: w
+	}, "padding-top") : null, ee = T > 0 ? /* @__PURE__ */ d(v, {
+		context: S,
+		height: T
 	}, "padding-bottom") : null;
-	return /* @__PURE__ */ f(v, {
+	return /* @__PURE__ */ f(y, {
 		"data-testid": "virtuoso-item-list",
 		ref: u,
-		...X(v, x),
+		...Y(y, S),
 		children: [
-			T,
-			n && /* @__PURE__ */ d(Pr, { showTopList: !0 }),
-			/* @__PURE__ */ d(Pr, {}),
-			E
+			E,
+			n && /* @__PURE__ */ d(Nr, { showTopList: !0 }),
+			/* @__PURE__ */ d(Nr, {}),
+			ee
 		]
 	});
-}), Ir = ({ children: t }) => {
-	let n = e.useContext(Yn), r = Br("viewportHeight"), i = Br("fixedItemHeight"), a = nt(e.useMemo(() => Te(r, (e) => Mt(e, "height")), [r]), !0, Q("skipAnimationFrameInResizeObserver"));
+}), Fr = ({ children: t }) => {
+	let n = e.useContext(Xn), r = zr("viewportHeight"), i = zr("fixedItemHeight"), a = et(e.useMemo(() => Te(r, (e) => Mt(e, "height")), [r]), !0, Q("skipAnimationFrameInResizeObserver"));
 	return e.useEffect(() => {
 		n && (r(n.viewportHeight), i(n.itemHeight));
 	}, [
@@ -2646,8 +2681,8 @@ var xr = ({ children: t }) => {
 		style: pr(!1),
 		children: t
 	});
-}, Lr = ({ children: t }) => {
-	let n = e.useContext(Yn), r = Br("windowViewportRect"), i = Br("fixedItemHeight"), a = Q("customScrollParent"), o = Q("useWindowScroll"), s = st(r, a, Q("skipAnimationFrameInResizeObserver"));
+}, Ir = ({ children: t }) => {
+	let n = e.useContext(Xn), r = zr("windowViewportRect"), i = zr("fixedItemHeight"), a = Q("customScrollParent"), o = Q("useWindowScroll"), s = ot(r, a, Q("skipAnimationFrameInResizeObserver"));
 	return e.useEffect(() => {
 		n && (i(n.itemHeight), r({
 			listHeight: 0,
@@ -2665,7 +2700,7 @@ var xr = ({ children: t }) => {
 		style: mr(!1, o),
 		children: t
 	});
-}, { Component: Rr, useEmitter: zr, useEmitterValue: Q, usePublisher: Br } = /* @__PURE__ */ Jn(kr, {
+}, { Component: Lr, useEmitter: Rr, useEmitterValue: Q, usePublisher: zr } = /* @__PURE__ */ Yn(Or, {
 	optional: {
 		restoreStateFrom: "restoreStateFrom",
 		context: "context",
@@ -2698,7 +2733,8 @@ var xr = ({ children: t }) => {
 		useWindowScroll: "useWindowScroll",
 		customScrollParent: "customScrollParent",
 		scrollerRef: "scrollerRef",
-		logLevel: "logLevel"
+		logLevel: "logLevel",
+		skipAnimationFrameInResizeObserver: "skipAnimationFrameInResizeObserver"
 	},
 	methods: {
 		scrollToIndex: "scrollToIndex",
@@ -2719,14 +2755,14 @@ var xr = ({ children: t }) => {
 		groupIndices: "groupIndices"
 	}
 }, /* @__PURE__ */ e.memo(function(t) {
-	let n = Q("useWindowScroll"), r = Q("customScrollParent"), i = Br("fixedHeaderHeight"), a = Br("fixedFooterHeight"), o = Q("fixedHeaderContent"), s = Q("fixedFooterContent"), c = Q("context"), l = nt(e.useMemo(() => Te(i, (e) => Mt(e, "height")), [i]), !0, Q("skipAnimationFrameInResizeObserver")), u = nt(e.useMemo(() => Te(a, (e) => Mt(e, "height")), [a]), !0, Q("skipAnimationFrameInResizeObserver")), p = r || n ? Hr : Vr, m = r || n ? Lr : Ir, h = Q("TableComponent"), g = Q("TableHeadComponent"), _ = Q("TableFooterComponent"), v = o ? /* @__PURE__ */ d(g, {
+	let n = Q("useWindowScroll"), r = Q("customScrollParent"), i = zr("fixedHeaderHeight"), a = zr("fixedFooterHeight"), o = Q("fixedHeaderContent"), s = Q("fixedFooterContent"), c = Q("context"), l = et(e.useMemo(() => Te(i, (e) => Mt(e, "height")), [i]), !0, Q("skipAnimationFrameInResizeObserver")), u = et(e.useMemo(() => Te(a, (e) => Mt(e, "height")), [a]), !0, Q("skipAnimationFrameInResizeObserver")), p = r || n ? Vr : Br, m = r || n ? Ir : Fr, h = Q("TableComponent"), g = Q("TableHeadComponent"), _ = Q("TableFooterComponent"), v = o ? /* @__PURE__ */ d(g, {
 		ref: l,
 		style: {
 			position: "sticky",
 			top: 0,
 			zIndex: 2
 		},
-		...X(g, c),
+		...Y(g, c),
 		children: o()
 	}, "TableHead") : null, y = s ? /* @__PURE__ */ d(_, {
 		ref: u,
@@ -2735,34 +2771,34 @@ var xr = ({ children: t }) => {
 			position: "sticky",
 			zIndex: 1
 		},
-		...X(_, c),
+		...Y(_, c),
 		children: s()
 	}, "TableFoot") : null;
 	return /* @__PURE__ */ d(p, {
 		...t,
-		...X(p, c),
+		...Y(p, c),
 		children: /* @__PURE__ */ d(m, { children: /* @__PURE__ */ f(h, {
 			style: {
 				borderSpacing: 0,
 				overflowAnchor: "none"
 			},
-			...X(h, c),
+			...Y(h, c),
 			children: [
 				v,
-				/* @__PURE__ */ d(Fr, {}, "TableBody"),
+				/* @__PURE__ */ d(Pr, {}, "TableBody"),
 				y
 			]
 		}) })
 	});
-})), Vr = /* @__PURE__ */ yr({
-	useEmitter: zr,
+})), Br = /* @__PURE__ */ yr({
+	useEmitter: Rr,
 	useEmitterValue: Q,
-	usePublisher: Br
-}), Hr = /* @__PURE__ */ br({
-	useEmitter: zr,
+	usePublisher: zr
+}), Vr = /* @__PURE__ */ br({
+	useEmitter: Rr,
 	useEmitterValue: Q,
-	usePublisher: Br
-}), Ur = Rr, Wr = {
+	usePublisher: zr
+}), Hr = Lr, Ur = {
 	bottom: 0,
 	itemHeight: 0,
 	items: [],
@@ -2770,7 +2806,7 @@ var xr = ({ children: t }) => {
 	offsetBottom: 0,
 	offsetTop: 0,
 	top: 0
-}, Gr = {
+}, Wr = {
 	bottom: 0,
 	itemHeight: 0,
 	items: [{ index: 0 }],
@@ -2778,27 +2814,27 @@ var xr = ({ children: t }) => {
 	offsetBottom: 0,
 	offsetTop: 0,
 	top: 0
-}, { ceil: Kr, floor: qr, max: Jr, min: Yr, round: Xr } = Math;
-function Zr(e, t, n) {
+}, { ceil: Gr, floor: Kr, max: qr, min: Jr, round: Yr } = Math;
+function Xr(e, t, n) {
 	return Array.from({ length: t - e + 1 }).map((t, r) => ({
 		data: n === null ? null : n[r + e],
 		index: r + e
 	}));
 }
-function Qr(e) {
+function Zr(e) {
 	return {
-		...Gr,
+		...Wr,
 		items: e
 	};
 }
-function $r(e, t) {
+function Qr(e, t) {
 	return e !== void 0 && e.width === t.width && e.height === t.height;
 }
-function ei(e, t) {
+function $r(e, t) {
 	return e !== void 0 && e.column === t.column && e.row === t.row;
 }
-var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan: n, visibleRange: r }, { footerHeight: i, headerHeight: a, scrollBy: o, scrollContainerState: s, scrollTo: c, scrollTop: l, smoothScrollTargetReached: u, viewportHeight: d }, f, p, { didMount: m, propsReady: h }, { customScrollParent: g, useWindowScroll: _, windowScrollContainerState: v, windowScrollTo: y, windowViewportRect: b }, x]) => {
-	let S = R(0), C = R(0), w = R(Wr), T = R({
+var ei = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan: n, visibleRange: r }, { footerHeight: i, headerHeight: a, scrollBy: o, scrollContainerState: s, scrollTo: c, scrollTop: l, smoothScrollTargetReached: u, viewportHeight: d }, f, p, { didMount: m, propsReady: h }, { customScrollParent: g, useWindowScroll: _, windowScrollContainerState: v, windowScrollTo: y, windowViewportRect: b }, x]) => {
+	let S = R(0), C = R(0), w = R(Ur), T = R({
 		height: 0,
 		width: 0
 	}), E = R({
@@ -2808,9 +2844,13 @@ var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan:
 		column: 0,
 		row: 0
 	}), ie = B(), ae = B(), oe = R(!1), se = R(0), ce = R(!0), le = R(!1), ue = R(!1);
-	k(I(m, L(se), P(([e, t]) => t !== 0)), () => {
+	k(I(m, L(se), P(([e, t]) => !sn(t))), () => {
 		A(ce, !1);
 	}), k(I(U(m, ce, E, T, se, le), P(([e, t, n, r, , i]) => e && !t && n.height !== 0 && r.height !== 0 && !i)), ([, , , , e]) => {
+		if (e === void 0) {
+			A(ce, !0);
+			return;
+		}
 		A(le, !0), an(1, () => {
 			A(ee, e);
 		}), Pe(I(l), () => {
@@ -2820,21 +2860,21 @@ var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan:
 		e && (A(T, e.viewport), A(E, e.item), A(D, e.gap), e.scrollTop > 0 && (A(oe, !0), Pe(I(l, ze(1)), (e) => {
 			A(oe, !1);
 		}), A(c, { top: e.scrollTop })));
-	}), M(I(T, F(({ height: e }) => e)), d), M(I(U(W(T, $r), W(E, $r), W(D, (e, t) => e !== void 0 && e.column === t.column && e.row === t.row), W(l)), F(([e, t, n, r]) => ({
+	}), M(I(T, F(({ height: e }) => e)), d), M(I(U(W(T, Qr), W(E, Qr), W(D, (e, t) => e !== void 0 && e.column === t.column && e.row === t.row), W(l)), F(([e, t, n, r]) => ({
 		gap: n,
 		item: t,
 		scrollTop: r,
 		viewport: e
-	}))), ie), M(I(U(W(S), r, W(D, ei), W(E, $r), W(T, $r), W(re), W(C), W(oe), W(ce), W(se)), P(([, , , , , , , e]) => !e), F(([e, [t, n], r, i, a, o, s, , c, l]) => {
+	}))), ie), M(I(U(W(S), r, W(D, $r), W(E, Qr), W(T, Qr), W(re), W(C), W(oe), W(ce), W(se)), P(([, , , , , , , e]) => !e), F(([e, [t, n], r, i, a, o, s, , c, l]) => {
 		let { column: u, row: d } = r, { height: f, width: p } = i, { width: m } = a;
-		if (s === 0 && (e === 0 || m === 0)) return Wr;
+		if (s === 0 && (e === 0 || m === 0)) return Ur;
 		if (p === 0) {
 			let t = on(l, e);
-			return Qr(Zr(t, t + Math.max(s - 1, 0), o));
+			return Zr(Xr(t, t + Math.max(s - 1, 0), o));
 		}
-		let h = ni(m, p, u), g, _;
-		c ? t === 0 && n === 0 && s > 0 ? (g = 0, _ = s - 1) : (g = h * qr((t + d) / (f + d)), _ = h * Kr((n + d) / (f + d)) - 1, _ = Yr(e - 1, Jr(_, h - 1)), g = Yr(_, Jr(0, g))) : (g = 0, _ = -1);
-		let v = Zr(g, _, o), { bottom: y, top: b } = ri(a, r, i, v), x = Kr(e / h);
+		let h = ti(m, p, u), g, _;
+		c ? t === 0 && n === 0 && s > 0 ? (g = 0, _ = s - 1) : (g = h * Kr((t + d) / (f + d)), _ = h * Gr((n + d) / (f + d)) - 1, _ = Jr(e - 1, qr(_, h - 1)), g = Jr(_, qr(0, g))) : (g = 0, _ = -1);
+		let v = Xr(g, _, o), { bottom: y, top: b } = ni(a, r, i, v), x = Gr(e / h);
 		return {
 			bottom: y,
 			itemHeight: f,
@@ -2845,7 +2885,7 @@ var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan:
 			top: b
 		};
 	})), w), M(I(re, P((e) => e !== null), F((e) => e.length)), S), M(I(U(T, E, w, D), P(([e, t, { items: n }]) => n.length > 0 && t.height !== 0 && e.height !== 0), F(([e, t, { items: n }, r]) => {
-		let { bottom: i, top: a } = ri(e, r, t, n);
+		let { bottom: i, top: a } = ni(e, r, t, n);
 		return [a, i];
 	}), N(Dt)), t);
 	let de = R(!1);
@@ -2859,9 +2899,9 @@ var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan:
 	})), N(Et), Be(0)));
 	M(me, p.scrollSeekRangeChanged), M(I(ee, L(T, E, S, D), F(([e, t, n, r, i]) => {
 		let a = tn(e), { align: o, behavior: s, offset: c } = a, l = a.index;
-		l === "LAST" && (l = r - 1), l = Jr(0, l, Yr(r - 1, l));
-		let u = ii(t, i, n, l);
-		return o === "end" ? u = Xr(u - t.height + n.height) : o === "center" && (u = Xr(u - t.height / 2 + n.height / 2)), c !== void 0 && c !== 0 && (u += c), {
+		l === "LAST" && (l = r - 1), l = qr(0, l, Jr(r - 1, l));
+		let u = ri(t, i, n, l);
+		return o === "end" ? u = Yr(u - t.height + n.height) : o === "center" && (u = Yr(u - t.height / 2 + n.height / 2)), c !== void 0 && c !== 0 && (u += c), {
 			behavior: s,
 			top: u
 		};
@@ -2909,30 +2949,30 @@ var ti = /* @__PURE__ */ H(([{ increaseViewportBy: e, listBoundary: t, overscan:
 		stateRestoreInProgress: oe,
 		...x
 	};
-}, O(bn, K, mn, Rn, $t, zn, Je));
-function ni(e, t, n) {
-	return Jr(1, qr((e + n) / (qr(t) + n)));
+}, O(xn, K, hn, zn, $t, Bn, Ye));
+function ti(e, t, n) {
+	return qr(1, Kr((e + n) / (Kr(t) + n)));
 }
-function ri(e, t, n, r) {
+function ni(e, t, n, r) {
 	let { height: i } = n;
 	if (i === void 0 || r.length === 0) return {
 		bottom: 0,
 		top: 0
 	};
-	let a = ii(e, t, n, r[0].index);
+	let a = ri(e, t, n, r[0].index);
 	return {
-		bottom: ii(e, t, n, r[r.length - 1].index) + i,
+		bottom: ri(e, t, n, r[r.length - 1].index) + i,
 		top: a
 	};
 }
-function ii(e, t, n, r) {
-	let i = qr(r / ni(e.width, n.width, t.column)), a = i * n.height + Jr(0, i - 1) * t.row;
+function ri(e, t, n, r) {
+	let i = Kr(r / ti(e.width, n.width, t.column)), a = i * n.height + qr(0, i - 1) * t.row;
 	return a > 0 ? a + t.row : a;
 }
-var ai = /* @__PURE__ */ H(([e, t]) => ({
+var ii = /* @__PURE__ */ H(([e, t]) => ({
 	...e,
 	...t
-}), O(ti, /* @__PURE__ */ H(() => {
+}), O(ei, /* @__PURE__ */ H(() => {
 	let e = R((e) => `Item ${e}`), t = R({}), n = R(null), r = R("virtuoso-grid-item"), i = R("virtuoso-grid-list"), a = R(ir), o = R("div"), s = R(Ae), c = (e, n = null) => z(I(t, F((t) => t[e]), N()), n), l = R(!1), u = R(!1);
 	return M(W(u), l), {
 		components: t,
@@ -2952,8 +2992,8 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		scrollerRef: s,
 		ScrollSeekPlaceholder: c("ScrollSeekPlaceholder", "div")
 	};
-}))), oi = /* @__PURE__ */ e.memo(function() {
-	let t = $("gridState"), r = $("listClassName"), i = $("itemClassName"), a = $("itemContent"), o = $("computeItemKey"), s = $("isSeeking"), c = pi("scrollHeight"), l = $("ItemComponent"), u = $("ListComponent"), f = $("ScrollSeekPlaceholder"), p = $("context"), m = pi("itemDimensions"), h = pi("gap"), g = $("log"), _ = $("stateRestoreInProgress"), v = pi("reportReadyState"), y = nt(e.useMemo(() => (e) => {
+}))), ai = /* @__PURE__ */ e.memo(function() {
+	let t = $("gridState"), r = $("listClassName"), i = $("itemClassName"), a = $("itemContent"), o = $("computeItemKey"), s = $("isSeeking"), c = fi("scrollHeight"), l = $("ItemComponent"), u = $("ListComponent"), f = $("ScrollSeekPlaceholder"), p = $("context"), m = fi("itemDimensions"), h = fi("gap"), g = $("log"), _ = $("stateRestoreInProgress"), v = fi("reportReadyState"), y = et(e.useMemo(() => (e) => {
 		let t = e.parentElement.parentElement.scrollHeight;
 		c(t);
 		let n = e.firstChild;
@@ -2965,8 +3005,8 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 			});
 		}
 		h({
-			column: gi("column-gap", getComputedStyle(e).columnGap, g),
-			row: gi("row-gap", getComputedStyle(e).rowGap, g)
+			column: hi("column-gap", getComputedStyle(e).columnGap, g),
+			row: hi("row-gap", getComputedStyle(e).rowGap, g)
 		});
 	}, [
 		c,
@@ -2974,12 +3014,12 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		h,
 		g
 	]), !0, !1);
-	return er(() => {
+	return at(() => {
 		t.itemHeight > 0 && t.itemWidth > 0 && v(!0);
 	}, [t]), _ ? null : /* @__PURE__ */ d(u, {
 		className: r,
 		ref: y,
-		...X(u, p),
+		...Y(u, p),
 		"data-testid": "virtuoso-item-list",
 		style: {
 			paddingBottom: t.offsetBottom,
@@ -2988,36 +3028,36 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		children: t.items.map((e) => {
 			let r = o(e.index, e.data, p);
 			return s ? /* @__PURE__ */ d(f, {
-				...X(f, p),
+				...Y(f, p),
 				height: t.itemHeight,
 				index: e.index,
 				width: t.itemWidth
 			}, r) : /* @__PURE__ */ n(l, {
-				...X(l, p),
+				...Y(l, p),
 				className: i,
 				"data-index": e.index,
 				key: r
 			}, a(e.index, e.data, p));
 		})
 	});
+}), oi = e.memo(function() {
+	let t = $("HeaderComponent"), n = fi("headerHeight"), r = $("headerFooterTag"), i = et(e.useMemo(() => (e) => {
+		n(Mt(e, "height"));
+	}, [n]), !0, !1), a = $("context");
+	return t == null ? null : /* @__PURE__ */ d(r, {
+		ref: i,
+		children: /* @__PURE__ */ d(t, { ...Y(t, a) })
+	});
 }), si = e.memo(function() {
-	let t = $("HeaderComponent"), n = pi("headerHeight"), r = $("headerFooterTag"), i = nt(e.useMemo(() => (e) => {
+	let t = $("FooterComponent"), n = fi("footerHeight"), r = $("headerFooterTag"), i = et(e.useMemo(() => (e) => {
 		n(Mt(e, "height"));
 	}, [n]), !0, !1), a = $("context");
 	return t == null ? null : /* @__PURE__ */ d(r, {
 		ref: i,
-		children: /* @__PURE__ */ d(t, { ...X(t, a) })
+		children: /* @__PURE__ */ d(t, { ...Y(t, a) })
 	});
-}), ci = e.memo(function() {
-	let t = $("FooterComponent"), n = pi("footerHeight"), r = $("headerFooterTag"), i = nt(e.useMemo(() => (e) => {
-		n(Mt(e, "height"));
-	}, [n]), !0, !1), a = $("context");
-	return t == null ? null : /* @__PURE__ */ d(r, {
-		ref: i,
-		children: /* @__PURE__ */ d(t, { ...X(t, a) })
-	});
-}), li = ({ children: t }) => {
-	let n = e.useContext(Xn), r = pi("itemDimensions"), i = pi("viewportDimensions"), a = nt(e.useMemo(() => (e) => {
+}), ci = ({ children: t }) => {
+	let n = e.useContext(Zn), r = fi("itemDimensions"), i = fi("viewportDimensions"), a = et(e.useMemo(() => (e) => {
 		i(e.getBoundingClientRect());
 	}, [i]), !0, !1);
 	return e.useEffect(() => {
@@ -3037,8 +3077,8 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		style: pr(!1),
 		children: t
 	});
-}, ui = ({ children: t }) => {
-	let n = e.useContext(Xn), r = pi("windowViewportRect"), i = pi("itemDimensions"), a = $("customScrollParent"), o = $("useWindowScroll"), s = st(r, a, !1);
+}, li = ({ children: t }) => {
+	let n = e.useContext(Zn), r = fi("windowViewportRect"), i = fi("itemDimensions"), a = $("customScrollParent"), o = $("useWindowScroll"), s = ot(r, a, !1);
 	return e.useEffect(() => {
 		n && (i({
 			height: n.itemHeight,
@@ -3058,7 +3098,7 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		style: mr(!1, o),
 		children: t
 	});
-}, { Component: di, useEmitter: fi, useEmitterValue: $, usePublisher: pi } = /* @__PURE__ */ Jn(ai, {
+}, { Component: ui, useEmitter: di, useEmitterValue: $, usePublisher: fi } = /* @__PURE__ */ Yn(ii, {
 	optional: {
 		context: "context",
 		totalCount: "totalCount",
@@ -3096,31 +3136,31 @@ var ai = /* @__PURE__ */ H(([e, t]) => ({
 		readyStateChanged: "readyStateChanged"
 	}
 }, /* @__PURE__ */ e.memo(function({ ...e }) {
-	let t = $("useWindowScroll"), n = $("customScrollParent"), r = n || t ? hi : mi, i = n || t ? ui : li, a = $("context");
+	let t = $("useWindowScroll"), n = $("customScrollParent"), r = n || t ? mi : pi, i = n || t ? li : ci, a = $("context");
 	return /* @__PURE__ */ d(r, {
 		...e,
-		...X(r, a),
+		...Y(r, a),
 		children: /* @__PURE__ */ f(i, { children: [
-			/* @__PURE__ */ d(si, {}),
 			/* @__PURE__ */ d(oi, {}),
-			/* @__PURE__ */ d(ci, {})
+			/* @__PURE__ */ d(ai, {}),
+			/* @__PURE__ */ d(si, {})
 		] })
 	});
-})), mi = /* @__PURE__ */ yr({
-	useEmitter: fi,
+})), pi = /* @__PURE__ */ yr({
+	useEmitter: di,
 	useEmitterValue: $,
-	usePublisher: pi
-}), hi = /* @__PURE__ */ br({
-	useEmitter: fi,
+	usePublisher: fi
+}), mi = /* @__PURE__ */ br({
+	useEmitter: di,
 	useEmitterValue: $,
-	usePublisher: pi
+	usePublisher: fi
 });
-function gi(e, t, n) {
+function hi(e, t, n) {
 	return t !== "normal" && t?.endsWith("px") !== !0 && n(`${e} was not resolved to pixel value correctly`, t, G.WARN), t === "normal" ? 0 : parseInt(t ?? "0", 10);
 }
 //#endregion
 //#region src/virtual/size-utils.ts
-var _i = (e) => {
+var gi = (e) => {
 	switch (e) {
 		case "sm": return 33;
 		case "xs": return 24;
@@ -3129,7 +3169,7 @@ var _i = (e) => {
 };
 //#endregion
 //#region src/virtual/FixedHeaderContent.tsx
-function vi({ onChangeSort: e }) {
+function _i({ onChangeSort: e }) {
 	let [t] = w(), [n] = D();
 	return /* @__PURE__ */ d("tr", { children: t.map((t, r) => /* @__PURE__ */ d(oe, {
 		field: t,
@@ -3141,7 +3181,7 @@ function vi({ onChangeSort: e }) {
 }
 //#endregion
 //#region src/virtual/ItemContent.tsx
-function yi({ row: e, renderRow: t }) {
+function vi({ row: e, renderRow: t }) {
 	let [n] = w();
 	return t ? t(e) : /* @__PURE__ */ d(b, {
 		fields: n,
@@ -3150,7 +3190,7 @@ function yi({ row: e, renderRow: t }) {
 }
 //#endregion
 //#region src/virtual/VirtualTableContainer.tsx
-var bi = l.div`
+var yi = l.div`
     height: calc(100vh - 100px);
     max-height: calc(100vh - 100px);
     width: 100%;
@@ -3171,8 +3211,8 @@ var bi = l.div`
 `;
 //#endregion
 //#region src/virtual/ContainedVirtualTable.tsx
-function xi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i, data: o, keyField: s, rowClassName: l, renderRow: u, onSelectRow: f, selected: p, tfoot: m, onChangeSort: g, containerProps: y, ...b }) {
-	let x = ve(), S = e ?? _i(i), C = t ?? _i(i), [w, T] = c(n ?? x), [E, ee] = c(w);
+function bi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i, data: o, keyField: s, rowClassName: l, renderRow: u, onSelectRow: f, selected: p, tfoot: m, onChangeSort: g, containerProps: y, ...b }) {
+	let x = ve(), S = e ?? gi(i), C = t ?? gi(i), [w, T] = c(n ?? x), [E, ee] = c(w);
 	a(() => {
 		T(n ?? x);
 	}, [n, x]);
@@ -3198,20 +3238,20 @@ function xi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i
 			});
 		},
 		TableFoot: () => m || null
-	}, D = () => /* @__PURE__ */ d(vi, { onChangeSort: g });
-	return /* @__PURE__ */ d(bi, {
+	}, D = () => /* @__PURE__ */ d(_i, { onChangeSort: g });
+	return /* @__PURE__ */ d(yi, {
 		...y,
 		style: {
 			...y?.style,
 			height: E
 		},
-		children: /* @__PURE__ */ d(Ur, {
+		children: /* @__PURE__ */ d(Hr, {
 			data: o,
 			components: re,
 			totalListHeightChanged: te,
 			fixedItemHeight: S,
 			fixedHeaderContent: D,
-			itemContent: (e, t) => /* @__PURE__ */ d(yi, {
+			itemContent: (e, t) => /* @__PURE__ */ d(vi, {
 				row: t,
 				renderRow: u
 			}, e)
@@ -3220,10 +3260,10 @@ function xi({ rowHeight: e, headerHeight: t, maxHeight: n, className: r, size: i
 }
 //#endregion
 //#region src/virtual/VirtualTable.tsx
-function Si({ data: e, fields: t, keyField: n, currentSort: r, onChangeSort: i, ...a }) {
+function xi({ data: e, fields: t, keyField: n, currentSort: r, onChangeSort: i, ...a }) {
 	return /* @__PURE__ */ f(S, {
 		initialFields: t,
-		children: [/* @__PURE__ */ d(ue, { nextSort: r }), /* @__PURE__ */ d(xi, {
+		children: [/* @__PURE__ */ d(ue, { nextSort: r }), /* @__PURE__ */ d(bi, {
 			onChangeSort: i,
 			data: e,
 			keyField: n,
@@ -3232,6 +3272,6 @@ function Si({ data: e, fields: t, keyField: n, currentSort: r, onChangeSort: i, 
 	});
 }
 //#endregion
-export { E as ContainedDataTable, te as ContainedDataTableRow, le as ContainedSortableTable, xi as ContainedVirtualTable, ee as DataTable, y as DataTableCell, he as DataTableCols, x as DataTableContext, S as DataTableProvider, ne as DataTableRow, b as DataTableRowCellSet, re as DataTableTBody, C as DataTableTH, v as DataTableTR, pe as RowsPerPage, de as SortableTable, se as SortableTableHead, oe as SortableTableTH, _ as Table, me as TablePagination, Si as VirtualTable, ge as useField, _e as useTableContext, w as useTableFields, D as useTableSort };
+export { E as ContainedDataTable, te as ContainedDataTableRow, le as ContainedSortableTable, bi as ContainedVirtualTable, ee as DataTable, y as DataTableCell, he as DataTableCols, x as DataTableContext, S as DataTableProvider, ne as DataTableRow, b as DataTableRowCellSet, re as DataTableTBody, C as DataTableTH, v as DataTableTR, pe as RowsPerPage, ue as SortHelper, de as SortableTable, se as SortableTableHead, oe as SortableTableTH, _ as Table, me as TablePagination, xi as VirtualTable, ge as useField, _e as useTableContext, w as useTableFields, D as useTableSort };
 
 //# sourceMappingURL=index.es.js.map

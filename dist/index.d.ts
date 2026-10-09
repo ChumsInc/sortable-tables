@@ -20,6 +20,7 @@ export { useField } from './useField';
 export { useTableFields } from './useTableFields';
 export { useTableSort } from './useTableSort';
 export { useTableContext } from './useTableContext';
+export { SortHelper, type StandaloneSortHelperProps } from './SortHelper';
 export { DataTableContext, type TableContextData } from './DataTableContext';
 export type { TableProviderProps } from './DataTableProvider';
 export type { SortProps, DataTableField, SortableTableField, DataTableColProps, DataTableCellProps, DataTableRowProps, DataTableTBodyProps, DataTableClassNames, DataTableProps, DataTableTHProps, RowsPerPageProps, SortableTableTHProps, SortableTableHeadProps, SortableTableProps, TablePaginationProps, UITableSize, UISize, UIFlexAlign, DataTableTRProps, DataTableCellSetProps, } from './types';

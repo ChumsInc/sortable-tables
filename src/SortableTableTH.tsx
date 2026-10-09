@@ -60,7 +60,7 @@ export default function SortableTableTH<T = unknown>({
     );
 
     const clickHandler = () => {
-        onClick({field: field.field, ascending: !sorted ? true : !ascending});
+        onClick({field: field.field as keyof T, ascending: !sorted ? true : !ascending});
     }
 
     const iconClassName = {
